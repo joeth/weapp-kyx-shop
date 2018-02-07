@@ -1,4 +1,4 @@
-# weapp-shop-kyx
+# weapp-kyx-shop
 
 ### 安装使用
 
