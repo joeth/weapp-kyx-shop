@@ -1,0 +1,32 @@
+
+    
+    <form class="searchbar {{$Searchbar$inputKeyword ? 'inputing':''}} {{$Searchbar$skin}}" style="{{$Searchbar$style}}" report-submit="{{$Searchbar$true}}" bindsubmit="$Searchbar$formSubmit" bindreset="$Searchbar$formReset">
+        <view class="wrapper">
+            <input type="text" value="{{$Searchbar$inputKeyword}}" confirm-type="search" bindinput="$Searchbar$inputTyping" placeholder="搜索产品名"/>
+            <button class="submit" form-type="submit"><text class="icon icon-search"/></button>
+            <button class="cancel" form-type="reset">取消</button>
+        </view>
+    </form>
+
+    <view class="classify">
+        <scroll-view class="classify-nav" scroll-y="true">
+            <view class="nav-item active">产品</view>
+            <view class="nav-item">免费试喝</view>
+            <view class="nav-item">个性定制</view>
+        </scroll-view>
+        <scroll-view class="classify-body" scroll-y="true">
+            
+    <view class="list-classify {{$ListClassify$skin}}" style="width:{{$ListClassify$width}}rpx;padding:{{$ListClassify$margin}}rpx;{{$ListClassify$style}}">
+        <block wx:for="{{$ListClassify$datalist}}" wx:for-index="$ListClassify$index" wx:for-item="$ListClassify$item" wx:key="$ListClassify$id">
+            <navigator class="item-classify" url="{{$ListClassify$item.id}}" rediect="{{$ListClassify$rediect}}" hover-class="{{$ListClassify$hoverClass}}" style="width:{{$ListClassify$itemWidth}}rpx;padding:{{$ListClassify$padding}}rpx;margin-top:{{$ListClassify$index>=$ListClassify$column?$ListClassify$margin:0}}rpx">
+                <view class="item-classify-image" style="width:{{$ListClassify$imageWidth}}rpx;height:{{$ListClassify$imageHeight}}rpx;">
+                    <image src="{{$ListClassify$item.image}}" mode="aspectFill" lazy-load="{{$ListClassify$lazyLoad}}"/>
+                </view>
+                <text class="item-classify-name">{{$ListClassify$item.name}}</text>
+                
+            </navigator>
+        </block>
+    </view>
+
+        </scroll-view>
+    </view>
