@@ -26,6 +26,27 @@ scroll-view:-webkit-scrollbar{
     position: absolute;
     z-index: 1000;
 }
+.avatar{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+button[type="normal"], navigator.normal{
+    border: 0;
+    margin: 0;
+    padding: @margin;
+    position: static;
+    overflow: visible;
+    line-height: normal;
+    background-color: transparent;
+    border-radius: 0;
+    &:after {
+        display: none;
+    }
+    &.button-hover, &.navigator-hover{
+        color: @color-primary;
+    }
+}
 </style>
 <script>
 import wepy from 'wepy'
@@ -37,33 +58,36 @@ const deviceRadio = device.windowWidth / 750
 export default class extends wepy.app {
     config = {
         pages: [
-            'pages/classify',
+            'pages/mycenter',
+            'pages/catalog',
             'pages/homepage',
             'pages/shopcart',
-            'pages/mycenter',
+            'pages/product/list',
+            'pages/product/detail'
         ],
         tabBar: {
             color: '#452713',
+            selectedColor: '#a91e11',
             backgroundColor: '#e9e0cc',
             list: [{
                 pagePath: 'pages/homepage',
                 iconPath: 'images/homepage.png',
-                selectedIconPath: 'images/homepage.png',
+                selectedIconPath: 'images/homepage-cur.png',
                 text: '首页'
             }, {
-                pagePath: 'pages/classify',
-                iconPath: 'images/classify.png',
-                selectedIconPath: 'images/classify.png',
+                pagePath: 'pages/catalog',
+                iconPath: 'images/catalog.png',
+                selectedIconPath: 'images/catalog-cur.png',
                 text: '产品分类'
             }, {
                 pagePath: 'pages/shopcart',
                 iconPath: 'images/shopcart.png',
-                selectedIconPath: 'images/shopcart.png',
+                selectedIconPath: 'images/shopcart-cur.png',
                 text: '购物车'
             }, {
                 pagePath: 'pages/mycenter',
                 iconPath: 'images/mycenter.png',
-                selectedIconPath: 'images/mycenter.png',
+                selectedIconPath: 'images/mycenter-cur.png',
                 text: '个人中心'
             }]
         },

@@ -1,39 +1,39 @@
 
     <view class="mycenter">
-        <view class="mycenter-header">
-            <view class="user-info">
-                <view class="user-info-avatar">
-                    <image src="{{userInfo.avatarUrl}}" mode="aspectFit" lazy-load="{{true}}"/>
+        <view class="header">
+            <wxc-cc>
+                <view class="user-info">
+                    <view class="user-info-avatar">
+                        <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFit" lazy-load="{{true}}"/>
+                    </view>
+                    <view class="user-info-name">
+                        <text>{{userInfo.nickName}}</text>
+                    </view>
                 </view>
-                <view class="user-info-name">
-                    <text>{{userInfo.nickName}}</text>
-                </view>
+            </wxc-cc>
+        </view>
+        <wxc-tab  bind:tabchange="onTabChange" line-color="transparent" active-line-color="transparent" class="tabbar">
+            <view class="navbar" slot="tablabel">
+                <wxc-tab-label  wx:for="{{tabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}" class="navbar-item">
+                    <button type="normal" class="navbar-button">
+                        {{tab.title}}
+                        <wxc-badge class="navbar-badge" max="99" value="{{tab.badge}}" wx:if="{{tab.badge}}"/>
+                    </button>
+                </wxc-tab-label>
             </view>
-        </view>
-        <view class="mycenter-tabbar">
-            <wxc-tab  bind:tabchange="onTabChange" default-index="{{activeKey}}" component-id="c3" animate="{{true}}" class="demo-tab">
-                <view slot="tablabel">
-                    <wxc-tab-label  wx:for="{{tabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}" component-id="c3">
-                        <view class="demo-tab__label">
-                            <view class="demo-tab__text {{ activeKey === index ? 'demo-tab--active' : ''}}">
-                                {{tab.title}}
-                                <wxc-badge class="user__un-read-msg-count">5</wxc-badge>
-                            </view>
-                        </view>
-                    </wxc-tab-label>
-                </view>
-                <wxc-tab-panel  wx:for="{{tabs}}" wx:for-item="tab" wx:key="{{tab.content}}" tab-index="{{index}}" component-id="c3">
-                    {{tab.content}}
-                </wxc-tab-panel>
-            </wxc-tab>
-        </view>
-        <text class="mycenter-contain">
-            <div>
-                <p>asdf;lkasdfjl;asdfj</p>
-                <p>asdf;lkasdfjl;asdfj</p>
-                <p>asdf;lkasdfjl;asdfj</p>
-                <p>asdf;lkasdfjl;asdfj</p>
-                <p>asdf;lkasdfjl;asdfj</p>
-            </div>
-        </text>
+        </wxc-tab>
+        <wxc-flex class="menu" main="around">
+            <navigator class="normal" url="/pages/shopcart" open-type="switchTab">
+                <text class="icon icon-shopcart"/>
+                <text class="text">购物车</text>
+            </navigator>
+            <navigator class="normal">
+                <text class="icon icon-location"/>
+                <text class="text">收货地址</text>
+            </navigator>
+            <navigator class="normal">
+                <text class="icon icon-question"/>
+                <text class="text">常见问题</text>
+            </navigator>
+        </wxc-flex>
     </view>

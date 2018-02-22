@@ -11,8 +11,6 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
-        "@minui/wxc-badge": "^1.0.3",
-        "@minui/wxc-tab": "^1.0.5",
         "wepy": "^1.6.0",
         "wepy-async-function": "^1.4.4",
         "wepy-com-toast": "^1.0.2"

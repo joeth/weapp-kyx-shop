@@ -2,6 +2,7 @@
 @import 'src/common/styles/config.less';
 .searchbar{
     padding: @margin;
+    overflow: hidden;
     position: relative;
     z-index: 100;
     border-bottom: 2rpx solid @color-border;
