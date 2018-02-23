@@ -92,11 +92,11 @@
                 <text class="icon icon-shopcart"></text>
                 <text class="text">购物车</text>
             </navigator>
-            <navigator class="normal">
+            <navigator class="normal" url="/pages/address/list">
                 <text class="icon icon-location"></text>
                 <text class="text">收货地址</text>
             </navigator>
-            <navigator class="normal">
+            <navigator class="normal" url="/pages/question/list">
                 <text class="icon icon-question"></text>
                 <text class="text">常见问题</text>
             </navigator>

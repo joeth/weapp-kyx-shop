@@ -63,7 +63,13 @@ export default class extends wepy.app {
             'pages/homepage',
             'pages/shopcart',
             'pages/product/list',
-            'pages/product/detail'
+            'pages/product/detail',
+            'pages/order/list',
+            'pages/order/detail',
+            'pages/address/list',
+            'pages/address/detail',
+            'pages/question/list',
+            'pages/question/detail'
         ],
         tabBar: {
             color: '#452713',
