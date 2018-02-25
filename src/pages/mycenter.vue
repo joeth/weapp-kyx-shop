@@ -1,34 +1,5 @@
 <style lang="less">
 @import 'src/common/styles/config.less';
-.navbar{
-    padding: @margin/2 0;
-    background-color: @color-backdrop;
-    .navbar-item{
-        padding: @margin 0;
-        position: relative;
-        &:before{
-            content: '';
-            height: 1em;
-            width: 2rpx;
-            margin-top: -.5em;
-            position: absolute;
-            top: 50%;
-            left: 0;
-
-            background-color: @color-border;
-        }
-        &:first-child{
-            &:before{
-                display: none;
-            }
-        }
-    }
-    .navbar-badge{
-        position: absolute;
-        right: 10rpx;
-        top: 0;
-    }
-}
 .header{
     padding: 60rpx;
     text-align: center;
@@ -77,13 +48,13 @@
                 </view>
             </wxc-cc>
         </view>
-        <wxc-tab bind:tabchange="onTabChange" line-color="transparent" active-line-color="transparent" class="tabbar">
-            <view class="navbar" slot="tablabel">
-                <wxc-tab-label wx:for="{{tabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}" class="navbar-item">
-                    <button type="normal" class="navbar-button">
+        <wxc-tab line-color="transparent" active-line-color="transparent">
+            <view class="tab-nav" slot="tablabel">
+                <wxc-tab-label class="tab-nav-item" wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}">
+                    <navigator class="normal tab-nav-button" url="/pages/order/list?type={{tab.id}}">
                         {{tab.title}}
-                        <wxc-badge class="navbar-badge" max="99" value="{{tab.badge}}" wx:if="{{tab.badge}}"></wxc-badge>
-                    </button>
+                        <wxc-badge class="tab-nav-badge" max="99" value="{{tab.badge}}" wx:if="{{tab.badge}}"></wxc-badge>
+                    </navigator>
                 </wxc-tab-label>
             </view>
         </wxc-tab>
@@ -128,12 +99,12 @@ export default class MyCenter extends wepy.page {
             avatarUrl: 'https://t1.picb.cc/uploads/2018/02/22/KGhb8.jpg',
             nickName: '文书生'
         },
-        tabs: [
-            { title: '全部', badge: 0 },
-            { title: '待付款', badge: 1 },
-            { title: '待发货', badge: 0 },
-            { title: '待收货', badge: 0 },
-            { title: '已完成', badge: 0 }
+        orderTabs: [
+            { id: 0, title: '全部', badge: 0 },
+            { id: 1, title: '待付款', badge: 1 },
+            { id: 2, title: '待发货', badge: 0 },
+            { id: 3, title: '待收货', badge: 0 },
+            { id: 4, title: '已完成', badge: 0 }
         ],
         activeKey: 0
     }
@@ -145,10 +116,6 @@ export default class MyCenter extends wepy.page {
     }
 
     methods = {
-        onTabChange(res) {
-            console.log(res)
-            this.activeKey = res.detail.key
-        }
     }
 
     events = {

@@ -1,6 +1,7 @@
 <style lang="less">
-@import 'src/common/styles/icon.less';
 @import 'src/common/styles/config.less';
+@import 'src/common/styles/icon.less';
+
 page{
     // background-image: url('https://applet.store.keyixing.com/images/bg.jpg');
     background-image: url('https://t1.picb.cc/uploads/2018/02/05/sqzLX.jpg');
@@ -40,6 +41,8 @@ button[type="normal"], navigator.normal{
     line-height: normal;
     background-color: transparent;
     border-radius: 0;
+    text-align: center;
+    color: inherit;
     &:after {
         display: none;
     }
@@ -47,6 +50,45 @@ button[type="normal"], navigator.normal{
         color: @color-primary;
     }
 }
+
+.tab-nav{
+    display: inline-block;
+    padding: @margin/2 0;
+    background-color: @color-backdrop;
+    .tab-nav-item{
+        padding: @margin 0;
+        position: relative;
+        &:before{
+            content: '';
+            height: 1em;
+            width: 2rpx;
+            margin-top: -.5em;
+            position: absolute;
+            top: 50%;
+            left: 0;
+
+            background-color: @color-border;
+        }
+        &:first-child{
+            &:before{
+                display: none;
+            }
+        }
+        &.active{
+            color: @color-primary;
+        }
+    }
+    .tab-nav-badge{
+        position: absolute;
+        right: 10rpx;
+        top: 0;
+    }
+}
+.tab-main{
+    margin-top: @margin;
+    background-color: @color-backdrop;
+}
+
 </style>
 <script>
 import wepy from 'wepy'

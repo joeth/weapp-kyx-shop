@@ -1,0 +1,18 @@
+
+<view class="order">
+    <wxc-tab line-color="transparent" default-index="{{activeKey}}" animate="{{true}}">
+        <view class="tab-nav" slot="tablabel">
+            <wxc-tab-label class="tab-nav-item {{activeKey == index ? 'active' : ''}}"  wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}">
+                <button class="tab-nav-button" type="normal"  bind:tap="onTabClick" data-id="{{tab.id}}">
+                    {{tab.title}}
+                    <wxc-badge class="tab-nav-badge" max="99" value="{{tab.badge}}" wx:if="{{tab.badge}}"/>
+                </button>
+            </wxc-tab-label>
+        </view>
+        <view class="tab-main">
+            <wxc-tab-panel  wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.id}}" tab-index="{{index}}">
+                {{tab.content}}
+            </wxc-tab-panel>
+        </view>
+    </wxc-tab>
+</view>
