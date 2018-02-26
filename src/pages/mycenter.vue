@@ -20,7 +20,7 @@
     display: block;
     padding: 60rpx;
     margin-top: @margin;
-    background-color: @color-backdrop;
+    background-color: @color-maincolor;
     .menu-button{
         padding: @margin;
     }
@@ -40,7 +40,7 @@
             <wxc-cc>
                 <view class="user-info">
                     <view class="user-info-avatar">
-                        <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFit" lazy-load="{{true}}"></image>
+                        <wxc-avatar src="{{userInfo.avatarUrl}}"></wxc-avatar>
                     </view>
                     <view class="user-info-name">
                         <text>{{userInfo.nickName}}</text>
@@ -48,12 +48,12 @@
                 </view>
             </wxc-cc>
         </view>
-        <wxc-tab line-color="transparent" active-line-color="transparent">
-            <view class="tab-nav" slot="tablabel">
-                <wxc-tab-label class="tab-nav-item" wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}">
-                    <navigator class="normal tab-nav-button" url="/pages/order/list?type={{tab.id}}">
+        <wxc-tab class="tabbar" line-color="transparent" active-line-color="transparent">
+            <view class="tabbar-nav" slot="tablabel">
+                <wxc-tab-label class="tabbar-label" wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}">
+                    <navigator class="normal tabbar-button" url="/pages/order/list?type={{tab.id}}">
                         {{tab.title}}
-                        <wxc-badge class="tab-nav-badge" max="99" value="{{tab.badge}}" wx:if="{{tab.badge}}"></wxc-badge>
+                        <wxc-badge class="tabbar-badge" max="99" value="{{tab.badge}}" wx:if="{{tab.badge}}"></wxc-badge>
                     </navigator>
                 </wxc-tab-label>
             </view>
@@ -87,6 +87,7 @@ export default class MyCenter extends wepy.page {
             'wxc-tab-panel': '../packages/@minui/wxc-tab/dist/panel',
             'wxc-tab-label': '../packages/@minui/wxc-tab/dist/label',
             'wxc-badge': '../packages/@minui/wxc-badge/dist/index',
+            'wxc-avatar': '../packages/@minui/wxc-avatar/dist/index',
         }
     }
 

@@ -5,7 +5,7 @@
     width: 100%;
     overflow: hidden;
     position: relative;
-    background-color: @color-backdrop;
+    background-color: @color-backcolor;
 }
 .catalog-nav {
     width: 200rpx;
@@ -13,7 +13,7 @@
     bottom: 0;
     left: 0;
     top: 0;
-    background-image: url('https://t1.picb.cc/uploads/2018/02/05/sqzLX.jpg');
+    background-image: url('https://t1.picb.cc/uploads/2018/02/26/KE9MN.jpg');
     .nav-item{
         height: 100rpx;
         line-height: 100rpx;
@@ -28,14 +28,14 @@
         border-top: 2rpx solid @color-border;
         text-align: center;
 
-        font-size: @fz-large;
+        font-size: @font-size-large;
 
         &:first-child{
             border-top: none;
         }
 
         &.active{
-            background-color: @color-backdrop;
+            background-color: @color-backcolor;
         }
     }
 }

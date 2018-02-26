@@ -4,7 +4,7 @@
             <wxc-cc>
                 <view class="user-info">
                     <view class="user-info-avatar">
-                        <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFit" lazy-load="{{true}}"/>
+                        <wxc-avatar src="{{userInfo.avatarUrl}}"/>
                     </view>
                     <view class="user-info-name">
                         <text>{{userInfo.nickName}}</text>
@@ -12,12 +12,12 @@
                 </view>
             </wxc-cc>
         </view>
-        <wxc-tab line-color="transparent" active-line-color="transparent">
-            <view class="tab-nav" slot="tablabel">
-                <wxc-tab-label class="tab-nav-item"  wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}">
-                    <navigator class="normal tab-nav-button" url="/pages/order/list?type={{tab.id}}">
+        <wxc-tab class="tabbar" line-color="transparent" active-line-color="transparent">
+            <view class="tabbar-nav" slot="tablabel">
+                <wxc-tab-label class="tabbar-label"  wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}">
+                    <navigator class="normal tabbar-button" url="/pages/order/list?type={{tab.id}}">
                         {{tab.title}}
-                        <wxc-badge class="tab-nav-badge" max="99" value="{{tab.badge}}" wx:if="{{tab.badge}}"/>
+                        <wxc-badge class="tabbar-badge" max="99" value="{{tab.badge}}" wx:if="{{tab.badge}}"/>
                     </navigator>
                 </wxc-tab-label>
             </view>

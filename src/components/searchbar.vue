@@ -18,7 +18,7 @@
 
         border: 2rpx solid @color-border;
         border-radius: 64rpx;
-        
+
         background-color: #fff;
 
         transition: all ease 400ms;
@@ -33,7 +33,7 @@
         margin: 0;
         padding: 0;
 
-        font-size: @fz-large;
+        font-size: @font-size-large;
     }
     button{
         margin: 0;
@@ -63,7 +63,7 @@
     button.cancel{
         width: 80rpx;
         left: 200%;
-        font-size: @fz-large;
+        font-size: @font-size-large;
     }
     &.inputing{
         .wrapper{
