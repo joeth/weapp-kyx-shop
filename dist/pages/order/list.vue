@@ -98,13 +98,30 @@ import wepy from 'wepy'
 import colorsMixin from '@/mixins/colors'
 import ItemOrder from '@/components/item-order'
 
-const __ORDER_LIST__ = [{
+const __ORDER_DATA__ = [{
     id: 1,
     code: 'E20180102112200',
     status: 1,
     payStatus: 1,
-    pirce: 200.00,
+    price: 200.00,
     freight: 0.00,
+    goods: [
+        {
+            id: 2,
+            cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
+            title: '云之七味',
+            type: '熟茶',
+            price: 100.00,
+            count: 1
+        }
+    ]
+},{
+    id: 2,
+    code: 'E20180102112201',
+    status: 2,
+    payStatus: 1,
+    price: 200.00,
+    freight: 10.00,
     goods: [
         {
             id: 1,
@@ -154,7 +171,7 @@ export default class OrderList extends wepy.page {
             { id: 3, title: '待收货', badge: 0, content: '待收货' },
             { id: 4, title: '已完成', badge: 0, content: '已完成' }
         ],
-        orderList: __ORDER_LIST__
+        orderList: __ORDER_DATA__
     }
 
     computed = {
@@ -176,7 +193,6 @@ export default class OrderList extends wepy.page {
     }
 
     onLoad(option) {
-        console.log(this)
         try{
             this.activeKey = Number(option.type);
         }catch(e) {}

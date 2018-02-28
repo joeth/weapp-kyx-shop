@@ -1,0 +1,42 @@
+<style lang="less">
+@import 'src/common/styles/config.less';
+</style>
+<template>
+
+</template>
+<script>
+import wepy from 'wepy'
+
+export default class ProductList extends wepy.page {
+    config = {
+        navigationBarTitleText: '产品列表'
+    }
+
+    components = {
+    }
+
+    mixins = []
+
+    data = {
+    }
+
+    computed = {
+        now() {
+            return +new Date()
+        }
+    }
+
+    methods = {
+
+    }
+
+    events = {
+
+    }
+
+    onLoad() {
+
+    }
+}
+
+</script>

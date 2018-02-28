@@ -56,8 +56,8 @@
         </wxc-flex>
         <view class="cp-item-order-main">
             <view class="order-goods-list">
-                <repeat for="{{2}}" index="gindex" item="goods" key="gid">
-                    <ItemOrderGoods :goods="order.goods"></ItemOrderGoods>
+                <repeat for="{{order.goods}}" index="gindex" item="goods" key="gid">
+                    <ItemOrderGoods :goods="goods"></ItemOrderGoods>
                 </repeat>
             </view>
         </view>
@@ -82,33 +82,6 @@ import ItemOrderGoods from '@/components/item-order-goods'
 const w = 750
 const winRtio = wepy.getSystemInfoSync().windowWidth / w
 
-const __ORDER__ = {
-    id: 1,
-    code: 'E20180102112200',
-    status: 1,
-    payStatus: 1,
-    pirce: 200.00,
-    freight: 0.00,
-    goods: [
-        {
-            id: 1,
-            cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
-            title: '云之七味',
-            type: '熟茶',
-            price: 100.00,
-            count: 1
-        },
-        {
-            id: 2,
-            cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
-            title: '云之七味',
-            type: '熟茶',
-            price: 100.00,
-            count: 1
-        }
-    ]
-}
-
 export default class ItemOrder extends wepy.component {
     components = {
         ItemOrderGoods
@@ -117,26 +90,12 @@ export default class ItemOrder extends wepy.component {
     props = {
         order: {
             type: Object,
-            default: {},
+            default: null,
             coerce (val) {
-                console.log(val)
+              console.log('coerce order', val)
+              return val
             }
         }
-    }
-
-    data = {
-    }
-
-    events = {
-    }
-
-    watch = {
-    }
-
-    methods = {
-    }
-
-    onLoad () {
     }
 }
 

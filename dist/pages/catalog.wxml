@@ -1,8 +1,8 @@
 
     
-    <form class="searchbar {{$Searchbar$inputKeyword ? 'inputing':''}} {{$Searchbar$skin}}" style="{{$Searchbar$style}}" report-submit="{{$Searchbar$true}}" bindsubmit="$Searchbar$formSubmit" bindreset="$Searchbar$formReset">
+    <form class="searchbar {{$searchbar$inputKeyword ? 'inputing':''}} {{$searchbar$skin}}" style="{{$searchbar$style}}" report-submit="{{$searchbar$true}}" bindsubmit="$searchbar$formSubmit" bindreset="$searchbar$formReset">
         <view class="wrapper">
-            <input type="text" value="{{$Searchbar$inputKeyword}}" confirm-type="search" bindinput="$Searchbar$inputTyping" placeholder="搜索产品名"/>
+            <input type="text" value="{{$searchbar$inputKeyword}}" confirm-type="search" bindinput="$searchbar$inputTyping" placeholder="搜索产品名"/>
             <button class="submit" form-type="submit"><text class="icon icon-search"/></button>
             <button class="cancel" form-type="reset">取消</button>
         </view>
@@ -16,13 +16,13 @@
         </scroll-view>
         <scroll-view class="catalog-body" scroll-y="true">
             
-    <view class="list-catalog {{$ListCatalog$skin}}" style="width:{{$ListCatalog$width}}rpx;padding:{{$ListCatalog$margin}}rpx;{{$ListCatalog$style}}">
-        <block wx:for="{{$ListCatalog$datalist}}" wx:for-index="$ListCatalog$index" wx:for-item="$ListCatalog$item" wx:key="$ListCatalog$id">
-            <navigator class="normal item-catalog" url="/pages/product/list?cid={{$ListCatalog$item.id}}" rediect="{{$ListCatalog$rediect}}" hover-class="{{$ListCatalog$hoverClass}}" style="width:{{$ListCatalog$itemWidth}}rpx;padding:{{$ListCatalog$padding}}rpx;margin-top:{{$ListCatalog$index>=$ListCatalog$column?$ListCatalog$margin:0}}rpx">
-                <view class="item-catalog-image" style="width:{{$ListCatalog$imageWidth}}rpx;height:{{$ListCatalog$imageHeight}}rpx;">
-                    <image src="{{$ListCatalog$item.image}}" mode="aspectFill" lazy-load="{{$ListCatalog$lazyLoad}}"/>
+    <view class="cp-catalog-list {{$cpCatalogList$skin}}" style="width:{{$cpCatalogList$width}}rpx;padding:{{$cpCatalogList$margin}}rpx;{{$cpCatalogList$style}}">
+        <block wx:for="{{$cpCatalogList$datalist}}" wx:for-index="$cpCatalogList$index" wx:for-item="$cpCatalogList$item" wx:key="$cpCatalogList$id">
+            <navigator class="normal cp-catalog-item" url="/pages/product/list?cid={{$cpCatalogList$item.id}}" rediect="{{$cpCatalogList$rediect}}" hover-class="{{$cpCatalogList$hoverClass}}" style="width:{{$cpCatalogList$itemWidth}}rpx;padding:{{$cpCatalogList$padding}}rpx;margin-top:{{$cpCatalogList$index>=$cpCatalogList$column?$cpCatalogList$margin:0}}rpx">
+                <view class="cp-catalog-image" style="width:{{$cpCatalogList$imageWidth}}rpx;height:{{$cpCatalogList$imageHeight}}rpx;">
+                    <image src="{{$cpCatalogList$item.image}}" mode="aspectFill" lazy-load="{{$cpCatalogList$lazyLoad}}"/>
                 </view>
-                <text class="item-catalog-name">{{$ListCatalog$item.name}}</text>
+                <text class="cp-catalog-name">{{$cpCatalogList$item.name}}</text>
                 
             </navigator>
         </block>

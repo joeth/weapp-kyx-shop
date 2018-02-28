@@ -62,39 +62,16 @@ import wepy from 'wepy'
 const w = 750
 const winRtio = wepy.getSystemInfoSync().windowWidth / w
 
-const GOODS = {
-    id: 1,
-    cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
-    title: '云之七味',
-    type: '熟茶',
-    price: 100.00,
-    count: 1
-}
-
 export default class ItemOrderGoods extends wepy.component {
     props = {
         goods: {
             type: Object,
-            default: {},
+            default: null,
             coerce (val) {
-                console.log(val)
+                console.log('coerce goods', val)
+                return val
             }
         }
-    }
-
-    data = {
-    }
-
-    events = {
-    }
-
-    watch = {
-    }
-
-    methods = {
-    }
-
-    onLoad () {
     }
 }
 

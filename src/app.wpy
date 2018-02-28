@@ -1,0 +1,228 @@
+<style lang="less">
+@import 'src/common/styles/config.less';
+@import 'src/common/styles/icon.less';
+
+page{
+    // background-image: url('https://applet.store.keyixing.com/images/bg.jpg');
+    background-image: url('https://t1.picb.cc/uploads/2018/02/26/KE9MN.jpg');
+    background-color: @color-backcolor;
+}
+page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    // justify-content: space-between;
+    // box-sizing: border-box;
+
+    font-size: @font-size-base;
+    font-family: @font-family-default;
+}
+view, input, button{
+    font-size: inherit;
+    font-family: inherit;
+}
+button{
+    border-radius: @radius;
+    &:before, &:after{
+        border-radius: @radius;
+    }
+    &[type="primary"], &[type="primary"].button-hover{
+        background-color: @color-primary;
+        color: @color-white;
+    }
+    &[type="warn"], &[type="warn"].button-hover{
+        background-color: @color-warn;
+        color: @color-white;
+    }
+    &[type="base"], &[type="base"].button-hover{
+        background-color: @color-base;
+        color: @color-white;
+    }
+    &[type="gray"], &[type="gray"].button-hover{
+        background-color: @color-gray;
+        color: @color-white;
+    }
+    &[type].button-hover{
+        opacity: 0.8;
+    }
+}
+scroll-view:-webkit-scrollbar{
+    position: absolute;
+    z-index: 1000;
+}
+button[type="normal"], navigator.normal{
+    border: 0;
+    margin: 0;
+    padding: @margin;
+    position: static;
+    overflow: visible;
+    line-height: normal;
+    background-color: transparent;
+    border-radius: 0;
+    text-align: center;
+    color: inherit;
+    &:after {
+        display: none;
+    }
+    &.button-hover, &.navigator-hover{
+        color: @color-primary;
+    }
+}
+
+.price{
+    color: @color-primary;
+}
+
+.c-gray{ color: @color-gray;}
+.c-base{ color: @color-base;}
+.c-warn{ color: @color-warn;}
+.c-invert{ color: @color-invert;}
+.c-primary{ color: @color-primary;}
+.c-success{ color: @color-success;}
+
+.tabbar{
+    display: block;
+    background-color: @color-maincolor;
+}
+.tabbar-nav{
+    padding: @margin/2 0;
+}
+.tabbar-label{
+    padding: @margin 0;
+    position: relative;
+    &:before{
+        content: '';
+        height: 1em;
+        width: 2rpx;
+        margin-top: -.5em;
+        position: absolute;
+        top: 50%;
+        left: 0;
+
+        background-color: @color-border;
+    }
+    &:first-child{
+        &:before{
+            display: none;
+        }
+    }
+    &.active{
+        color: @color-success;
+    }
+}
+.tabbar-button{
+    position: relative;
+}
+.tabbar-badge{
+    position: absolute;
+    right: 10rpx;
+    top: 0;
+}
+.tabbar-main{
+    overflow: hidden;
+    background-image: url('https://t1.picb.cc/uploads/2018/02/26/KE9MN.jpg');
+    background-color: @color-backcolor;
+}
+
+</style>
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+
+const device = wx.getSystemInfoSync()
+const deviceRadio = device.windowWidth / 750
+
+export default class extends wepy.app {
+    config = {
+        pages: [
+            'pages/mycenter',
+            'pages/homepage',
+            'pages/catalog',
+            'pages/shopcart',
+            'pages/product/list',
+            'pages/product/detail',
+            'pages/order/list',
+            'pages/order/detail',
+            'pages/address/list',
+            'pages/address/detail',
+            'pages/question/list',
+            'pages/question/detail'
+        ],
+        tabBar: {
+            color: '#452713',
+            selectedColor: '#a91e11',
+            backgroundColor: '#e9e0cc',
+            list: [{
+                pagePath: 'pages/homepage',
+                iconPath: 'images/homepage.png',
+                selectedIconPath: 'images/homepage-cur.png',
+                text: '首页'
+            }, {
+                pagePath: 'pages/catalog',
+                iconPath: 'images/catalog.png',
+                selectedIconPath: 'images/catalog-cur.png',
+                text: '产品分类'
+            }, {
+                pagePath: 'pages/shopcart',
+                iconPath: 'images/shopcart.png',
+                selectedIconPath: 'images/shopcart-cur.png',
+                text: '购物车'
+            }, {
+                pagePath: 'pages/mycenter',
+                iconPath: 'images/mycenter.png',
+                selectedIconPath: 'images/mycenter-cur.png',
+                text: '个人中心'
+            }]
+        },
+        window: {
+            backgroundColor: '#e9e0cc',
+            backgroundTextStyle: 'light',
+            navigationBarBackgroundColor: '#452713',
+            navigationBarTitleText: '可以兴商城',
+            navigationBarTextStyle: '#d6c5ac'
+        }
+    }
+
+    globalData = {
+        deviceRadio: deviceRadio,
+        userInfo: null
+    }
+
+    constructor() {
+        super()
+        this.use('requestfix')
+    }
+
+    onLaunch() {
+        // this.testAsync()
+    }
+
+    sleep(s) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('promise resolved')
+            }, s * 1000)
+        })
+    }
+
+    async testAsync() {
+        const data = await this.sleep(3)
+        console.log(data)
+    }
+
+    getUserInfo(cb) {
+        const that = this
+        if (this.globalData.userInfo) {
+            return this.globalData.userInfo
+        }
+        wepy.getUserInfo({
+            success(res) {
+                that.globalData.userInfo = res.userInfo
+                cb && cb(res.userInfo)
+            }
+        })
+    }
+}
+
+</script>
