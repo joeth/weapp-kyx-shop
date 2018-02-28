@@ -1,17 +1,55 @@
 
 <view class="order">
-    <wxc-tab line-color="transparent" default-index="{{activeKey}}" animate="{{true}}">
-        <view class="tab-nav" slot="tablabel">
-            <wxc-tab-label class="tab-nav-item {{activeKey == index ? 'active' : ''}}"  wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}">
-                <button class="tab-nav-button" type="normal"  bind:tap="onTabClick" data-id="{{tab.id}}">
+    <wxc-tab class="tabbar" line-color="transparent" active-line-color="{{colors.success}}" default-index="{{activeKey}}" animate="{{true}}">
+        <view class="tabbar-nav" slot="tablabel">
+            <wxc-tab-label class="tabbar-label {{activeKey == index ? 'active' : ''}}"  wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}">
+                <button class="tabbar-button" type="normal"  bind:tap="onTabClick" data-id="{{tab.id}}">
                     {{tab.title}}
-                    <wxc-badge class="tab-nav-badge" max="99" value="{{tab.badge}}" wx:if="{{tab.badge}}"/>
+                    <wxc-badge class="tabbar-badge" max="99" value="{{tab.badge}}" wx:if="{{tab.badge}}"/>
                 </button>
             </wxc-tab-label>
         </view>
-        <view class="tab-main">
+        <view class="tabbar-main">
             <wxc-tab-panel  wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.id}}" tab-index="{{index}}">
-                {{tab.content}}
+                <view class="order-list">
+                    <block wx:for="{{2}}" wx:for-index="oindex" wx:for-item="order" wx:key="oid">
+                        <view class="order-item">
+                            <wxc-flex class="order-item-head" main="between">
+                                <text class="c-gray">订单编号：E20180102112200</text>
+                                <text class="c-success">待付款</text>
+                            </wxc-flex>
+                            <view class="order-item-main">
+                                <view class="order-goods-list">
+                                    <block wx:for="{{2}}" wx:for-index="gindex" wx:for-item="goods" wx:key="gid">
+                                        <wxc-flex class="order-goods-item">
+                                            <image class="goods-item-cover" src="https://t1.picb.cc/uploads/2018/02/22/KGQhG.png"/>
+                                            <wxc-flex class="goods-item-main" dir="top" main="between">
+                                                <view>
+                                                    <view class="goods-item-title">云之七味</view>
+                                                    <view class="goods-item-text">普洱熟茶小方砖</view>
+                                                </view>
+                                                <wxc-flex class="goods-item-info" main="between" cross="center">
+                                                    <wxc-price class="price" value="100.00"/>
+                                                    <text class="count">x1</text>
+                                                </wxc-flex>
+                                            </wxc-flex>
+                                        </wxc-flex>
+                                    </block>
+                                </view>
+                            </view>
+                            <wxc-flex class="order-item-info" main="between">
+                                <view class="side"/>
+                                <view class="main">
+                                    合计：<wxc-price class="price" value="200.00"/>
+                                </view>
+                            </wxc-flex>
+                            <wxc-flex class="order-item-tool" main="end">
+                                <view class="button"><button type="warn">取消订单</button></view>
+                                <view class="button"><button type="base">确认付款</button></view>
+                            </wxc-flex>
+                        </view>
+                    </block>
+                </view>
             </wxc-tab-panel>
         </view>
     </wxc-tab>

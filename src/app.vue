@@ -4,12 +4,8 @@
 
 page{
     // background-image: url('https://applet.store.keyixing.com/images/bg.jpg');
-    background-image: url('https://t1.picb.cc/uploads/2018/02/05/sqzLX.jpg');
-    background-color: @color-backdrop;
-}
-page, view, input, button{
-    font-size: @fz-base;
-    font-family: @fontDefault;
+    background-image: url('https://t1.picb.cc/uploads/2018/02/26/KE9MN.jpg');
+    background-color: @color-backcolor;
 }
 page {
     height: 100vh;
@@ -18,19 +14,42 @@ page {
     // align-items: center;
     // justify-content: space-between;
     // box-sizing: border-box;
+
+    font-size: @font-size-base;
+    font-family: @font-family-default;
 }
-.container {
-    height: 100%;
-    display: flex;
+view, input, button{
+    font-size: inherit;
+    font-family: inherit;
+}
+button{
+    border-radius: @radius;
+    &:before, &:after{
+        border-radius: @radius;
+    }
+    &[type="primary"], &[type="primary"].button-hover{
+        background-color: @color-primary;
+        color: @color-white;
+    }
+    &[type="warn"], &[type="warn"].button-hover{
+        background-color: @color-warn;
+        color: @color-white;
+    }
+    &[type="base"], &[type="base"].button-hover{
+        background-color: @color-base;
+        color: @color-white;
+    }
+    &[type="gray"], &[type="gray"].button-hover{
+        background-color: @color-gray;
+        color: @color-white;
+    }
+    &[type].button-hover{
+        opacity: 0.8;
+    }
 }
 scroll-view:-webkit-scrollbar{
     position: absolute;
     z-index: 1000;
-}
-.avatar{
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
 }
 button[type="normal"], navigator.normal{
     border: 0;
@@ -51,42 +70,59 @@ button[type="normal"], navigator.normal{
     }
 }
 
-.tab-nav{
-    display: inline-block;
-    padding: @margin/2 0;
-    background-color: @color-backdrop;
-    .tab-nav-item{
-        padding: @margin 0;
-        position: relative;
-        &:before{
-            content: '';
-            height: 1em;
-            width: 2rpx;
-            margin-top: -.5em;
-            position: absolute;
-            top: 50%;
-            left: 0;
+.price{
+    color: @color-primary;
+}
 
-            background-color: @color-border;
-        }
-        &:first-child{
-            &:before{
-                display: none;
-            }
-        }
-        &.active{
-            color: @color-primary;
+.c-gray{ color: @color-gray;}
+.c-base{ color: @color-base;}
+.c-warn{ color: @color-warn;}
+.c-invert{ color: @color-invert;}
+.c-primary{ color: @color-primary;}
+.c-success{ color: @color-success;}
+
+.tabbar{
+    display: block;
+    background-color: @color-maincolor;
+}
+.tabbar-nav{
+    padding: @margin/2 0;
+}
+.tabbar-label{
+    padding: @margin 0;
+    position: relative;
+    &:before{
+        content: '';
+        height: 1em;
+        width: 2rpx;
+        margin-top: -.5em;
+        position: absolute;
+        top: 50%;
+        left: 0;
+
+        background-color: @color-border;
+    }
+    &:first-child{
+        &:before{
+            display: none;
         }
     }
-    .tab-nav-badge{
-        position: absolute;
-        right: 10rpx;
-        top: 0;
+    &.active{
+        color: @color-success;
     }
 }
-.tab-main{
-    margin-top: @margin;
-    background-color: @color-backdrop;
+.tabbar-button{
+    position: relative;
+}
+.tabbar-badge{
+    position: absolute;
+    right: 10rpx;
+    top: 0;
+}
+.tabbar-main{
+    overflow: hidden;
+    background-image: url('https://t1.picb.cc/uploads/2018/02/26/KE9MN.jpg');
+    background-color: @color-backcolor;
 }
 
 </style>
