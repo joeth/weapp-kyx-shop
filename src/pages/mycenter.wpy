@@ -13,6 +13,7 @@
     }
     .user-info-name{
         margin-top: @margin;
+        font-size: @font-size-bigger;
         color: @color-invert;
     }
 }

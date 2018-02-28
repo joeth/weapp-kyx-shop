@@ -12,26 +12,26 @@
         <view class="tabbar-main">
             <wxc-tab-panel  wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.id}}" tab-index="{{index}}">
                 
-    <block  wx:for-items="{{$cpOrderList$datalist}}" wx:for-index="index" wx:for-item="order" wx:key="id">
-        <view class="cp-item-order is-complete">
-            <wxc-flex class="cp-item-order-head" main="between">
-                <text class="cp-item-order-code">订单编号：{{order.code}}</text>
-                <text class="cp-item-order-status">{{order.statusText}}</text>
+    <view class="cp-order-list"  wx:for-items="{{$cpOrderList$datalist}}" wx:for-index="index" wx:for-item="order" wx:key="id">
+        <view class="cp-order-item is-complete">
+            <wxc-flex class="cp-order-head" main="between">
+                <text class="cp-order-code">订单编号：{{order.code}}</text>
+                <text class="cp-order-status">{{order.statusText}}</text>
             </wxc-flex>
-            <view class="cp-item-order-main">
-                <view class="order-goods-list">
+            <view class="cp-order-main">
+                <view class="cp-order-goods-list">
                     <block wx:for="{{order.goods}}" wx:for-index="$cpOrderList$gindex" wx:for-item="$cpOrderList$goods" wx:key="$cpOrderList$gid">
                         
     <wxc-flex class="cp-order-goods">
-        <image class="cp-order-goods-cover" src="{{$cpOrderList$goods.cover}}"/>
-        <wxc-flex class="cp-order-goods-main" dir="top" main="between">
-            <view class="cp-order-goods-info">
-                <text class="cp-order-goods-row cp-order-goods-title">{{$cpOrderList$goods.title}}</text>
-                <text class="cp-order-goods-row cp-order-goods-text">{{$cpOrderList$goods.type}}</text>
+        <image class="cp-goods-cover" src="{{$cpOrderList$goods.cover}}"/>
+        <wxc-flex class="cp-goods-main" dir="top" main="between">
+            <view class="cp-goods-info">
+                <text class="cp-goods-row cp-goods-title">{{$cpOrderList$goods.title}}</text>
+                <text class="cp-goods-row cp-goods-text">{{$cpOrderList$goods.type}}</text>
             </view>
-            <wxc-flex class="cp-order-goods-count" main="between" cross="center">
-                <wxc-price class="cp-order-goods-price" value="{{$cpOrderList$goods.price}}"/>
-                <text class="cp-order-goods-count">x{{$cpOrderList$goods.count}}</text>
+            <wxc-flex class="cp-goods-count" main="between" cross="center">
+                <wxc-price class="cp-goods-price" decimal="small" value="{{$cpOrderList$goods.price}}"/>
+                <text class="cp-goods-count">x{{$cpOrderList$goods.count}}</text>
             </wxc-flex>
         </wxc-flex>
     </wxc-flex>
@@ -39,20 +39,20 @@
                     </block>
                 </view>
             </view>
-            <view class="cp-item-order-foot">
-                <wxc-flex class="cp-item-order-info" main="between" dir="right">
-                    <view>合计（含运费）：<wxc-price class="price" value="{{order.price+order.freight}}"/></view>
+            <view class="cp-order-foot">
+                <wxc-flex class="cp-order-info" main="between" dir="right">
+                    <view>合计（含运费）：<wxc-price class="cp-order-price" decimal="small" value="{{order.price+order.freight}}"/></view>
                 </wxc-flex>
-                <wxc-flex class="cp-item-order-tool" main="end" wrap="wrap">
-                    <view class="button"><button type="warn">取消订单</button></view>
-                    <view class="button"><button type="base">马上支付</button></view>
-                    <!-- <view class="button"><button type="base">确认收货</button></view>
-                    <view class="button"><button type="base">查看订单</button></view>
-                    <view class="button"><button type="base">发表评价</button></view> -->
+                <wxc-flex class="cp-order-tool" main="end" wrap="wrap">
+                    <view class="cp-order-button"><button type="warn">取消订单</button></view>
+                    <view class="cp-order-button"><button type="base">马上支付</button></view>
+                    <!-- <view class="cp-order-button"><button type="base">确认收货</button></view>
+                    <view class="cp-order-button"><button type="base">查看订单</button></view>
+                    <view class="cp-order-button"><button type="base">发表评价</button></view> -->
                 </wxc-flex>
             </view>
         </view>
-    </block>
+    </view>
 
             </wxc-tab-panel>
         </view>

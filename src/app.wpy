@@ -16,7 +16,7 @@ page {
     // box-sizing: border-box;
 
     font-size: @font-size-base;
-    font-family: @font-family-default;
+    // font-family: @font-family-default;
 }
 view, input, button{
     font-size: inherit;
@@ -87,6 +87,7 @@ button[type="normal"], navigator.normal{
 }
 .tabbar-nav{
     padding: @margin/2 0;
+    font-size: @font-size-large;
 }
 .tabbar-label{
     padding: @margin 0;
