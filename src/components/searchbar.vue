@@ -1,5 +1,6 @@
 <style lang="less">
 @import 'src/common/styles/config.less';
+
 .searchbar{
     padding: @margin;
     overflow: hidden;

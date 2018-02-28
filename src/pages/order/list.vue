@@ -8,10 +8,17 @@
     border: 2rpx solid @color-border;
     border-radius: @radius;
 }
+.goods-item-info{
+    overflow: hidden;
+    > view{
+        display: block;
+        margin-bottom: @margin/2;
+    }
+}
 .goods-item-text{
     color: @color-gray;
 }
-.goods-item-info{
+.goods-item-count{
     .price{
         color: @color-base;
     }
@@ -33,14 +40,16 @@
     }
 }
 .order-item-head,
-.order-item-info,
-.order-item-tool{
+.order-item-foot{
     display: block;
     padding: @margin;
 }
+.order-item-info{
+    margin-top: @margin;
+}
 .order-item-tool{
-    padding-top: 0;
     .button{
+        margin-top: @margin;
         margin-left: @margin;
         &:first-child{
             margin-left: 0;
@@ -75,42 +84,8 @@
         <view class="tabbar-main">
             <wxc-tab-panel wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.id}}" tab-index="{{index}}">
                 <view class="order-list">
-                    <repeat for="{{2}}" index="oindex" item="order" key="oid">
-                        <view class="order-item">
-                            <wxc-flex class="order-item-head" main="between">
-                                <text class="c-gray">订单编号：E20180102112200</text>
-                                <text class="c-success">待付款</text>
-                            </wxc-flex>
-                            <view class="order-item-main">
-                                <view class="order-goods-list">
-                                    <repeat for="{{2}}" index="gindex" item="goods" key="gid">
-                                        <wxc-flex class="order-goods-item">
-                                            <image class="goods-item-cover" src="https://t1.picb.cc/uploads/2018/02/22/KGQhG.png"></image>
-                                            <wxc-flex class="goods-item-main" dir="top" main="between">
-                                                <view>
-                                                    <view class="goods-item-title">云之七味</view>
-                                                    <view class="goods-item-text">普洱熟茶小方砖</view>
-                                                </view>
-                                                <wxc-flex class="goods-item-info" main="between" cross="center">
-                                                    <wxc-price class="price" value="100.00"></wxc-price>
-                                                    <text class="count">x1</text>
-                                                </wxc-flex>
-                                            </wxc-flex>
-                                        </wxc-flex>
-                                    </repeat>
-                                </view>
-                            </view>
-                            <wxc-flex class="order-item-info" main="between">
-                                <view class="side"></view>
-                                <view class="main">
-                                    合计：<wxc-price class="price" value="200.00"></wxc-price>
-                                </view>
-                            </wxc-flex>
-                            <wxc-flex class="order-item-tool" main="end">
-                                <view class="button"><button type="warn">取消订单</button></view>
-                                <view class="button"><button type="base">确认付款</button></view>
-                            </wxc-flex>
-                        </view>
+                    <repeat for="{{orderList}}" index="oindex" item="order" key="oid">
+                        <ItemOrder :order="order"></ItemOrder>
                     </repeat>
                 </view>
             </wxc-tab-panel>
@@ -121,6 +96,34 @@
 <script>
 import wepy from 'wepy'
 import colorsMixin from '@/mixins/colors'
+import ItemOrder from '@/components/item-order'
+
+const __ORDER_LIST__ = [{
+    id: 1,
+    code: 'E20180102112200',
+    status: 1,
+    payStatus: 1,
+    pirce: 200.00,
+    freight: 0.00,
+    goods: [
+        {
+            id: 1,
+            cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
+            title: '云之七味',
+            type: '熟茶',
+            price: 100.00,
+            count: 1
+        },
+        {
+            id: 2,
+            cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
+            title: '云之七味',
+            type: '熟茶',
+            price: 100.00,
+            count: 1
+        }
+    ]
+}]
 
 export default class OrderList extends wepy.page {
     config = {
@@ -137,7 +140,7 @@ export default class OrderList extends wepy.page {
     }
 
     components = {
-
+        ItemOrder
     }
 
     mixins = [colorsMixin]
@@ -150,7 +153,8 @@ export default class OrderList extends wepy.page {
             { id: 2, title: '待发货', badge: 0, content: '待发货' },
             { id: 3, title: '待收货', badge: 0, content: '待收货' },
             { id: 4, title: '已完成', badge: 0, content: '已完成' }
-        ]
+        ],
+        orderList: __ORDER_LIST__
     }
 
     computed = {

@@ -1,4 +1,6 @@
 <style lang="less">
+@import 'src/common/styles/config.less';
+
 .item-classify{
     width: 33.333%;
 }

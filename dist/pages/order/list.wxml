@@ -12,42 +12,48 @@
         <view class="tabbar-main">
             <wxc-tab-panel  wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.id}}" tab-index="{{index}}">
                 <view class="order-list">
-                    <block wx:for="{{2}}" wx:for-index="oindex" wx:for-item="order" wx:key="oid">
-                        <view class="order-item">
-                            <wxc-flex class="order-item-head" main="between">
-                                <text class="c-gray">订单编号：E20180102112200</text>
-                                <text class="c-success">待付款</text>
-                            </wxc-flex>
-                            <view class="order-item-main">
-                                <view class="order-goods-list">
-                                    <block wx:for="{{2}}" wx:for-index="gindex" wx:for-item="goods" wx:key="gid">
-                                        <wxc-flex class="order-goods-item">
-                                            <image class="goods-item-cover" src="https://t1.picb.cc/uploads/2018/02/22/KGQhG.png"/>
-                                            <wxc-flex class="goods-item-main" dir="top" main="between">
-                                                <view>
-                                                    <view class="goods-item-title">云之七味</view>
-                                                    <view class="goods-item-text">普洱熟茶小方砖</view>
-                                                </view>
-                                                <wxc-flex class="goods-item-info" main="between" cross="center">
-                                                    <wxc-price class="price" value="100.00"/>
-                                                    <text class="count">x1</text>
-                                                </wxc-flex>
-                                            </wxc-flex>
-                                        </wxc-flex>
-                                    </block>
-                                </view>
-                            </view>
-                            <wxc-flex class="order-item-info" main="between">
-                                <view class="side"/>
-                                <view class="main">
-                                    合计：<wxc-price class="price" value="200.00"/>
-                                </view>
-                            </wxc-flex>
-                            <wxc-flex class="order-item-tool" main="end">
-                                <view class="button"><button type="warn">取消订单</button></view>
-                                <view class="button"><button type="base">确认付款</button></view>
-                            </wxc-flex>
-                        </view>
+                    <block wx:for="{{orderList}}" wx:for-index="oindex" wx:for-item="order" wx:key="oid">
+                        
+    <view class="cp-item-order is-complete">
+        <wxc-flex class="cp-item-order-head" main="between">
+            <text class="cp-item-order-code">订单编号：{{order.code}}</text>
+            <text class="cp-item-order-status">{{order.statusText}}</text>
+        </wxc-flex>
+        <view class="cp-item-order-main">
+            <view class="order-goods-list">
+                <block wx:for="{{2}}" wx:for-index="$ItemOrder$gindex" wx:for-item="$ItemOrder$goods" wx:key="$ItemOrder$gid">
+                    
+    <wxc-flex class="cp-order-goods">
+        <image class="cp-order-goods-cover" src="{{$ItemOrder$order.goods.cover}}"/>
+        <wxc-flex class="cp-order-goods-main" dir="top" main="between">
+            <view class="cp-order-goods-info">
+                <text class="cp-order-goods-row cp-order-goods-title">{{$ItemOrder$order.goods.title}}</text>
+                <text class="cp-order-goods-row cp-order-goods-text">{{$ItemOrder$order.goods.type}}</text>
+            </view>
+            <wxc-flex class="cp-order-goods-count" main="between" cross="center">
+                <wxc-price class="cp-order-goods-price" value="{{$ItemOrder$order.goods.price}}"/>
+                <text class="cp-order-goods-count">x{{$ItemOrder$order.goods.count}}</text>
+            </wxc-flex>
+        </wxc-flex>
+    </wxc-flex>
+
+                </block>
+            </view>
+        </view>
+        <view class="cp-item-order-foot">
+            <wxc-flex class="cp-item-order-info" main="between" dir="right">
+                <view>合计（含运费）：<wxc-price class="price" value="{{order.price+order.freight}}"/></view>
+            </wxc-flex>
+            <wxc-flex class="cp-item-order-tool" main="end" wrap="wrap">
+                <view class="button"><button type="warn">取消订单</button></view>
+                <view class="button"><button type="base">马上支付</button></view>
+                <!-- <view class="button"><button type="base">确认收货</button></view>
+                <view class="button"><button type="base">查看订单</button></view>
+                <view class="button"><button type="base">发表评价</button></view> -->
+            </wxc-flex>
+        </view>
+    </view>
+
                     </block>
                 </view>
             </wxc-tab-panel>
