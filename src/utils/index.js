@@ -88,7 +88,8 @@ const status2str = (status, type) => {
             case 0 : text = '待付款'; break;
             case 1 : text = '待发货'; break;
             case 2 : text = '待收货'; break;
-            case 3 : text = '已完成'; break;
+            case 3 : text = '待评价'; break;
+            case 4 : text = '已完成'; break;
             default: text = '已失效';
         }
     }

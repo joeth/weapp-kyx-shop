@@ -1,5 +1,5 @@
 
-<view class="order">
+<view class="order-lst">
     <wxc-tab class="tabbar" line-color="transparent" active-line-color="{{colors.success}}" default-index="{{activeKey}}" animate="{{true}}">
         <view class="tabbar-nav" slot="tablabel">
             <wxc-tab-label class="tabbar-label {{activeKey == index ? 'active' : ''}}"  wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}">
@@ -10,17 +10,16 @@
             </wxc-tab-label>
         </view>
         <view class="tabbar-main">
-            <wxc-tab-panel  wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.id}}" tab-index="{{index}}">
-                
-    <view class="cp-order-list"  wx:for-items="{{$cpOrderList$datalist}}" wx:for-index="index" wx:for-item="order" wx:key="id">
+            
+    <view class="cp-order-list"  wx:for-items="{{$cpOrderList$datalist}}" wx:for-item="order" wx:key="oid">
         <view class="cp-order-item is-complete">
             <wxc-flex class="cp-order-head" main="between">
                 <text class="cp-order-code">订单编号：{{order.code}}</text>
                 <text class="cp-order-status">{{order.statusText}}</text>
             </wxc-flex>
-            <view class="cp-order-main">
+            <navigator class="cp-order-main" url="/pages/order/detail?id={{order.id}}">
                 <view class="cp-order-goods-list">
-                    <block wx:for="{{order.goods}}" wx:for-index="$cpOrderList$gindex" wx:for-item="$cpOrderList$goods" wx:key="$cpOrderList$gid">
+                    <block wx:for="{{order.goodsList}}" wx:for-index="$cpOrderList$index" wx:for-item="$cpOrderList$goods" wx:key="$cpOrderList$gid">
                         
     <wxc-flex class="cp-order-goods">
         <image class="cp-goods-cover" src="{{$cpOrderList$goods.cover}}"/>
@@ -38,23 +37,22 @@
 
                     </block>
                 </view>
-            </view>
+            </navigator>
             <view class="cp-order-foot">
                 <wxc-flex class="cp-order-info" main="between" dir="right">
                     <view>合计（含运费）：<wxc-price class="cp-order-price" decimal="small" value="{{order.price+order.freight}}"/></view>
                 </wxc-flex>
                 <wxc-flex class="cp-order-tool" main="end" wrap="wrap">
-                    <view class="cp-order-button"><button type="warn">取消订单</button></view>
-                    <view class="cp-order-button"><button type="base">马上支付</button></view>
-                    <!-- <view class="cp-order-button"><button type="base">确认收货</button></view>
-                    <view class="cp-order-button"><button type="base">查看订单</button></view>
-                    <view class="cp-order-button"><button type="base">发表评价</button></view> -->
+                    <view class="cp-order-button" wx:if="{{order.status<2}}"><button type="warn">取消订单</button></view>
+                    <view class="cp-order-button" wx:if="{{order.status==0}}"><button type="base">马上支付</button></view>
+                    <view class="cp-order-button" wx:if="{{order.status==2}}"><button type="base">确认收货</button></view>
+                    <view class="cp-order-button" wx:if="{{order.status==3}}"><button type="base">发表评价</button></view>
+                    <view class="cp-order-button" wx:if="{{order.status==4}}"><button type="base">查看订单</button></view>
                 </wxc-flex>
             </view>
         </view>
     </view>
 
-            </wxc-tab-panel>
         </view>
     </wxc-tab>
 </view>

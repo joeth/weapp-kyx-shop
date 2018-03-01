@@ -1,77 +1,8 @@
 <style lang="less">
 @import 'src/common/styles/config.less';
-.goods-item-cover{
-    flex-grow: 0;
-    width: 180rpx;
-    height: 180rpx;
-    background-color: @color-forecolor;
-    border: 2rpx solid @color-border;
-    border-radius: @radius;
-}
-.goods-item-info{
-    overflow: hidden;
-    > view{
-        display: block;
-        margin-bottom: @margin/2;
-    }
-}
-.goods-item-text{
-    color: @color-gray;
-}
-.goods-item-count{
-    .price{
-        color: @color-base;
-    }
-}
-.goods-item-main{
-    flex-grow: 1;
-    margin-left: @margin;
-}
-.goods-item-head{
-    padding: @margin;
-}
-.order-goods-item{
-    display: block;
-    padding: @margin;
-    margin-top: @margin;
-    background-color: @color-backcolor;
-    &:first-child{
-        margin-top: 0;
-    }
-}
-.order-item-head,
-.order-item-foot{
-    display: block;
-    padding: @margin;
-}
-.order-item-info{
-    margin-top: @margin;
-}
-.order-item-tool{
-    .button{
-        margin-top: @margin;
-        margin-left: @margin;
-        &:first-child{
-            margin-left: 0;
-        }
-    }
-}
-.order-item{
-    margin-top: @margin;
-    background-color: @color-maincolor;
-    // &:first-child{
-    //     margin-top: 0;
-    // }
-}
-.order-item-info{
-    .price{
-        font-size: @font-size-large;
-        color: @color-success;
-    }
-}
 </style>
 <template>
-<view class="order">
+<view class="order-lst">
     <wxc-tab class="tabbar" line-color="transparent" active-line-color="{{colors.success}}" default-index="{{activeKey}}" animate="{{true}}">
         <view class="tabbar-nav" slot="tablabel">
             <wxc-tab-label class="tabbar-label {{activeKey == index ? 'active' : ''}}" wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}">
@@ -82,9 +13,7 @@
             </wxc-tab-label>
         </view>
         <view class="tabbar-main">
-            <wxc-tab-panel wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.id}}" tab-index="{{index}}">
-                <cp-order-list :datalist="orderList"></cp-order-list>
-            </wxc-tab-panel>
+            <cp-order-list :datalist="orderList"></cp-order-list>
         </view>
     </wxc-tab>
 </view>
@@ -101,7 +30,8 @@ const __ORDER_DATA__ = [{
     payStatus: 1,
     price: 200.00,
     freight: 0.00,
-    goods: [
+    isCommented: false,
+    goodsList: [
         {
             id: 2,
             cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
@@ -118,7 +48,8 @@ const __ORDER_DATA__ = [{
     payStatus: 1,
     price: 200.00,
     freight: 10.00,
-    goods: [
+    isCommented: false,
+    goodsList: [
         {
             id: 1,
             cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
@@ -180,6 +111,7 @@ export default class OrderList extends wepy.page {
 
             if(id != activeKey){
                 this.activeKey = id;
+                this.orderList = __ORDER_DATA__;
                 console.log('执行数据更新');
             }
         }

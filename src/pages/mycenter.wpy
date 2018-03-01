@@ -98,7 +98,7 @@ export default class MyCenter extends wepy.page {
 
     data = {
         userInfo: {
-            avatarUrl: 'https://t1.picb.cc/uploads/2018/02/22/KGhb8.jpg',
+            avatarUrl: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
             nickName: '文书生'
         },
         orderTabs: [
