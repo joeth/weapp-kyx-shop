@@ -20,30 +20,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var w = 750;
 var winRtio = _wepy2.default.getSystemInfoSync().windowWidth / w;
 
-var ItemOrderGoods = function (_wepy$component) {
-    _inherits(ItemOrderGoods, _wepy$component);
+var ItemOrderCommodity = function (_wepy$component) {
+    _inherits(ItemOrderCommodity, _wepy$component);
 
-    function ItemOrderGoods() {
+    function ItemOrderCommodity() {
         var _ref;
 
         var _temp, _this, _ret;
 
-        _classCallCheck(this, ItemOrderGoods);
+        _classCallCheck(this, ItemOrderCommodity);
 
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ItemOrderGoods.__proto__ || Object.getPrototypeOf(ItemOrderGoods)).call.apply(_ref, [this].concat(args))), _this), _this.props = {
-            goods: {
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ItemOrderCommodity.__proto__ || Object.getPrototypeOf(ItemOrderCommodity)).call.apply(_ref, [this].concat(args))), _this), _this.props = {
+            commodity: {
                 type: Object,
                 default: null
             }
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
-    return ItemOrderGoods;
+    return ItemOrderCommodity;
 }(_wepy2.default.component);
 
-exports.default = ItemOrderGoods;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm9yZGVyLWdvb2RzLmpzIl0sIm5hbWVzIjpbInciLCJ3aW5SdGlvIiwiZ2V0U3lzdGVtSW5mb1N5bmMiLCJ3aW5kb3dXaWR0aCIsIkl0ZW1PcmRlckdvb2RzIiwicHJvcHMiLCJnb29kcyIsInR5cGUiLCJPYmplY3QiLCJkZWZhdWx0IiwiY29tcG9uZW50Il0sIm1hcHBpbmdzIjoiOzs7Ozs7O0FBQ0E7Ozs7Ozs7Ozs7OztBQUVBLElBQU1BLElBQUksR0FBVjtBQUNBLElBQU1DLFVBQVUsZUFBS0MsaUJBQUwsR0FBeUJDLFdBQXpCLEdBQXVDSCxDQUF2RDs7SUFFcUJJLGM7Ozs7Ozs7Ozs7Ozs7OzBNQUNqQkMsSyxHQUFRO0FBQ0pDLG1CQUFPO0FBQ0hDLHNCQUFNQyxNQURIO0FBRUhDLHlCQUFTO0FBRk47QUFESCxTOzs7O0VBRGdDLGVBQUtDLFM7O2tCQUE1Qk4sYyIsImZpbGUiOiJvcmRlci1nb29kcy5qcyIsInNvdXJjZXNDb250ZW50IjpbIlxuaW1wb3J0IHdlcHkgZnJvbSAnd2VweSdcblxuY29uc3QgdyA9IDc1MFxuY29uc3Qgd2luUnRpbyA9IHdlcHkuZ2V0U3lzdGVtSW5mb1N5bmMoKS53aW5kb3dXaWR0aCAvIHdcblxuZXhwb3J0IGRlZmF1bHQgY2xhc3MgSXRlbU9yZGVyR29vZHMgZXh0ZW5kcyB3ZXB5LmNvbXBvbmVudCB7XG4gICAgcHJvcHMgPSB7XG4gICAgICAgIGdvb2RzOiB7XG4gICAgICAgICAgICB0eXBlOiBPYmplY3QsXG4gICAgICAgICAgICBkZWZhdWx0OiBudWxsXG4gICAgICAgIH1cbiAgICB9XG59XG5cbiJdfQ==
+exports.default = ItemOrderCommodity;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm9yZGVyLWNvbW1vZGl0eS5qcyJdLCJuYW1lcyI6WyJ3Iiwid2luUnRpbyIsImdldFN5c3RlbUluZm9TeW5jIiwid2luZG93V2lkdGgiLCJJdGVtT3JkZXJDb21tb2RpdHkiLCJwcm9wcyIsImNvbW1vZGl0eSIsInR5cGUiLCJPYmplY3QiLCJkZWZhdWx0IiwiY29tcG9uZW50Il0sIm1hcHBpbmdzIjoiOzs7Ozs7O0FBQ0E7Ozs7Ozs7Ozs7OztBQUVBLElBQU1BLElBQUksR0FBVjtBQUNBLElBQU1DLFVBQVUsZUFBS0MsaUJBQUwsR0FBeUJDLFdBQXpCLEdBQXVDSCxDQUF2RDs7SUFFcUJJLGtCOzs7Ozs7Ozs7Ozs7OztrTkFDakJDLEssR0FBUTtBQUNKQyx1QkFBVztBQUNQQyxzQkFBTUMsTUFEQztBQUVQQyx5QkFBUztBQUZGO0FBRFAsUzs7OztFQURvQyxlQUFLQyxTOztrQkFBaENOLGtCIiwiZmlsZSI6Im9yZGVyLWNvbW1vZGl0eS5qcyIsInNvdXJjZXNDb250ZW50IjpbIlxuaW1wb3J0IHdlcHkgZnJvbSAnd2VweSdcblxuY29uc3QgdyA9IDc1MFxuY29uc3Qgd2luUnRpbyA9IHdlcHkuZ2V0U3lzdGVtSW5mb1N5bmMoKS53aW5kb3dXaWR0aCAvIHdcblxuZXhwb3J0IGRlZmF1bHQgY2xhc3MgSXRlbU9yZGVyQ29tbW9kaXR5IGV4dGVuZHMgd2VweS5jb21wb25lbnQge1xuICAgIHByb3BzID0ge1xuICAgICAgICBjb21tb2RpdHk6IHtcbiAgICAgICAgICAgIHR5cGU6IE9iamVjdCxcbiAgICAgICAgICAgIGRlZmF1bHQ6IG51bGxcbiAgICAgICAgfVxuICAgIH1cbn1cblxuIl19

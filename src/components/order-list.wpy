@@ -56,11 +56,9 @@
                 <text class="cp-order-status">{{order.statusText}}</text>
             </wxc-flex>
             <navigator class="cp-order-main" url="/pages/order/detail?id={{order.id}}">
-                <view class="cp-order-goods-list">
-                    <repeat for="{{order.goodsList}}" item="goods" key="gid">
-                        <cp-order-goods :goods="goods"></cp-order-goods>
-                    </repeat>
-                </view>
+                <repeat for="{{order.commodityList}}" item="commodity" key="cid">
+                    <cp-order-commodity :commodity="commodity"></cp-order-commodity>
+                </repeat>
             </navigator>
             <view class="cp-order-foot">
                 <wxc-flex class="cp-order-info" main="between" dir="right">
@@ -80,14 +78,26 @@
 <script>
 import wepy from 'wepy'
 import { status2str } from '@/utils'
-import orderGoods from '@/components/order-goods'
+import orderCommodity from '@/components/order-commodity'
 
 const w = 750
 const winRtio = wepy.getSystemInfoSync().windowWidth / w
 
 export default class OrderListItem extends wepy.component {
+    config = {
+        usingComponents: {
+            'wxc-cc': '../../packages/@minui/wxc-cc/dist/index',
+            'wxc-flex': '../../packages/@minui/wxc-flex/dist/index',
+            'wxc-tab': '../../packages/@minui/wxc-tab/dist/index',
+            'wxc-tab-panel': '../../packages/@minui/wxc-tab/dist/panel',
+            'wxc-tab-label': '../../packages/@minui/wxc-tab/dist/label',
+            'wxc-badge': '../../packages/@minui/wxc-badge/dist/index',
+            'wxc-price': '../../packages/@minui/wxc-price/dist/index',
+        }
+    }
+
     components = {
-        'cp-order-goods': orderGoods
+        'cp-order-commodity': orderCommodity
     }
 
     props = {

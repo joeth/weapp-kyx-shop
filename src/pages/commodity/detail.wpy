@@ -7,9 +7,9 @@
 <script>
 import wepy from 'wepy'
 
-export default class ProductList extends wepy.page {
+export default class CommodityDetail extends wepy.page {
     config = {
-        navigationBarTitleText: '产品列表'
+        navigationBarTitleText: '产品详情'
     }
 
     components = {

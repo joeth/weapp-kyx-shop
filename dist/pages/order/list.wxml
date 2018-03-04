@@ -18,25 +18,23 @@
                 <text class="cp-order-status">{{order.statusText}}</text>
             </wxc-flex>
             <navigator class="cp-order-main" url="/pages/order/detail?id={{order.id}}">
-                <view class="cp-order-goods-list">
-                    <block wx:for="{{order.goodsList}}" wx:for-index="$cpOrderList$index" wx:for-item="$cpOrderList$goods" wx:key="$cpOrderList$gid">
-                        
-    <wxc-flex class="cp-order-goods">
-        <image class="cp-goods-cover" src="{{$cpOrderList$goods.cover}}"/>
-        <wxc-flex class="cp-goods-main" dir="top" main="between">
-            <view class="cp-goods-info">
-                <text class="cp-goods-row cp-goods-title">{{$cpOrderList$goods.title}}</text>
-                <text class="cp-goods-row cp-goods-text">{{$cpOrderList$goods.type}}</text>
+                <block wx:for="{{order.commodityList}}" wx:for-index="$cpOrderList$index" wx:for-item="$cpOrderList$commodity" wx:key="$cpOrderList$cid">
+                    
+    <wxc-flex class="cp-order-commodity">
+        <image class="cp-commodity-cover" src="{{$cpOrderList$commodity.cover}}"/>
+        <wxc-flex class="cp-commodity-main" dir="top" main="between">
+            <view class="cp-commodity-info">
+                <text class="cp-commodity-row cp-commodity-title">{{$cpOrderList$commodity.title}}</text>
+                <text class="cp-commodity-row cp-commodity-text">{{$cpOrderList$commodity.type}}</text>
             </view>
-            <wxc-flex class="cp-goods-count" main="between" cross="center">
-                <wxc-price class="cp-goods-price" decimal="small" value="{{$cpOrderList$goods.price}}"/>
-                <text class="cp-goods-count">x{{$cpOrderList$goods.count}}</text>
+            <wxc-flex class="cp-commodity-count" main="between" cross="center">
+                <wxc-price class="price" decimal="small" value="{{$cpOrderList$commodity.price}}"/>
+                <text class="count">x{{$cpOrderList$commodity.count}}</text>
             </wxc-flex>
         </wxc-flex>
     </wxc-flex>
 
-                    </block>
-                </view>
+                </block>
             </navigator>
             <view class="cp-order-foot">
                 <wxc-flex class="cp-order-info" main="between" dir="right">

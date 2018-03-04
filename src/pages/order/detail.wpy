@@ -1,37 +1,73 @@
 <style lang="less">
 @import 'src/common/styles/config.less';
+.order-detail-amount,
+.order-detail-property,
+.order-detail-toolbar{
+    padding: @margin;
+    margin-top: @margin;
+    background-color: @color-maincolor;
+}
 
-.order-detail-info{
-
+.order-detail-commodity{
+    .cp-order-commodity{
+        margin-top: 2rpx;
+        background-color: @color-maincolor;
+    }
+}
+.order-detail-amount{
+    .freight{
+    }
+    wxc-price{
+        font-size: @font-size-bigger;
+        color: @color-success;
+    }
+}
+.order-detail-property{
+    margin-top: 2rpx;
+}
+.order-detail-toolbar{
+    margin-top: 0;
 }
 </style>
 <template>
     <view class="order-detail">
-        <view class="order-detail-head"></view>
-        <view class="order-detail-main"></view>
-        <view class="order-detail-foot">
-            <view class="order-detail-freight"></view>
-            <view class="order-detail-info">
-                <view><text>订单编号：</text>{{order.code}}</view>
-                <view><text>成交时间：</text>{{order.createTime}}</view>
-                <view wx:if="{{order.expressName}}"><text>快递公司：</text>{{order.expressName}}</view>
-                <view wx:if="{{order.expressCode}}"><text>快递编号：</text>{{order.expressCode}}</view>
-                <view wx:if="{{order.expressTime}}"><text>发货时间：</text>{{order.expressTime}}</view>
-                <view wx:if="{{order.message}}"><text>留　　言：</text>{{order.message}}</view>
-            </view>
-            <view class="order-detail-tool">
-                <view class="order-button" wx:if="{{order.status<2}}"><button type="warn">取消订单</button></view>
-                <view class="order-button" wx:if="{{order.status==0}}"><button type="base">马上支付</button></view>
-                <view class="order-button" wx:if="{{order.status==2}}"><button type="base">确认收货</button></view>
-                <view class="order-button" wx:if="{{order.status==3}}"><button type="base">发表评价</button></view>
-                <view class="order-button" wx:if="{{order.status==4}}"><button type="base">查看订单</button></view>
-            </view>
+        <view class="order-detail-consignee"></view>
+        <view class="order-detail-commodity">
+            <repeat for="{{order.commodityList}}" item="commodity" key="cid">
+                <cp-order-commodity :commodity="commodity"></cp-order-commodity>
+            </repeat>
+        </view>
+        <view class="order-detail-amount">
+            <wxc-flex class="freight" main="between" cross="center">
+                <text>运费</text>
+                <wxc-price decimal="small" value="{{order.freight}}"></wxc-price>
+            </wxc-flex>
+            <wxc-flex class="amount" main="between" cross="center">
+                <text>实付款（含运费）</text>
+                <wxc-price decimal="small" value="{{order.freight+order.price}}"></wxc-price>
+            </wxc-flex>
+        </view>
+        <view class="order-detail-property">
+            <view><text>订单编号：</text>{{order.code}}</view>
+            <view><text>成交时间：</text>{{order.createTime}}</view>
+            <view wx:if="{{order.expressName}}"><text>快递公司：</text>{{order.expressName}}</view>
+            <view wx:if="{{order.expressCode}}"><text>快递编号：</text>{{order.expressCode}}</view>
+            <view wx:if="{{order.expressTime}}"><text>发货时间：</text>{{order.expressTime}}</view>
+            <view wx:if="{{order.message}}"><text>留　　言：</text>{{order.message}}</view>
+        </view>
+        <view class="order-detail-toolbar">
+            <view class="order-button" wx:if="{{order.status<2}}"><button type="warn">取消订单</button></view>
+            <view class="order-button" wx:if="{{order.status==0}}"><button type="base">马上支付</button></view>
+            <view class="order-button" wx:if="{{order.status==2}}"><button type="base">确认收货</button></view>
+            <view class="order-button" wx:if="{{order.status==3}}"><button type="base">发表评价</button></view>
+            <view class="order-button" wx:if="{{order.status==4}}"><button type="base">查看订单</button></view>
         </view>
     </view>
 </template>
 <script>
 
 import wepy from 'wepy'
+import orderCommodity from '@/components/order-commodity'
 
 const __ORDER_DATA__ = {
     id: 2,
@@ -50,7 +86,7 @@ const __ORDER_DATA__ = {
     consigneeTel: '15817489898',
     consigneeArea: '广东 广州市  天河区',
     consigneeAddress: '金穗路1号3401(广东星外星唱片)',
-    goodsList: [
+    commodityList: [
         {
             id: 1,
             cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
@@ -72,11 +108,20 @@ const __ORDER_DATA__ = {
 
 export default class OrderDetail extends wepy.page {
     config = {
-        navigationBarTitleText: '订单详情'
+        navigationBarTitleText: '订单详情',
+        usingComponents: {
+            'wxc-cc': '../../packages/@minui/wxc-cc/dist/index',
+            'wxc-flex': '../../packages/@minui/wxc-flex/dist/index',
+            'wxc-tab': '../../packages/@minui/wxc-tab/dist/index',
+            'wxc-tab-panel': '../../packages/@minui/wxc-tab/dist/panel',
+            'wxc-tab-label': '../../packages/@minui/wxc-tab/dist/label',
+            'wxc-badge': '../../packages/@minui/wxc-badge/dist/index',
+            'wxc-price': '../../packages/@minui/wxc-price/dist/index',
+        }
     }
-    
-    components = {
 
+    components = {
+        'cp-order-commodity': orderCommodity
     }
 
     mixins = []

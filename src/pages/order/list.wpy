@@ -31,7 +31,7 @@ const __ORDER_DATA__ = [{
     price: 200.00,
     freight: 0.00,
     isCommented: false,
-    goodsList: [
+    commodityList: [
         {
             id: 2,
             cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
@@ -49,7 +49,7 @@ const __ORDER_DATA__ = [{
     price: 200.00,
     freight: 10.00,
     isCommented: false,
-    goodsList: [
+    commodityList: [
         {
             id: 1,
             cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
