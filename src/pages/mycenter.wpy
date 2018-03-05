@@ -88,7 +88,7 @@ export default class MyCenter extends wepy.page {
             'wxc-tab-panel': '../packages/@minui/wxc-tab/dist/panel',
             'wxc-tab-label': '../packages/@minui/wxc-tab/dist/label',
             'wxc-badge': '../packages/@minui/wxc-badge/dist/index',
-            'wxc-avatar': '../packages/@minui/wxc-avatar/dist/index',
+            'wxc-avatar': '../packages/@minui/wxc-avatar/dist/index'
         }
     }
 

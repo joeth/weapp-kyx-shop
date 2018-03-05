@@ -66,12 +66,14 @@ const w = 750
 const winRtio = wepy.getSystemInfoSync().windowWidth / w
 
 export default class ItemOrderCommodity extends wepy.component {
+
     props = {
         commodity: {
             type: Object,
             default: null
         }
     }
+    
 }
 
 </script>

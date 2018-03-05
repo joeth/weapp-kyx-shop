@@ -145,8 +145,8 @@ export default class extends wepy.app {
             'pages/homepage',
             'pages/catalog',
             'pages/shopcart',
-            'pages/goods/list',
-            'pages/goods/detail',
+            'pages/commodity/list',
+            'pages/commodity/detail',
             'pages/order/list',
             'pages/order/detail',
             'pages/address/list',
@@ -186,16 +186,7 @@ export default class extends wepy.app {
             navigationBarBackgroundColor: '#452713',
             navigationBarTitleText: '可以兴商城',
             navigationBarTextStyle: '#d6c5ac'
-        },
-        // usingComponents: {
-        //     'wxc-cc': 'packages/@minui/wxc-cc/dist/index',
-        //     'wxc-flex': 'packages/@minui/wxc-flex/dist/index',
-        //     'wxc-tab': 'packages/@minui/wxc-tab/dist/index',
-        //     'wxc-tab-panel': 'packages/@minui/wxc-tab/dist/panel',
-        //     'wxc-tab-label': 'packages/@minui/wxc-tab/dist/label',
-        //     'wxc-badge': 'packages/@minui/wxc-badge/dist/index',
-        //     'wxc-price': 'packages/@minui/wxc-price/dist/index',
-        // }
+        }
     }
 
     globalData = {

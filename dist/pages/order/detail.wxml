@@ -23,11 +23,11 @@
         <view class="order-detail-amount">
             <wxc-flex class="freight" main="between" cross="center">
                 <text>运费</text>
-                <wxc-price decimal="small" value="{{order.freight}}"/>
+                <wxc-price class="price" decimal="small" value="{{order.freight}}"/>
             </wxc-flex>
             <wxc-flex class="amount" main="between" cross="center">
                 <text>实付款（含运费）</text>
-                <wxc-price decimal="small" value="{{order.freight+order.price}}"/>
+                <wxc-price class="price" decimal="small" value="{{order.freight+order.price}}"/>
             </wxc-flex>
         </view>
         <view class="order-detail-property">

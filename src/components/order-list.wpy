@@ -84,17 +84,6 @@ const w = 750
 const winRtio = wepy.getSystemInfoSync().windowWidth / w
 
 export default class OrderListItem extends wepy.component {
-    config = {
-        usingComponents: {
-            'wxc-cc': '../../packages/@minui/wxc-cc/dist/index',
-            'wxc-flex': '../../packages/@minui/wxc-flex/dist/index',
-            'wxc-tab': '../../packages/@minui/wxc-tab/dist/index',
-            'wxc-tab-panel': '../../packages/@minui/wxc-tab/dist/panel',
-            'wxc-tab-label': '../../packages/@minui/wxc-tab/dist/label',
-            'wxc-badge': '../../packages/@minui/wxc-badge/dist/index',
-            'wxc-price': '../../packages/@minui/wxc-price/dist/index',
-        }
-    }
 
     components = {
         'cp-order-commodity': orderCommodity

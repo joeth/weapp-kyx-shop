@@ -15,9 +15,7 @@
     }
 }
 .order-detail-amount{
-    .freight{
-    }
-    wxc-price{
+    .price{
         font-size: @font-size-bigger;
         color: @color-success;
     }
@@ -40,11 +38,11 @@
         <view class="order-detail-amount">
             <wxc-flex class="freight" main="between" cross="center">
                 <text>运费</text>
-                <wxc-price decimal="small" value="{{order.freight}}"></wxc-price>
+                <wxc-price class="price" decimal="small" value="{{order.freight}}"></wxc-price>
             </wxc-flex>
             <wxc-flex class="amount" main="between" cross="center">
                 <text>实付款（含运费）</text>
-                <wxc-price decimal="small" value="{{order.freight+order.price}}"></wxc-price>
+                <wxc-price class="price" decimal="small" value="{{order.freight+order.price}}"></wxc-price>
             </wxc-flex>
         </view>
         <view class="order-detail-property">
@@ -116,7 +114,7 @@ export default class OrderDetail extends wepy.page {
             'wxc-tab-panel': '../../packages/@minui/wxc-tab/dist/panel',
             'wxc-tab-label': '../../packages/@minui/wxc-tab/dist/label',
             'wxc-badge': '../../packages/@minui/wxc-badge/dist/index',
-            'wxc-price': '../../packages/@minui/wxc-price/dist/index',
+            'wxc-price': '../../packages/@minui/wxc-price/dist/index'
         }
     }
 
