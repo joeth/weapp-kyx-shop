@@ -1,6 +1,19 @@
 
     <view class="order-detail">
-        <view class="order-detail-consignee"/>
+        <wxc-flex class="order-detail-consignee">
+            <wxc-cc class="order-consignee-side">
+                <text class="icon icon-address"/>
+            </wxc-cc>
+            <view class="order-consignee-main">
+                <view class="order-consignee-title">
+                    <text class="order-consignee-name">{{order.consigneeName}}</text>
+                    <text class="order-consignee-tel">{{order.consigneeTel}}</text>
+                </view>
+                <view class="order-consignee-address">
+                    <text>收货地址：</text>{{order.consigneeArea +' '+ order.consigneeAddress}}
+                </view>
+            </view>
+        </wxc-flex>
         <view class="order-detail-commodity">
             <block wx:for="{{order.commodityList}}" wx:for-index="index" wx:for-item="commodity" wx:key="cid">
                 
@@ -12,7 +25,7 @@
                 <text class="cp-commodity-row cp-commodity-text">{{commodity.type}}</text>
             </view>
             <wxc-flex class="cp-commodity-count" main="between" cross="center">
-                <wxc-price class="price" decimal="small" value="{{commodity.price}}"/>
+                <wxc-price class="price" value="{{commodity.price}}"/>
                 <text class="count">x{{commodity.count}}</text>
             </wxc-flex>
         </wxc-flex>
@@ -23,11 +36,11 @@
         <view class="order-detail-amount">
             <wxc-flex class="freight" main="between" cross="center">
                 <text>运费</text>
-                <wxc-price class="price" decimal="small" value="{{order.freight}}"/>
+                <wxc-price class="price" value="{{order.freightAmount}}"/>
             </wxc-flex>
             <wxc-flex class="amount" main="between" cross="center">
                 <text>实付款（含运费）</text>
-                <wxc-price class="price" decimal="small" value="{{order.freight+order.price}}"/>
+                <wxc-price class="price" value="{{order.actualAmount}}"/>
             </wxc-flex>
         </view>
         <view class="order-detail-property">
@@ -39,10 +52,9 @@
             <view wx:if="{{order.message}}"><text>留　　言：</text>{{order.message}}</view>
         </view>
         <view class="order-detail-toolbar">
-            <view class="order-button" wx:if="{{order.status<2}}"><button type="warn">取消订单</button></view>
-            <view class="order-button" wx:if="{{order.status==0}}"><button type="base">马上支付</button></view>
-            <view class="order-button" wx:if="{{order.status==2}}"><button type="base">确认收货</button></view>
-            <view class="order-button" wx:if="{{order.status==3}}"><button type="base">发表评价</button></view>
-            <view class="order-button" wx:if="{{order.status==4}}"><button type="base">查看订单</button></view>
+            <view class="cp-order-button" wx:if="{{order.status<2}}"><button type="warn">取消订单</button></view>
+            <view class="cp-order-button" wx:if="{{order.status==0}}"><button type="base">马上支付</button></view>
+            <view class="cp-order-button" wx:if="{{order.status==2}}"><button type="base">确认收货</button></view>
+            <view class="cp-order-button" wx:if="{{order.status==3 && !order.isCommented}}"><button type="base">发表评价</button></view>
         </view>
     </view>

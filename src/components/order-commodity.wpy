@@ -53,7 +53,7 @@
                 <text class="cp-commodity-row cp-commodity-text">{{commodity.type}}</text>
             </view>
             <wxc-flex class="cp-commodity-count" main="between" cross="center">
-                <wxc-price class="price" decimal="small" value="{{commodity.price}}"></wxc-price>
+                <wxc-price class="price" value="{{commodity.price}}"></wxc-price>
                 <text class="count">x{{commodity.count}}</text>
             </wxc-flex>
         </wxc-flex>
@@ -73,7 +73,7 @@ export default class ItemOrderCommodity extends wepy.component {
             default: null
         }
     }
-    
+
 }
 
 </script>

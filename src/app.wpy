@@ -6,8 +6,7 @@ page{
     // background-image: url('https://applet.store.keyixing.com/images/bg.jpg');
     background-image: url('https://t1.picb.cc/uploads/2018/02/26/KE9MN.jpg');
     background-color: @color-backcolor;
-}
-page {
+
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -15,8 +14,10 @@ page {
     // justify-content: space-between;
     // box-sizing: border-box;
 
+    line-height: 1.5;
     font-size: @font-size-base;
     // font-family: @font-family-default;
+    color: @color-base;
 }
 image{
     max-width: 100%;

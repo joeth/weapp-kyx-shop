@@ -2,13 +2,38 @@
 @import 'src/common/styles/config.less';
 .order-detail-amount,
 .order-detail-property,
-.order-detail-toolbar{
+.order-detail-toolbar,
+.order-detail-consignee,
+.order-detail-commodity{
     padding: @margin;
     margin-top: @margin;
     background-color: @color-maincolor;
 }
-
+.order-detail-consignee{
+    display: block;
+    margin-top: 0;
+    .icon-address{
+        font-size: 40rpx;
+    }
+}
+.order-consignee-side{
+    display: block;
+}
+.order-consignee-main{
+    margin-left: @margin;
+}
+.order-consignee-name{
+    margin-right: @margin;
+}
+.order-consignee-title{
+    font-size: @font-size-large;
+}
+.order-consignee-address{
+    margin-top: @margin/2;
+}
 .order-detail-commodity{
+    padding: 0;
+    background-color: transparent;
     .cp-order-commodity{
         margin-top: 2rpx;
         background-color: @color-maincolor;
@@ -22,14 +47,30 @@
 }
 .order-detail-property{
     margin-top: 2rpx;
+    line-height: 1.8;
 }
 .order-detail-toolbar{
     margin-top: 0;
+    padding-bottom: @margin*2;
+    display: flex;
 }
 </style>
 <template>
     <view class="order-detail">
-        <view class="order-detail-consignee"></view>
+        <wxc-flex class="order-detail-consignee">
+            <wxc-cc class="order-consignee-side">
+                <text class="icon icon-address"></text>
+            </wxc-cc>
+            <view class="order-consignee-main">
+                <view class="order-consignee-title">
+                    <text class="order-consignee-name">{{order.consigneeName}}</text>
+                    <text class="order-consignee-tel">{{order.consigneeTel}}</text>
+                </view>
+                <view class="order-consignee-address">
+                    <text>收货地址：</text>{{order.consigneeArea +' '+ order.consigneeAddress}}
+                </view>
+            </view>
+        </wxc-flex>
         <view class="order-detail-commodity">
             <repeat for="{{order.commodityList}}" item="commodity" key="cid">
                 <cp-order-commodity :commodity="commodity"></cp-order-commodity>
@@ -38,11 +79,11 @@
         <view class="order-detail-amount">
             <wxc-flex class="freight" main="between" cross="center">
                 <text>运费</text>
-                <wxc-price class="price" decimal="small" value="{{order.freight}}"></wxc-price>
+                <wxc-price class="price" value="{{order.freightAmount}}"></wxc-price>
             </wxc-flex>
             <wxc-flex class="amount" main="between" cross="center">
                 <text>实付款（含运费）</text>
-                <wxc-price class="price" decimal="small" value="{{order.freight+order.price}}"></wxc-price>
+                <wxc-price class="price" value="{{order.actualAmount}}"></wxc-price>
             </wxc-flex>
         </view>
         <view class="order-detail-property">
@@ -54,11 +95,10 @@
             <view wx:if="{{order.message}}"><text>留　　言：</text>{{order.message}}</view>
         </view>
         <view class="order-detail-toolbar">
-            <view class="order-button" wx:if="{{order.status<2}}"><button type="warn">取消订单</button></view>
-            <view class="order-button" wx:if="{{order.status==0}}"><button type="base">马上支付</button></view>
-            <view class="order-button" wx:if="{{order.status==2}}"><button type="base">确认收货</button></view>
-            <view class="order-button" wx:if="{{order.status==3}}"><button type="base">发表评价</button></view>
-            <view class="order-button" wx:if="{{order.status==4}}"><button type="base">查看订单</button></view>
+            <view class="cp-order-button" wx:if="{{order.status<2}}"><button type="warn">取消订单</button></view>
+            <view class="cp-order-button" wx:if="{{order.status==0}}"><button type="base">马上支付</button></view>
+            <view class="cp-order-button" wx:if="{{order.status==2}}"><button type="base">确认收货</button></view>
+            <view class="cp-order-button" wx:if="{{order.status==3 && !order.isCommented}}"><button type="base">发表评价</button></view>
         </view>
     </view>
 </template>
@@ -66,14 +106,15 @@
 
 import wepy from 'wepy'
 import orderCommodity from '@/components/order-commodity'
+import icon from '@/components/icon'
 
 const __ORDER_DATA__ = {
     id: 2,
     code: 'E20180102112201',
-    status: 2,
+    status: 1,
     payStatus: 1,
-    price: 200.00,
-    freight: 10.00,
+    freightAmount: '10.00',
+    actualAmount: '200.00',
     isCommented: false,
     message: '帮我包装得好看点',
     createTime: '2015-11-16 12:45:00',

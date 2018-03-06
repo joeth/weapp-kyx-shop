@@ -92,7 +92,8 @@ export default class MyCenter extends wepy.page {
         }
     }
 
-    components = {}
+    components = {
+    }
 
     mixins = []
 
