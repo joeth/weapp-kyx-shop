@@ -1,0 +1,36 @@
+
+    <radio-group class="consignee-list">
+        <block  wx:for="{{consigneeList}}" wx:for-item="consignee" wx:key="id">
+            <view class="item-consignee">
+                <wxc-flex class="item-consignee-contain" main="between">
+                    <view class="item-consignee-main">
+                        <view class="item-consignee-title">
+                            <text class="item-consignee-name">{{consignee.name}}</text>
+                            <text class="item-consignee-tel">{{consignee.tel}}</text>
+                        </view>
+                        <view class="item-consignee-address">
+                            {{consignee.area +' '+ consignee.address}}
+                        </view>
+                    </view>
+                    <view class="item-consignee-side">
+                        <text class="icon icon-close"/>
+                    </view>
+                </wxc-flex>
+                <wxc-flex class="item-consignee-toolbar" main="between">
+                    <view>
+                        <label>
+                            <text class="icon icon-radio{{consignee.isDefault ? '-cur': ''}}"/>
+                            <text>设为默认地址</text>
+                        </label>
+                    </view>
+                    <view>
+                        <text class="icon icon-edit"/>
+                        <text>编辑</text>
+                    </view>
+                </wxc-flex>
+            </view>
+        </block>
+    </radio-group>
+    <div class="consignee-toolbar">
+        <button type="base" size="large">添加地址</button>
+    </div>

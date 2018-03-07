@@ -14,7 +14,7 @@ page{
     // justify-content: space-between;
     // box-sizing: border-box;
 
-    line-height: 1.5;
+    line-height: 1.5em;
     font-size: @font-size-base;
     // font-family: @font-family-default;
     color: @color-base;
@@ -27,8 +27,25 @@ view, input, button{
     font-size: inherit;
     font-family: inherit;
 }
+text{
+    display: inline-block;
+    vertical-align: middle;
+}
+textarea{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    line-height: inherit;
+    &[auto-height]{
+        line-height: 1;
+    }
+}
 button{
+    // display: inline-block;
     border-radius: @radius;
+    // line-height: 2.5;
+    padding: 0 1.4em;
+    font-size: @font-size-base;
     &:before, &:after{
         border-radius: @radius;
     }
@@ -51,6 +68,23 @@ button{
     &[type].button-hover{
         opacity: 0.8;
     }
+    &[size=mini] {
+        font-size: @font-size-small;
+        padding: 0 1.2em;
+    }
+    &[size=base] {
+        font-size: @font-size-base;
+    }
+    &[size=large] {
+        font-size: @font-size-large;
+    }
+    &[size=bigger] {
+        font-size: @font-size-bigger;
+    }
+    &[size=biggest] {
+        font-size: @font-size-biggest;
+    }
+
 }
 scroll-view:-webkit-scrollbar{
     position: absolute;
@@ -142,6 +176,7 @@ const deviceRadio = device.windowWidth / 750
 export default class extends wepy.app {
     config = {
         pages: [
+
             'pages/mycenter',
             'pages/homepage',
             'pages/catalog',
@@ -150,6 +185,8 @@ export default class extends wepy.app {
             'pages/commodity/detail',
             'pages/order/list',
             'pages/order/detail',
+            'pages/order/confirm',
+
             'pages/address/list',
             'pages/address/detail',
             'pages/question/list',

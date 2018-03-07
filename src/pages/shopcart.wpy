@@ -1,17 +1,28 @@
 <style lang="less">
 @import 'src/common/styles/config.less';
+.shopcart{
+    height: 100vh;
+}
 </style>
 <template>
-
+    <wxc-cc class="shopcart">
+        <navigator url="/pages/order/confirm?ids=[1,2,3,4,5]"><button type="primary">去结算</button></navigator>
+    </wxc-cc>
 </template>
 <script>
 import wepy from 'wepy'
 
 export default class ShopCart extends wepy.page {
     config = {
-        navigationBarTitleText: '购物车'
+        navigationBarTitleText: '购物车',
+        usingComponents: {
+            'wxc-cc': '../../packages/@minui/wxc-cc/dist/index',
+            'wxc-flex': '../../packages/@minui/wxc-flex/dist/index',
+            'wxc-badge': '../../packages/@minui/wxc-badge/dist/index',
+            'wxc-price': '../../packages/@minui/wxc-price/dist/index'
+        }
     }
-    
+
     components = {
 
     }
@@ -19,7 +30,7 @@ export default class ShopCart extends wepy.page {
     mixins = []
 
     data = {
-        
+
     }
 
     computed = {

@@ -1,16 +1,16 @@
 
     <view class="order-detail">
-        <wxc-flex class="order-detail-consignee">
+        <wxc-flex class="order-detail-consignee"  wx:if="{{order.consignee}}">
             <wxc-cc class="order-consignee-side">
                 <text class="icon icon-address"/>
             </wxc-cc>
             <view class="order-consignee-main">
                 <view class="order-consignee-title">
-                    <text class="order-consignee-name">{{order.consigneeName}}</text>
-                    <text class="order-consignee-tel">{{order.consigneeTel}}</text>
+                    <text class="order-consignee-name">{{order.consignee.name}}</text>
+                    <text class="order-consignee-tel">{{order.consignee.tel}}</text>
                 </view>
                 <view class="order-consignee-address">
-                    <text>收货地址：</text>{{order.consigneeArea +' '+ order.consigneeAddress}}
+                    <text>收货地址：</text>{{order.consignee.area +' '+ order.consignee.address}}
                 </view>
             </view>
         </wxc-flex>
@@ -46,15 +46,15 @@
         <view class="order-detail-property">
             <view><text>订单编号：</text>{{order.code}}</view>
             <view><text>成交时间：</text>{{order.createTime}}</view>
-            <view  wx:if="{{order.expressName}}"><text>快递公司：</text>{{order.expressName}}</view>
-            <view  wx:if="{{order.expressCode}}"><text>快递编号：</text>{{order.expressCode}}</view>
-            <view wx:if="{{order.expressTime}}"><text>发货时间：</text>{{order.expressTime}}</view>
+            <view  wx:if="{{order.logistics.name}}"><text>快递公司：</text>{{order.logistics.name}}</view>
+            <view wx:if="{{order.logistics.code}}"><text>快递编号：</text>{{order.logistics.code}}</view>
+            <view wx:if="{{order.logistics.time}}"><text>发货时间：</text>{{order.logistics.time}}</view>
             <view wx:if="{{order.message}}"><text>留　　言：</text>{{order.message}}</view>
         </view>
         <view class="order-detail-toolbar">
-            <view class="cp-order-button" wx:if="{{order.status<2}}"><button type="warn">取消订单</button></view>
-            <view class="cp-order-button" wx:if="{{order.status==0}}"><button type="base">马上支付</button></view>
-            <view class="cp-order-button" wx:if="{{order.status==2}}"><button type="base">确认收货</button></view>
-            <view class="cp-order-button" wx:if="{{order.status==3 && !order.isCommented}}"><button type="base">发表评价</button></view>
+            <view class="cp-order-button" wx:if="{{order.status<2}}"><button type="warn" size="large">取消订单</button></view>
+            <view class="cp-order-button" wx:if="{{order.status==0}}"><button type="base" size="large">马上支付</button></view>
+            <view class="cp-order-button" wx:if="{{order.status==2}}"><button type="base" size="large">确认收货</button></view>
+            <view class="cp-order-button" wx:if="{{order.status==3 && !order.isCommented}}"><button type="base" size="large">发表评价</button></view>
         </view>
     </view>

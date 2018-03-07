@@ -1,17 +1,17 @@
 <style lang="less">
 @import 'src/common/styles/config.less';
-.order-detail-amount,
-.order-detail-property,
-.order-detail-toolbar,
-.order-detail-consignee{
+.order-confirm-amount,
+.order-confirm-property,
+.order-confirm-toolbar,
+.order-confirm-consignee,
+.order-confirm-commodity{
     padding: @margin;
     margin-top: @margin;
     background-color: @color-maincolor;
 }
-.order-detail-consignee{
+.order-confirm-consignee{
     display: block;
     margin-top: 0;
-    margin-bottom: @margin;
 }
 .order-consignee-side{
     display: block;
@@ -38,7 +38,7 @@
 .order-consignee-address{
     margin-top: @margin/2;
 }
-.order-detail-commodity{
+.order-confirm-commodity{
     padding: 0;
     background-color: transparent;
     .cp-order-commodity{
@@ -46,21 +46,17 @@
         background-color: @color-maincolor;
     }
 }
-.order-detail-amount{
-    .freight{
-        display: block;
-        margin-bottom: @margin/2;
-    }
+.order-confirm-amount{
     .price{
         font-size: @font-size-bigger;
         color: @color-success;
     }
 }
-.order-detail-property{
+.order-confirm-property{
     margin-top: 2rpx;
     line-height: 1.8;
 }
-.order-detail-toolbar{
+.order-confirm-toolbar{
     margin-top: 0;
     padding-bottom: @margin*2;
     display: flex;
@@ -68,11 +64,11 @@
 </style>
 <template>
     <view class="order-detail">
-        <wxc-flex class="order-detail-consignee" wx:if="{{order.consignee}}">
+        <wxc-flex class="order-confirm-consignee">
             <wxc-cc class="order-consignee-side">
                 <text class="icon icon-address"></text>
             </wxc-cc>
-            <view class="order-consignee-main">
+            <view class="order-consignee-main" wx:if="{{order.consignee.id}}">
                 <view class="order-consignee-title">
                     <text class="order-consignee-name">{{order.consignee.name}}</text>
                     <text class="order-consignee-tel">{{order.consignee.tel}}</text>
@@ -81,35 +77,35 @@
                     <text>收货地址：</text>{{order.consignee.area +' '+ order.consignee.address}}
                 </view>
             </view>
+            <view class="order-consignee-main" wx:else>
+                <view class="order-consignee-title">您还没有收货地址</view>
+                <view class="order-consignee-address">请添加先添加收货地址</view>
+            </view>
+            <wxc-cc class="order-consignee-side">
+                <text class="icon icon-arrow-right"></text>
+            </wxc-cc>
         </wxc-flex>
-        <view class="order-detail-commodity">
+        <view class="order-confirm-commodity">
             <repeat for="{{order.commodityList}}" item="commodity" key="cid">
                 <cp-order-commodity :commodity="commodity"></cp-order-commodity>
             </repeat>
         </view>
-        <view class="order-detail-amount">
+        <view class="order-confirm-amount">
+            <wxc-flex class="amount" main="between" cross="center">
+                <text>商品总价</text>
+                <wxc-price class="price" value="{{order.totalAmount}}"></wxc-price>
+            </wxc-flex>
             <wxc-flex class="freight" main="between" cross="center">
-                <text>运费</text>
+                <text>运费（满200包邮）</text>
                 <wxc-price class="price" value="{{order.freightAmount}}"></wxc-price>
             </wxc-flex>
-            <wxc-flex class="amount" main="between" cross="center">
-                <text>实付款（含运费）</text>
+        </view>
+        <view class="order-confirm-toolbar">
+            <view class="order-confirm-info">
+                <text>实付款：</text>
                 <wxc-price class="price" value="{{order.actualAmount}}"></wxc-price>
-            </wxc-flex>
-        </view>
-        <view class="order-detail-property">
-            <view><text>订单编号：</text>{{order.code}}</view>
-            <view><text>成交时间：</text>{{order.createTime}}</view>
-            <view wx:if="{{order.logistics.name}}"><text>快递公司：</text>{{order.logistics.name}}</view>
-            <view wx:if="{{order.logistics.code}}"><text>快递编号：</text>{{order.logistics.code}}</view>
-            <view wx:if="{{order.logistics.time}}"><text>发货时间：</text>{{order.logistics.time}}</view>
-            <view wx:if="{{order.message}}"><text>留　　言：</text>{{order.message}}</view>
-        </view>
-        <view class="order-detail-toolbar">
-            <view class="cp-order-button" wx:if="{{order.status<2}}"><button type="warn" size="large">取消订单</button></view>
-            <view class="cp-order-button" wx:if="{{order.status==0}}"><button type="base" size="large">马上支付</button></view>
-            <view class="cp-order-button" wx:if="{{order.status==2}}"><button type="base" size="large">确认收货</button></view>
-            <view class="cp-order-button" wx:if="{{order.status==3 && !order.isCommented}}"><button type="base" size="large">发表评价</button></view>
+            </view>
+            <view class="order-confirm-button"><button type="warn">提交订单</button></view>
         </view>
     </view>
 </template>
@@ -118,22 +114,10 @@
 import wepy from 'wepy'
 import orderCommodity from '@/components/order-commodity'
 
-const __ORDER_DATA__ = {
-    id: 2,
-    code: 'E20180102112201',
-    status: 1,
-    payStatus: 1,
+const __DATA__ = {
     freightAmount: '10.00',
     actualAmount: '200.00',
-    isCommented: false,
     message: '帮我包装得好看点',
-    createTime: '2015-11-16 12:45:00',
-    logistics: {
-        id: 1,
-        name: '顺丰快递',
-        code: 'SF20180901020001',
-        time: '2015-11-16 12:45:00',
-    },
     consignee: {
         id: 1,
         name: '张生',
@@ -182,13 +166,14 @@ export default class OrderDetail extends wepy.page {
     mixins = []
 
     data = {
-        order: __ORDER_DATA__
+        order: __DATA__
     }
 
     computed = {
     }
 
     methods = {
+
     }
 
     events = {
@@ -196,7 +181,7 @@ export default class OrderDetail extends wepy.page {
     }
 
     onLoad() {
-
+        console.log(this.route)
     }
 }
 
