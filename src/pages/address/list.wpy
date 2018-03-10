@@ -1,6 +1,5 @@
 <style lang="less">
 @import 'src/common/styles/config.less';
-
 .item-consignee-name{
     margin-right: @margin;
 }
@@ -11,10 +10,30 @@
 .item-consignee-address{
     margin-top: @margin/2;
 }
-.item-consignee-contain{
+.order-consignee-side{
+    display: block;
+    &:last-child{ padding-left: @margin;}
+    &:first-child{ padding-right: @margin;}
+    .icon{
+        font-size: 40rpx;
+    }
+    .icon-address{
+        color: @color-primary;
+    }
+    .icon-arrow-right{
+        font-size: 60rpx;
+    }
+}
+.item-consignee-close{
+    // align-self: stretch;
+}
+.item-consignee-contain,
+.item-consignee-toolbar{
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
 }
 .item-consignee-toolbar{
-    display: block;
     margin-top: @margin;
     padding-top: @margin;
     border-top: 2rpx dashed @color-border;
@@ -33,16 +52,22 @@
         font-size: @font-size-biggest;
         color: @color-gray;
     }
+    &.selected{
+        background-color: @color-forecolor;
+    }
 }
 .consignee-toolbar{
     padding: @margin;
 }
 </style>
 <template>
-    <radio-group class="consignee-list">
+    <view class="consignee-list">
         <block wx:for="{{consigneeList}}" wx:for-item="consignee" wx:key="id">
-            <view class="item-consignee">
-                <wxc-flex class="item-consignee-contain" main="between">
+            <view class="item-consignee {{consignee.id == selectId ? 'selected' : ''}}" @tap="tapSelect({{consignee.id}})">
+                <view class="item-consignee-contain">
+                    <wxc-cc class="order-consignee-side" wx:if="{{type == 'select'}}">
+                        <text class="icon icon-address"></text>
+                    </wxc-cc>
                     <view class="item-consignee-main">
                         <view class="item-consignee-title">
                             <text class="item-consignee-name">{{consignee.name}}</text>
@@ -52,28 +77,30 @@
                             {{consignee.area +' '+ consignee.address}}
                         </view>
                     </view>
-                    <view class="item-consignee-side">
-                        <text class="icon icon-close"></text>
+                    <view class="item-consignee-side" wx:if="{{type != 'select'}}">
+                        <text class="icon icon-close" @tap.stop="tapDelete({{consignee.id}})"></text>
                     </view>
-                </wxc-flex>
-                <wxc-flex class="item-consignee-toolbar" main="between">
+                </view>
+                <view class="item-consignee-toolbar" wx:if="{{type != 'select'}}">
                     <view>
-                        <label>
+                        <label @tap.stop="tapDefault({{consignee.id}})">
                             <text class="icon icon-radio{{consignee.isDefault ? '-cur': ''}}"></text>
                             <text>设为默认地址</text>
                         </label>
                     </view>
                     <view>
-                        <text class="icon icon-edit"></text>
-                        <text>编辑</text>
+                        <label @tap.stop="tapEdit({{consignee.id}})">
+                            <text class="icon icon-edit"></text>
+                            <text>编辑</text>
+                        </label>
                     </view>
-                </wxc-flex>
+                </view>
             </view>
         </block>
-    </radio-group>
-    <div class="consignee-toolbar">
+    </view>
+    <view class="consignee-toolbar">
         <button type="base" size="large">添加地址</button>
-    </div>
+    </view>
 </template>
 <script>
 import wepy from 'wepy'
@@ -115,6 +142,9 @@ export default class AddressList extends wepy.page {
     mixins = []
 
     data = {
+        type: null,
+        selectId: 0,
+        defaultId: 0,
         consigneeList: __DATA__
     }
 
@@ -122,15 +152,50 @@ export default class AddressList extends wepy.page {
     }
 
     methods = {
+        tapDefault(id){
+            console.log('tapDefault')
+            if(!id){ return }
+            //防止重复设定
+            if(this.defaultId == id){ return; }
+            try{
+                this.consigneeList.map(item => {
+                    item.isDefault = false
+                    if(item.id == id){
+                        item.isDefault = true
+                        this.defaultId = item.id
+                    }
+                    return item
+                })
+            } catch(e) {}
+        },
+        tapDelete(id){
+            console.log('tapDelete')
+            try{
+                let index = this.consigneeList.findIndex(n => n.id == id)
+                this.consigneeList.splice(index, 1)
+            } catch(e) {}
+        },
+        tapSelect(id){
+            console.log('tapSelect')
+            if(this.type != 'select'){ return; }
 
+        },
+        tapEdit(id){
+            console.log('tapEdit')
+            wx.navigateTo({
+                url: `/pages/address/detail?id=${id}`
+            })
+        }
     }
 
     events = {
 
     }
 
-    onLoad() {
-
+    onLoad(res) {
+        console.log(res)
+        this.type = res.type
+        this.selectId = res.sid
     }
 }
 

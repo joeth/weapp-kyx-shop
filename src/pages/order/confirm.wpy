@@ -11,8 +11,10 @@
     background-color: @color-maincolor;
 }
 .order-confirm-consignee{
-    display: block;
     margin-top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .order-consignee-side{
     display: block;
@@ -109,7 +111,7 @@
 <template>
 <form report-submit="true" bindsubmit="formSubmit">
     <wxc-flex class="order-confirm" dir="top">
-        <wxc-flex class="order-confirm-consignee">
+        <view class="order-confirm-consignee" @tap="tapConsignee({{order.consignee.id}})">
             <wxc-cc class="order-consignee-side">
                 <text class="icon icon-address"></text>
             </wxc-cc>
@@ -129,7 +131,7 @@
             <wxc-cc class="order-consignee-side">
                 <text class="icon icon-arrow-right"></text>
             </wxc-cc>
-        </wxc-flex>
+        </view>
         <view class="order-confirm-contain">
             <repeat for="{{order.commodityList}}" item="commodity" key="cid">
                 <cp-order-commodity :commodity="commodity" class="order-confirm-commodity"></cp-order-commodity>
@@ -229,6 +231,12 @@ export default class OrderDetail extends wepy.page {
             const { type } = e.currentTarget.dataset;
             let message = e.detail.value && e.detail.value.replace(/[\s\r\n]+/g, ' ') || '';
             this.order[type] = message
+        },
+
+        tapConsignee(id){
+            wx.navigateTo({
+                url: `/pages/address/list?sid=${id}&type=select`
+            })
         },
 
         formSubmit(e){

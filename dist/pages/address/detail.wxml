@@ -1,0 +1,42 @@
+
+    <view class="consignee-detail">
+        <view class="dzui-cells">
+            <view class="dzui-cell">
+                <view class="dzui-cell-head">收货人</view>
+                <view class="dzui-cell-body"><input value="{{consignee.name}}"/></view>
+            </view>
+            <view class="dzui-cell">
+                <view class="dzui-cell-head">联系方式</view>
+                <view class="dzui-cell-body"><input value="{{consignee.tel}}"/></view>
+            </view>
+            <view class="dzui-cell" bindtap="toggleCityPicker">
+                <view class="dzui-cell-head">所在地区</view>
+                <view class="dzui-cell-body">{{consignee.region}}</view>
+                <view class="dzui-cell-foot"><text class="icon icon-arrow-right"/></view>
+            </view>
+            <view class="dzui-cell">
+                <view class="dzui-cell-head">详细地址</view>
+                <view class="dzui-cell-body"><textarea value="{{consignee.address}}" auto-height/></view>
+            </view>
+        </view>
+    </view>
+    
+    <wxc-popup class="J_Picker_Popup" locked="false" animation-mode="bottom" align="bottom">
+        <view class="cp-picker" catchtap="$cpCityPicker$tap">
+            <view class="cp-picker-tool">
+                <view catchtap="$cpCityPicker$onCancel" class="cp-picker-cancel">取消</view>
+                <view catchtap="$cpCityPicker$onConfirm" class="cp-picker-confirm">确定</view>
+            </view>
+            <picker-view class="cp-picker-view" value="{{$cpCityPicker$value}}" bindchange="$cpCityPicker$onChange">
+                <picker-view-column class="cp-picker-view-column">
+                    <text class="cp-picker-text"  wx:for="{{$cpCityPicker$provinces}}" wx:key="item">{{item}}</text>
+                </picker-view-column>
+                <picker-view-column class="cp-picker-view-column">
+                    <text class="cp-picker-text"  wx:for="{{$cpCityPicker$citys}}" wx:key="item">{{item}}</text>
+                </picker-view-column>
+                <picker-view-column class="cp-picker-view-column">
+                    <text class="cp-picker-text" wx:for="{{$cpCityPicker$countys}}" wx:key="item">{{item}}</text>
+                </picker-view-column>
+            </picker-view>
+        </view>
+    </wxc-popup>

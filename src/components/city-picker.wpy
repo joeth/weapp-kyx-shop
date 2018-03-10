@@ -1,0 +1,196 @@
+<style lang="less">
+@import 'src/common/styles/config.less';
+.cp-picker {
+    width: 100%;
+    background-color: #fff;
+    position: relative;
+    z-index: 1000;
+}
+
+.cp-picker-tool{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: @margin;
+
+    background-color: @color-maincolor;
+}
+
+.cp-picker-view {
+    width: 100%;
+    height: 300rpx;
+    padding: 0;
+    background-color: white;
+}
+
+.cp-picker-text {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+</style>
+<template>
+    <wxc-popup class="J_Picker_Popup" locked="false" animation-mode="bottom" align="bottom">
+        <view class="cp-picker" @tap.stop="tap">
+            <view class="cp-picker-tool">
+                <view @tap.stop="onCancel" class="cp-picker-cancel">取消</view>
+                <view @tap.stop="onConfirm" class="cp-picker-confirm">确定</view>
+            </view>
+            <picker-view class="cp-picker-view" value="{{value}}" bindchange="onChange">
+                <picker-view-column class="cp-picker-view-column">
+                    <text class="cp-picker-text" wx:for="{{provinces}}" wx:key="item">{{item}}</text>
+                </picker-view-column>
+                <picker-view-column class="cp-picker-view-column">
+                    <text class="cp-picker-text" wx:for="{{citys}}" wx:key="item">{{item}}</text>
+                </picker-view-column>
+                <picker-view-column class="cp-picker-view-column">
+                    <text class="cp-picker-text" wx:for="{{countys}}" wx:key="item">{{item}}</text>
+                </picker-view-column>
+            </picker-view>
+        </view>
+    </wxc-popup>
+</template>
+<script>
+import wepy from 'wepy'
+import cityData from '@/utils/cityData'
+
+export default class CityPicker extends wepy.component {
+    components = {}
+
+    props = {
+        selected: {
+            type: String,
+            default: '北京 北京市 东城区',
+            twoWay: true,
+            coerce(val) {
+                console.log('coerce selected', val)
+            }
+        }
+    }
+
+    data = {
+        tempValue: '',
+        cityData: [],
+        provinces: [],
+        citys: [],
+        countys: [],
+        province: '',
+        city: '',
+        county: '',
+        value: [0, 0, 0],
+        values: [0, 0, 0]
+    }
+
+    events = {
+        showPicker() {
+            let popup = this.$wxpage.selectComponent('.J_Picker_Popup');
+            popup && popup.show();
+        },
+        hidePicker() {
+            let popup = this.$wxpage.selectComponent('.J_Picker_Popup');
+            popup && popup.hide();
+        }
+    }
+
+    watch = {
+
+    }
+
+    methods = {
+        tap() {},
+        onCancel() {
+            this.$emit('hidePicker')
+        },
+        onConfirm() {
+            this.selected = `${this.province} ${this.city} ${this.county}`
+            // this.$apply();
+            this.$emit('hidePicker')
+        },
+        onChange(e) {
+            console.log(e);
+            let val = e.detail.value
+            let t = this.values;
+
+            if (val[0] != t[0]) {
+                console.log('province no ');
+                let citys = [];
+                let countys = [];
+
+                for (let i = 0; i < this.cityData[val[0]].sub.length; i++) {
+                    citys.push(this.cityData[val[0]].sub[i].name)
+                }
+                for (let i = 0; i < this.cityData[val[0]].sub[0].sub.length; i++) {
+                    countys.push(this.cityData[val[0]].sub[0].sub[i].name)
+                }
+
+                this.province = this.provinces[val[0]];
+                this.city = this.cityData[val[0]].sub[0].name;
+                this.citys = citys;
+                this.county = this.cityData[val[0]].sub[0].sub[0].name;
+                this.countys = countys;
+                this.values = val;
+                this.value = [val[0], 0, 0];
+
+                return;
+            }
+            if (val[1] != t[1]) {
+                console.log('city no');
+                let countys = [];
+
+                for (let i = 0; i < this.cityData[val[0]].sub[val[1]].sub.length; i++) {
+                    countys.push(this.cityData[val[0]].sub[val[1]].sub[i].name)
+                }
+
+                this.city = this.citys[val[1]];
+                this.county = this.cityData[val[0]].sub[val[1]].sub[0].name;
+                this.countys = countys;
+                this.values = val;
+                this.value = [val[0], val[1], 0];
+                return;
+            }
+            if (val[2] != t[2]) {
+                console.log('county no');
+                this.county = this.countys[val[2]];
+                this.values = val;
+                return;
+            }
+        }
+    }
+
+    onLoad() {
+
+        this.$parent.$apply();
+
+        this.cityData = cityData
+
+        const provinces = [];
+        const citys = [];
+        const countys = [];
+
+        for (let i = 0; i < this.cityData.length; i++) {
+            provinces.push(this.cityData[i].name);
+        }
+        console.log('省份完成');
+        for (let i = 0; i < this.cityData[0].sub.length; i++) {
+            citys.push(this.cityData[0].sub[i].name)
+        }
+        console.log('city完成');
+        for (let i = 0; i < this.cityData[0].sub[0].sub.length; i++) {
+            countys.push(this.cityData[0].sub[0].sub[i].name)
+        }
+
+        this.provinces = provinces;
+        this.citys = citys;
+        this.countys = countys;
+        this.province = this.cityData[0].name;
+        this.city = this.cityData[0].sub[0].name;
+        this.county = this.cityData[0].sub[0].sub[0].name;
+
+        console.log('初始化完成');
+    }
+}
+
+</script>

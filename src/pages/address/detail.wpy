@@ -1,40 +1,110 @@
 <style lang="less">
 @import 'src/common/styles/config.less';
+.dzui-cells{
+    background-color: @color-maincolor;
+}
+.dzui-cell{
+    &:before{ border-top-style: dashed;}
+}
+.dzui-cell-head{
+    width: 140rpx;
+}
 </style>
 <template>
-
+    <view class="consignee-detail">
+        <view class="dzui-cells">
+            <view class="dzui-cell">
+                <view class="dzui-cell-head">收货人</view>
+                <view class="dzui-cell-body"><input value="{{consignee.name}}" /></view>
+            </view>
+            <view class="dzui-cell">
+                <view class="dzui-cell-head">联系方式</view>
+                <view class="dzui-cell-body"><input value="{{consignee.tel}}" /></view>
+            </view>
+            <view class="dzui-cell" bindtap="toggleCityPicker">
+                <view class="dzui-cell-head">所在地区</view>
+                <view class="dzui-cell-body">{{consignee.region}}</view>
+                <view class="dzui-cell-foot"><text class="icon icon-arrow-right"></text></view>
+            </view>
+            <view class="dzui-cell">
+                <view class="dzui-cell-head">详细地址</view>
+                <view class="dzui-cell-body"><textarea value="{{consignee.address}}" auto-height></textarea></view>
+            </view>
+        </view>
+    </view>
+    <cp-city-picker :selected.sync="regionValue"></cp-city-picker>
 </template>
 <script>
 import wepy from 'wepy'
+import CityPicker from '@/components/city-picker'
 
 export default class AddressDetail extends wepy.page {
     config = {
-        navigationBarTitleText: '收货地址'
+        navigationBarTitleText: '收货地址',
+        usingComponents: {
+            'wxc-cc': '/packages/@minui/wxc-cc/dist/index',
+            'wxc-flex': '/packages/@minui/wxc-flex/dist/index',
+            'wxc-tab': '/packages/@minui/wxc-tab/dist/index',
+            'wxc-tab-panel': '/packages/@minui/wxc-tab/dist/panel',
+            'wxc-tab-label': '/packages/@minui/wxc-tab/dist/label',
+            'wxc-badge': '/packages/@minui/wxc-badge/dist/index',
+            'wxc-price': '/packages/@minui/wxc-price/dist/index',
+            'wxc-popup': '/packages/@minui/wxc-popup/dist/index'
+        }
     }
-    
-    components = {
 
+    components = {
+        'cp-city-picker': CityPicker
     }
 
     mixins = []
 
     data = {
-        
+        isShowPicker: false,
+        currentId: 0,
+        regionValue: '北京 北京市 东城区',
+        consignee: {
+            id: 0,
+            name: null,
+            tel: null,
+            region: '北京 北京市 东城区',
+            address: null
+        },
+    }
+
+    watch = {
+        regionValue(newVal){
+            this.consignee.region = newVal
+        }
     }
 
     computed = {
     }
 
     methods = {
-
+        toggleCityPicker() {
+            this.$broadcast('showPicker')
+        }
     }
 
     events = {
 
     }
 
-    onLoad() {
+    onLoad(res) {
 
+        this.currentId = res.id
+        if(this.currentId){
+            //发起请求
+            console.log('请求数据ID:', this.currentId)
+            this.consignee = Object.assign({}, this.consignee, {
+                id: this.currentId,
+                name: '张生',
+                tel: '15899900098',
+                area: '广东省 广州市 天河区',
+                address: '金穗路1号3401(广东星外星唱片)'
+            })
+        }
     }
 }
 

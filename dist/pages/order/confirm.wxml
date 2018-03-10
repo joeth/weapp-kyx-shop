@@ -1,7 +1,7 @@
 
 <form report-submit="true" bindsubmit="formSubmit">
     <wxc-flex class="order-confirm" dir="top">
-        <wxc-flex class="order-confirm-consignee">
+        <view class="order-confirm-consignee" bindtap="tapConsignee" data-wpytapconsignee-a="{{order.consignee.id}}">
             <wxc-cc class="order-consignee-side">
                 <text class="icon icon-address"/>
             </wxc-cc>
@@ -21,7 +21,7 @@
             <wxc-cc class="order-consignee-side">
                 <text class="icon icon-arrow-right"/>
             </wxc-cc>
-        </wxc-flex>
+        </view>
         <view class="order-confirm-contain">
             <block wx:for="{{order.commodityList}}" wx:for-index="index" wx:for-item="commodity" wx:key="cid">
                 

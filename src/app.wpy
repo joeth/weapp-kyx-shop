@@ -1,5 +1,6 @@
 <style lang="less">
 @import 'src/common/styles/config.less';
+@import 'src/common/styles/dzui.less';
 @import 'src/common/styles/icon.less';
 
 page{
@@ -177,6 +178,8 @@ export default class extends wepy.app {
     config = {
         pages: [
 
+            'pages/address/detail',
+
             'pages/mycenter',
             'pages/homepage',
             'pages/catalog',
@@ -188,7 +191,7 @@ export default class extends wepy.app {
             'pages/order/confirm',
 
             'pages/address/list',
-            'pages/address/detail',
+
             'pages/question/list',
             'pages/question/detail'
         ],
