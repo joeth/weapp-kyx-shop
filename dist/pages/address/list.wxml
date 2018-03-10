@@ -1,0 +1,41 @@
+
+    <view class="consignee-list">
+        <block  wx:for="{{consigneeList}}" wx:for-item="consignee" wx:key="id">
+            <view class="item-consignee {{consignee.id == selectId ? 'selected' : ''}}" bindtap="tapSelect" data-wpytapselect-a="{{consignee.id}}">
+                <view class="item-consignee-contain">
+                    <wxc-cc class="order-consignee-side" wx:if="{{type == 'select'}}">
+                        <text class="icon icon-address"/>
+                    </wxc-cc>
+                    <view class="item-consignee-main">
+                        <view class="item-consignee-title">
+                            <text class="item-consignee-name">{{consignee.name}}</text>
+                            <text class="item-consignee-tel">{{consignee.tel}}</text>
+                        </view>
+                        <view class="item-consignee-address">
+                            {{consignee.area +' '+ consignee.address}}
+                        </view>
+                    </view>
+                    <view class="item-consignee-side" wx:if="{{type != 'select'}}">
+                        <text class="icon icon-close" catchtap="tapDelete" data-wpytapdelete-a="{{consignee.id}}"/>
+                    </view>
+                </view>
+                <view class="item-consignee-toolbar" wx:if="{{type != 'select'}}">
+                    <view>
+                        <label catchtap="tapDefault" data-wpytapdefault-a="{{consignee.id}}">
+                            <text class="icon icon-radio{{consignee.isDefault ? '-cur': ''}}"/>
+                            <text>设为默认地址</text>
+                        </label>
+                    </view>
+                    <view>
+                        <label catchtap="tapEdit" data-wpytapedit-a="{{consignee.id}}">
+                            <text class="icon icon-edit"/>
+                            <text>编辑</text>
+                        </label>
+                    </view>
+                </view>
+            </view>
+        </block>
+    </view>
+    <view class="consignee-toolbar">
+        <button type="base" size="large">添加地址</button>
+    </view>

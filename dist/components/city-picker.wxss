@@ -1,0 +1,1 @@
+.cp-picker{width:100%;background-color:#fff;position:relative;z-index:1000}.cp-picker-tool{display:flex;align-items:center;justify-content:space-between;padding:20rpx;background-color:#e9e0cc}.cp-picker-view{width:100%;height:300rpx;padding:0;background-color:white}.cp-picker-text{height:100%;display:flex;align-items:center;justify-content:center}
