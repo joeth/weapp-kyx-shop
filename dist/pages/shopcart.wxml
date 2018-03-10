@@ -1,4 +1,0 @@
-
-    <wxc-cc class="shopcart">
-        <navigator url="/pages/order/confirm?ids=[1,2,3,4,5]"><button type="primary">去结算</button></navigator>
-    </wxc-cc>

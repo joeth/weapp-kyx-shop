@@ -1,3 +1,0 @@
-@import "./../components/catalog-list.wxss";
-@import "./../components/searchbar.wxss";
-.catalog{flex:1;width:100%;overflow:hidden;position:relative;background-color:#ddd4c1}.catalog-nav{width:160rpx;position:absolute;bottom:0;left:0;top:0;background-image:url('https://t1.picb.cc/uploads/2018/02/26/KE9MN.jpg')}.catalog-nav .nav-item{height:100rpx;line-height:100rpx;overflow:hidden;padding:0 10rpx;display:-webkit-box;word-break:break-all;-webkit-line-clamp:1;-webkit-box-orient:vertical;border-top:2rpx solid #b9ae8b;text-align:center;font-size:34rpx}.catalog-nav .nav-item:first-child{border-top:none}.catalog-nav .nav-item.active{background-color:#ddd4c1}.catalog-body{height:100%;overflow:auto;position:absolute;bottom:0;left:200rpx;top:0}
