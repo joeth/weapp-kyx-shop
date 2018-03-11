@@ -43,18 +43,21 @@ module.exports = {
     },
     plugins: {
         uglifyjs: {
-            filter: /\.js$/,
+            filter: /\.(js|wpy|vue)$/,
             config: {
-                dead_code: true,
-                beautify: false,
-                warnings: false,
-                sourceMap: false,
-                compress: true,
-                minify: true,
-                mangle: true,
-                comments: false,
-                drop_console: true,
-                drop_debugger: true,
+                'warnings': false,
+                'comments': false,
+                'beautify': false,
+                'mangle': true,
+                'mangle-props': true,
+                'minify': true,
+                'sourcemap': false,
+                'compress': {
+                    'warnings': false,
+                    'dead_code': true,
+                    'drop_console': false,
+                    'drop_debugger': true
+                }
             }
         },
         imagemin: {
@@ -86,18 +89,21 @@ if (prod) {
     // 压缩js
     module.exports.plugins = {
         uglifyjs: {
-            filter: /\.js$/,
+            filter: /\.(js|wpy|vue)$/,
             config: {
-                dead_code: true,
-                beautify: false,
-                warnings: false,
-                sourceMap: false,
-                compress: true,
-                minify: true,
-                mangle: true,
-                comments: false,
-                drop_console: true,
-                drop_debugger: true,
+                'warnings': false,
+                'comments': false,
+                'beautify': false,
+                'mangle': true,
+                'mangle-props': true,
+                'minify': true,
+                'sourcemap': false,
+                'compress': {
+                    'warnings': false,
+                    'dead_code': true,
+                    'drop_console': true,
+                    'drop_debugger': true
+                }
             }
         },
         imagemin: {

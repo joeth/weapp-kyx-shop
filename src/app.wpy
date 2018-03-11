@@ -1,7 +1,7 @@
 <style lang="less">
 @import 'src/common/styles/config.less';
-@import 'src/common/styles/dzui.less';
 @import 'src/common/styles/icon.less';
+@import 'src/common/styles/dzui.less';
 
 page{
     // background-image: url('https://applet.store.keyixing.com/images/bg.jpg');
@@ -168,8 +168,8 @@ button[type="normal"], navigator.normal{
 
 </style>
 <script>
-import wepy from 'wepy'
-import 'wepy-async-function'
+import wepy from 'wepy';
+import 'wepy-async-function';
 
 const device = wx.getSystemInfoSync()
 const deviceRadio = device.windowWidth / 750

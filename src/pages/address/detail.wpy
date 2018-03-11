@@ -4,39 +4,47 @@
     background-color: @color-maincolor;
 }
 .dzui-cell{
-    &:before{ border-top-style: dashed;}
+    &:before{ border-top-style: dotted;}
 }
 .dzui-cell-head{
     width: 140rpx;
 }
 </style>
 <template>
+<form report-submit="true" bindsubmit="formSubmit">
     <view class="consignee-detail">
         <view class="dzui-cells">
             <view class="dzui-cell">
                 <view class="dzui-cell-head">收货人</view>
-                <view class="dzui-cell-body"><input value="{{consignee.name}}" /></view>
+                <view class="dzui-cell-body"><input value="{{name}}" bindinput="binput" bindblur="binput" data-store="consignee.name" /></view>
             </view>
             <view class="dzui-cell">
                 <view class="dzui-cell-head">联系方式</view>
-                <view class="dzui-cell-body"><input value="{{consignee.tel}}" /></view>
+                <view class="dzui-cell-body"><input value="{{tel}}" bindinput="binput" bindblur="binput" data-store="consignee.tel" /></view>
             </view>
-            <view class="dzui-cell" bindtap="toggleCityPicker">
+            <view class="dzui-cell" @tap="showCityPicker">
                 <view class="dzui-cell-head">所在地区</view>
-                <view class="dzui-cell-body">{{consignee.region}}</view>
+                <view class="dzui-cell-body">{{area}}</view>
                 <view class="dzui-cell-foot"><text class="icon icon-arrow-right"></text></view>
             </view>
             <view class="dzui-cell">
                 <view class="dzui-cell-head">详细地址</view>
-                <view class="dzui-cell-body"><textarea value="{{consignee.address}}" auto-height></textarea></view>
+                <view class="dzui-cell-body"><textarea value="{{address}}" auto-height  bindinput="bindinput" bindblur="bindinput" data-store="consignee.address" data-trim="line"></textarea></view>
             </view>
         </view>
+        <view class="dzui-tools">
+            <button type="base" size="large" form-type="submit">确定提交</button>
+        </view>
     </view>
-    <cp-city-picker :selected.sync="regionValue"></cp-city-picker>
+</form>
+<dzuicityselect :selected.sync="area"></dzuicityselect>
+<dzuitoast id="toast"></dzuitoast>
 </template>
 <script>
-import wepy from 'wepy'
-import CityPicker from '@/components/city-picker'
+import wepy from 'wepy';
+import binputMixin from '@/mixins/binput';
+import dzuitoast from '@/components/dzui/toast';
+import dzuicityselect from '@/components/dzui/cityselect';
 
 export default class AddressDetail extends wepy.page {
     config = {
@@ -54,36 +62,66 @@ export default class AddressDetail extends wepy.page {
     }
 
     components = {
-        'cp-city-picker': CityPicker
+        dzuitoast,
+        dzuicityselect
     }
 
-    mixins = []
+    mixins = [binputMixin]
 
     data = {
-        isShowPicker: false,
-        currentId: 0,
-        regionValue: '北京 北京市 东城区',
-        consignee: {
-            id: 0,
-            name: null,
-            tel: null,
-            region: '北京 北京市 东城区',
-            address: null
-        },
-    }
-
-    watch = {
-        regionValue(newVal){
-            this.consignee.region = newVal
-        }
+        id: 0,
+        name: '',
+        area: '',
+        tel: '',
+        address: ''
     }
 
     computed = {
     }
 
     methods = {
-        toggleCityPicker() {
-            this.$broadcast('showPicker')
+        showCityPicker() {
+            this.$broadcast('showCityselect');
+        },
+
+        formSubmit(e){
+            //formId
+            console.log(e.detail.formId);
+
+            if(!this.name){
+                let promise = this.$invoke('toast', 'show', {
+                    title: '请填写收货人',
+                    img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png',
+                });
+                return;
+            }
+
+            if(!this.tel){
+                let promise = this.$invoke('toast', 'show', {
+                    title: '请填写联系方式',
+                    img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png',
+                });
+                return;
+            }
+
+            if(!this.area){
+                let promise = this.$invoke('toast', 'show', {
+                    title: '请选择所在地区',
+                    img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png',
+                });
+                return;
+            }
+
+            if(!this.address){
+                let promise = this.$invoke('toast', 'show', {
+                    title: '请填写详细地址',
+                    img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png',
+                });
+                return;
+            }
+
+            console.log('提交数据')
+
         }
     }
 
@@ -93,17 +131,19 @@ export default class AddressDetail extends wepy.page {
 
     onLoad(res) {
 
-        this.currentId = res.id
-        if(this.currentId){
+        this.id = res.id;
+
+        if(this.id){
             //发起请求
-            console.log('请求数据ID:', this.currentId)
-            this.consignee = Object.assign({}, this.consignee, {
-                id: this.currentId,
-                name: '张生',
-                tel: '15899900098',
-                area: '广东省 广州市 天河区',
-                address: '金穗路1号3401(广东星外星唱片)'
-            })
+            console.log('请求数据ID:', this.id);
+            setTimeout(() => {
+                this.name = '张生';
+                this.tel = '15899900098';
+                this.area = '广东省 广州市 天河区';
+                this.address = '金穗路1号3401(广东星外星唱片)';
+                this.$apply();
+                console.log('请求完成');
+            }, 200)
         }
     }
 }

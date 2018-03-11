@@ -1,2 +1,3 @@
-@import "./../../components/city-picker.wxss";
-.dzui-cells{background-color:#e9e0cc}.dzui-cell:before{border-top-style:dashed}.dzui-cell-head{width:140rpx}
+@import "./../../components/dzui/cityselect.wxss";
+@import "./../../components/dzui/toast.wxss";
+.dzui-cells{background-color:#e9e0cc}.dzui-cell:before{border-top-style:dotted}.dzui-cell-head{width:140rpx}

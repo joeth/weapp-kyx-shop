@@ -1,42 +1,62 @@
 
+<form report-submit="true" bindsubmit="formSubmit">
     <view class="consignee-detail">
         <view class="dzui-cells">
             <view class="dzui-cell">
                 <view class="dzui-cell-head">收货人</view>
-                <view class="dzui-cell-body"><input value="{{consignee.name}}"/></view>
+                <view class="dzui-cell-body"><input value="{{name}}" bindinput="binput" bindblur="binput" data-store="consignee.name"/></view>
             </view>
             <view class="dzui-cell">
                 <view class="dzui-cell-head">联系方式</view>
-                <view class="dzui-cell-body"><input value="{{consignee.tel}}"/></view>
+                <view class="dzui-cell-body"><input value="{{tel}}" bindinput="binput" bindblur="binput" data-store="consignee.tel"/></view>
             </view>
-            <view class="dzui-cell" bindtap="toggleCityPicker">
+            <view class="dzui-cell" bindtap="showCityPicker">
                 <view class="dzui-cell-head">所在地区</view>
-                <view class="dzui-cell-body">{{consignee.region}}</view>
+                <view class="dzui-cell-body">{{area}}</view>
                 <view class="dzui-cell-foot"><text class="icon icon-arrow-right"/></view>
             </view>
             <view class="dzui-cell">
                 <view class="dzui-cell-head">详细地址</view>
-                <view class="dzui-cell-body"><textarea value="{{consignee.address}}" auto-height/></view>
+                <view class="dzui-cell-body"><textarea value="{{address}}" auto-height bindinput="bindinput" bindblur="bindinput" data-store="consignee.address" data-trim="line"/></view>
             </view>
         </view>
+        <view class="dzui-tools">
+            <button type="base" size="large" form-type="submit">确定提交</button>
+        </view>
     </view>
-    
-    <wxc-popup class="J_Picker_Popup" locked="false" animation-mode="bottom" align="bottom">
-        <view class="cp-picker" catchtap="$cpCityPicker$tap">
-            <view class="cp-picker-tool">
-                <view catchtap="$cpCityPicker$onCancel" class="cp-picker-cancel">取消</view>
-                <view catchtap="$cpCityPicker$onConfirm" class="cp-picker-confirm">确定</view>
+</form>
+
+    <wxc-popup class="J_Cityselect" locked="false" animation-mode="bottom" align="bottom">
+        <view class="dzui-cityselect" catchtap="$dzuicityselect$tap">
+            <view class="dzui-cityselect-tool">
+                <button class="dzui-cityselect-cancel" catchtap="$dzuicityselect$onCancel">取消</button>
+                <button class="dzui-cityselect-confirm" catchtap="$dzuicityselect$onConfirm">确定</button>
             </view>
-            <picker-view class="cp-picker-view" value="{{$cpCityPicker$value}}" bindchange="$cpCityPicker$onChange">
-                <picker-view-column class="cp-picker-view-column">
-                    <text class="cp-picker-text"  wx:for="{{$cpCityPicker$provinces}}" wx:key="item">{{item}}</text>
+            <picker-view class="dzui-cityselect-view" indicator-style="height: 4em;" value="{{$dzuicityselect$value}}" bindchange="$dzuicityselect$onChange"  wx:if="{{$dzuicityselect$isReady}}">
+                <picker-view-column class="dzui-cityselect-view-column">
+                    <view class="dzui-cityselect-text" wx:for="{{$dzuicityselect$provinces}}" wx:key="item">{{item}}</view>
                 </picker-view-column>
-                <picker-view-column class="cp-picker-view-column">
-                    <text class="cp-picker-text"  wx:for="{{$cpCityPicker$citys}}" wx:key="item">{{item}}</text>
+                <picker-view-column class="dzui-cityselect-view-column">
+                    <view class="dzui-cityselect-text" wx:for="{{$dzuicityselect$citys}}" wx:key="item">{{item}}</view>
                 </picker-view-column>
-                <picker-view-column class="cp-picker-view-column">
-                    <text class="cp-picker-text" wx:for="{{$cpCityPicker$countys}}" wx:key="item">{{item}}</text>
+                <picker-view-column class="dzui-cityselect-view-column">
+                    <view class="dzui-cityselect-text" wx:for="{{$dzuicityselect$countys}}" wx:key="item">{{item}}</view>
                 </picker-view-column>
             </picker-view>
         </view>
     </wxc-popup>
+
+
+    <view class="wetoast {{$dzuitoast$reveal ? 'wetoast_show' : ''}}">
+        <view class="wetoast__mask"/>
+        <view class="wetoast__bd" animation="{{$dzuitoast$animationData}}">
+            <block  wx:if="{{$dzuitoast$img}}">
+                <view class="wetoast__bd__img {{$dzuitoast$imgClassName || ''}}">
+                    <image class="wetoast__bd__img_desc" src="{{$dzuitoast$img}}" mode="{{$dzuitoast$imgMode || 'scaleToFill'}}"/>
+                </view>
+            </block>
+            <block  wx:if="{{$dzuitoast$title}}">
+                <view class="wetoast__bd__title {{$dzuitoast$titleClassName || ''}}">{{$dzuitoast$title}}</view>
+            </block>
+        </view>
+    </view>
