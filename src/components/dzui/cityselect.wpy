@@ -111,9 +111,9 @@ export default class CitySelect extends wepy.component {
 
     events = {
         showCityselect() {
-            this.reinit();
             let popup = this.$wxpage.selectComponent('.J_Cityselect');
             popup && popup.show();
+            this.onReinit();
         },
         hideCityselect() {
             let popup = this.$wxpage.selectComponent('.J_Cityselect');
@@ -184,7 +184,7 @@ export default class CitySelect extends wepy.component {
         }
     }
 
-    reinit() {
+    onReinit() {
 
         this.isReady = false;
 
@@ -238,7 +238,7 @@ export default class CitySelect extends wepy.component {
         //全国城市数据
         this.cityData = cityData;
 
-        this.reinit();
+        this.onReinit();
 
     }
 }

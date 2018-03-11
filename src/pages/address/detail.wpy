@@ -16,11 +16,11 @@
         <view class="dzui-cells">
             <view class="dzui-cell">
                 <view class="dzui-cell-head">收货人</view>
-                <view class="dzui-cell-body"><input value="{{name}}" bindinput="binput" bindblur="binput" data-store="consignee.name" /></view>
+                <view class="dzui-cell-body"><input value="{{name}}" bindinput="binput" bindblur="binput" data-store="name" /></view>
             </view>
             <view class="dzui-cell">
                 <view class="dzui-cell-head">联系方式</view>
-                <view class="dzui-cell-body"><input value="{{tel}}" bindinput="binput" bindblur="binput" data-store="consignee.tel" /></view>
+                <view class="dzui-cell-body"><input value="{{tel}}" bindinput="binput" bindblur="binput" data-store="tel" /></view>
             </view>
             <view class="dzui-cell" @tap="showCityPicker">
                 <view class="dzui-cell-head">所在地区</view>
@@ -29,7 +29,7 @@
             </view>
             <view class="dzui-cell">
                 <view class="dzui-cell-head">详细地址</view>
-                <view class="dzui-cell-body"><textarea value="{{address}}" auto-height  bindinput="bindinput" bindblur="bindinput" data-store="consignee.address" data-trim="line"></textarea></view>
+                <view class="dzui-cell-body"><textarea value="{{address}}" auto-height  bindinput="binput" bindblur="binput" data-store="address" data-trim="line"></textarea></view>
             </view>
         </view>
         <view class="dzui-tools">
