@@ -1,14 +1,14 @@
 <style lang="less">
 @import 'src/common/styles/config.less';
-.dzui-cityselect {
+.cp-cityselect {
     width: 100%;
     background-color: #fff;
     position: relative;
     z-index: 1000;
 }
 
-.dzui-cityselect-cancel,
-.dzui-cityselect-confirm{
+.cp-cityselect-cancel,
+.cp-cityselect-confirm{
     display: block;
     border: none;
     outline: none;
@@ -26,11 +26,11 @@
         background-color: @color-forecolor;
     }
 }
-.dzui-cityselect-confirm{
+.cp-cityselect-confirm{
     color: @color-primary;
 }
 
-.dzui-cityselect-tool{
+.cp-cityselect-tool{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -38,7 +38,7 @@
     background-color: @color-maincolor;
 }
 
-.dzui-cityselect-view {
+.cp-cityselect-view {
     display: block;
     // width: 100%;
     height: 12em;
@@ -46,7 +46,7 @@
     background-color: white;
 }
 
-.dzui-cityselect-text {
+.cp-cityselect-text {
     height: 100%;
     line-height: 1.5em;
     padding: 0 0.5em;
@@ -59,20 +59,20 @@
 </style>
 <template>
     <wxc-popup class="J_Cityselect" locked="false" animation-mode="bottom" align="bottom">
-        <view class="dzui-cityselect" @tap.stop="tap">
-            <view class="dzui-cityselect-tool">
-                <button class="dzui-cityselect-cancel" @tap.stop="onCancel">取消</button>
-                <button class="dzui-cityselect-confirm" @tap.stop="onConfirm">确定</button>
+        <view class="cp-cityselect" @tap.stop="tap">
+            <view class="cp-cityselect-tool">
+                <button class="cp-cityselect-cancel" @tap.stop="onCancel">取消</button>
+                <button class="cp-cityselect-confirm" @tap.stop="onConfirm">确定</button>
             </view>
-            <picker-view class="dzui-cityselect-view" indicator-style="height: 4em;" value="{{value}}" bindchange="onChange" wx:if="{{isReady}}">
-                <picker-view-column class="dzui-cityselect-view-column">
-                    <view class="dzui-cityselect-text" wx:for="{{provinces}}" wx:key="item">{{item}}</view>
+            <picker-view class="cp-cityselect-view" indicator-style="height: 4em;" value="{{value}}" bindchange="onChange" wx:if="{{isReady}}">
+                <picker-view-column class="cp-cityselect-view-column">
+                    <view class="cp-cityselect-text" wx:for="{{provinces}}" wx:key="item">{{item}}</view>
                 </picker-view-column>
-                <picker-view-column class="dzui-cityselect-view-column">
-                    <view class="dzui-cityselect-text" wx:for="{{citys}}" wx:key="item">{{item}}</view>
+                <picker-view-column class="cp-cityselect-view-column">
+                    <view class="cp-cityselect-text" wx:for="{{citys}}" wx:key="item">{{item}}</view>
                 </picker-view-column>
-                <picker-view-column class="dzui-cityselect-view-column">
-                    <view class="dzui-cityselect-text" wx:for="{{countys}}" wx:key="item">{{item}}</view>
+                <picker-view-column class="cp-cityselect-view-column">
+                    <view class="cp-cityselect-text" wx:for="{{countys}}" wx:key="item">{{item}}</view>
                 </picker-view-column>
             </picker-view>
         </view>

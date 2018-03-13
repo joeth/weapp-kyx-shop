@@ -1,17 +1,17 @@
 
 <form report-submit="true" bindsubmit="formSubmit">
     <wxc-flex class="order-confirm" dir="top">
-        <view class="order-confirm-consignee" bindtap="tapConsignee" data-wpytapconsignee-a="{{order.consignee.id}}">
+        <view class="order-confirm-consignee" bindtap="tapConsignee" data-wpytapconsignee-a="">
             <wxc-cc class="order-consignee-side">
                 <text class="icon icon-address"/>
             </wxc-cc>
-            <view class="order-consignee-main"  wx:if="{{order.consignee.id}}">
+            <view class="order-consignee-main"  wx:if="{{consignee.id}}">
                 <view class="order-consignee-title">
-                    <text class="order-consignee-name">{{order.consignee.name}}</text>
-                    <text class="order-consignee-tel">{{order.consignee.tel}}</text>
+                    <text class="order-consignee-name">{{consignee.name}}</text>
+                    <text class="order-consignee-tel">{{consignee.tel}}</text>
                 </view>
                 <view class="order-consignee-address">
-                    <text>收货地址：</text>{{order.consignee.area +' '+ order.consignee.address}}
+                    <text>收货地址：</text>{{consignee.area +' '+ consignee.address}}
                 </view>
             </view>
             <view class="order-consignee-main"  wx:else>
@@ -23,7 +23,7 @@
             </wxc-cc>
         </view>
         <view class="order-confirm-contain">
-            <block wx:for="{{order.commodityList}}" wx:for-index="index" wx:for-item="commodity" wx:key="cid">
+            <block wx:for="{{commodityList}}" wx:for-index="index" wx:for-item="commodity" wx:key="commodity">
                 
     <wxc-flex class="cp-order-commodity order-confirm-commodity">
         <image class="cp-commodity-cover" src="{{commodity.cover}}"/>
@@ -43,62 +43,28 @@
         </view>
         <view class="order-confirm-footer">
             <view class="order-confirm-message">
-                <textarea bindinput="bindinput" bindblur="bindinput" bindconfirm="bindinput" value="{{order.message}}" data-type="message" cursor-spacing="20" maxlength="50" placeholder="选填：买家留言（50字以内）"/>
+                <textarea bindinput="input" bindblur="input" bindconfirm="input" value="{{message}}" data-store="message" cursor-spacing="20" maxlength="50" placeholder="选填：买家留言（50字以内）"/>
             </view>
             <view class="order-confirm-amount">
                 <wxc-flex class="amount" main="between" cross="center">
                     <text>商品总价</text>
-                    <wxc-price class="price" value="{{order.totalAmount}}"/>
+                    <wxc-price class="price" value="{{totalAmount}}"/>
                 </wxc-flex>
                 <wxc-flex class="freight" main="between" cross="center">
                     <text>运费（满200包邮）</text>
-                    <wxc-price class="price" value="{{order.freightAmount}}"/>
+                    <wxc-price class="price" value="{{freightAmount}}"/>
                 </wxc-flex>
             </view>
         </view>
         <wxc-flex class="order-confirm-toolbar">
             <wxc-flex class="count" cross="center" main="end">
                 <text>实付款：</text>
-                <wxc-price class="price" value="{{order.actualAmount}}"/>
+                <wxc-price class="price" value="{{actualAmount}}"/>
             </wxc-flex>
             <button class="submit" type="base" size="bigger" form-type="submit">提交订单</button>
         </wxc-flex>
     </wxc-flex>
 </form>
 <wxc-popup id="addressPopup">
-    
-    <view class="item-consignee {{$addressList$consignee.id == $addressList$selectId ? 'selected' : ''}}" bindtap="$addressList$tapSelect" data-wpytapselect-a="{{$addressList$consignee.id}}">
-        <view class="item-consignee-contain">
-            <view class="item-consignee-side"  wx:if="{{$addressList$type == 'select'}}">
-                <text class="icon icon-address"/>
-            </view>
-            <view class="item-consignee-main">
-                <view class="item-consignee-title">
-                    <text class="item-consignee-name">{{$addressList$consignee.name}}</text>
-                    <text class="item-consignee-tel">{{$addressList$consignee.tel}}</text>
-                </view>
-                <view class="item-consignee-address">
-                    {{$addressList$consignee.area +' '+ $addressList$consignee.address}}
-                </view>
-            </view>
-            <view class="item-consignee-close"  wx:if="{{$addressList$type != 'select'}}">
-                <text class="icon icon-close" catchtap="$addressList$tapDelete" data-wpytapdelete-a="{{$addressList$consignee.id}}"/>
-            </view>
-        </view>
-        <view class="item-consignee-toolbar" wx:if="{{$addressList$type != 'select'}}">
-            <view>
-                <label catchtap="$addressList$tapDefault" data-wpytapdefault-a="{{$addressList$consignee.id}}">
-                    <text class="icon icon-radio{{$addressList$consignee.isDefault ? '-cur': ''}}"/>
-                    <text>设为默认地址</text>
-                </label>
-            </view>
-            <view>
-                <label catchtap="$addressList$tapEdit" data-wpytapedit-a="{{$addressList$consignee.id}}">
-                    <text class="icon icon-edit"/>
-                    <text>编辑</text>
-                </label>
-            </view>
-        </view>
-    </view>
-
+    <addressList/>
 </wxc-popup>

@@ -1,8 +1,8 @@
 import wepy from 'wepy'
 
-export default class binputMixin extends wepy.mixin {
+export default class inputMixin extends wepy.mixin {
     methods = {
-        binput(e){
+        input(e){
             const { store, trim } = e.currentTarget.dataset;
             //取得输入的值
             let value = e.detail.value || '';

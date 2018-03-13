@@ -27,11 +27,11 @@
                 <text class="icon icon-shopcart"/>
                 <text class="text">购物车</text>
             </navigator>
-            <navigator class="normal" url="/pages/address/list">
+            <navigator class="normal" url="/pages/consignee/list">
                 <text class="icon icon-location"/>
                 <text class="text">收货地址</text>
             </navigator>
-            <navigator class="normal" url="/pages/question/list">
+            <navigator class="normal" url="/pages/question/detail">
                 <text class="icon icon-question"/>
                 <text class="text">常见问题</text>
             </navigator>

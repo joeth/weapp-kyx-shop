@@ -3,14 +3,91 @@
 .shopcart{
     height: 100vh;
 }
+
+.shopcart-toolbar{
+    display: block;
+    width: 100%;
+    height: 100rpx;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    z-index: 100;
+
+    background-color: @color-maincolor;
+    border-top: 2rpx solid @color-border;
+    box-sizing: border-box;
+    .price{
+        font-size: @font-size-bigger;
+        color: @color-success;
+    }
+    .submit{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        border-radius: 0;
+        &:after, &:before{
+            border-radius: 0;
+        }
+    }
+    .contain{
+        flex-grow: 1;
+        padding: @margin;
+        text-align: right;
+    }
+}
 </style>
 <template>
-    <wxc-cc class="shopcart">
-        <navigator url="/pages/order/confirm?ids=[1,2,3,4,5]"><button type="primary">去结算</button></navigator>
-    </wxc-cc>
+<form report-submit="true" bindsubmit="formSubmit">
+    <wxc-flex class="shopcart" dir="top">
+        <view class="shopcart-commodity" wx:for="{{shopcartList}}" wx:for-item="commodity" wx:key="commodity">
+            <view @tap.stop="tapCheckbox({{commodity.id}})">
+                {{commodity.isSelected}}
+            </view>
+        </view>
+        <wxc-flex class="shopcart-toolbar">
+            <wxc-flex class="contain" cross="center" main="between">
+                <view>
+                    <label @tap.stop="tapCheckboxAll()">
+                        <text class="icon icon-radio{{ isSelectedAll ? '-cur': '' }}"></text>
+                        <text>全选</text>
+                    </label>
+                </view>
+                <view>
+                    <text>合计：</text>
+                    <wxc-price class="price" value="{{order.actualAmount}}"></wxc-price>
+                </view>
+            </wxc-flex>
+            <button class="submit" type="base" size="bigger" form-type="submit">结算</button>
+        </wxc-flex>
+    </wxc-flex>
+</form>
 </template>
 <script>
 import wepy from 'wepy'
+
+const __SHOPCART_LIST__ = [
+    {
+        id: 1,
+        cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
+        title: '云之七味',
+        type: '熟茶',
+        price: '180.00',
+        count: 1,
+        isSelected: true
+    },
+    {
+        id: 2,
+        cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
+        title: '糥伍古树圆茶',
+        type: '熟茶',
+        price: '920.00',
+        count: 1,
+        isSelected: true
+    }
+]
 
 export default class ShopCart extends wepy.page {
     config = {
@@ -42,32 +119,61 @@ export default class ShopCart extends wepy.page {
         }
     }
 
-    components = {
-
-    }
-
-    mixins = []
-
     data = {
-
-    }
-
-    computed = {
-        now() {
-            return +new Date()
-        }
+        isSelectedAll: false,
+        shopcartList: __SHOPCART_LIST__,
+        selectedList: []
     }
 
     methods = {
+        tapCheckboxAll(){
+            this.isSelectedAll = !this.isSelectedAll;
+            this.shopcartList.map(item => {
+                item.isSelected = this.isSelectedAll;
+                return item;
+            });
+        },
+        tapCheckbox(id){
+            this.shopcartList.map(item => {
+                if(item.id == id){
+                    item.isSelected = !item.isSelected;
+                }
+                return item;
+            });
+            this.updateSelectedAll();
+        },
+        formSubmit(e){
+            console.log('去结算');
+            console.log(e.detail.formId);
 
+            //更新购物车缓存数据
+            this.setStorageShopcart();
+
+            wx.navigateTo({
+                url: '/pages/order/confirm'
+            })
+        }
     }
 
-    events = {
+    updateSelectedAll(){
+        this.isSelectedAll = !this.shopcartList.find(n => !n.isSelected);
+    }
 
+    //设置购物车缓存数据
+    setStorageShopcart(){
+        console.log('更新购物车缓存数据');
+        wx.setStorageSync('__SHOPCART_LIST__', this.shopcartList);
+    }
+
+    //设置购物车缓存数据
+    getStorageShopcart(){
+        console.log('更新购物车缓存数据');
+        this.shopcartList = wx.getStorageSync('__SHOPCART_LIST__') || this.shopcartList;
     }
 
     onLoad() {
-
+        this.getStorageShopcart();
+        this.updateSelectedAll();
     }
 }
 

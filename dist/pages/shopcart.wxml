@@ -1,4 +1,25 @@
 
-    <wxc-cc class="shopcart">
-        <navigator url="/pages/order/confirm?ids=[1,2,3,4,5]"><button type="primary">去结算</button></navigator>
-    </wxc-cc>
+<form report-submit="true" bindsubmit="formSubmit">
+    <wxc-flex class="shopcart" dir="top">
+        <view class="shopcart-commodity"  wx:for="{{shopcartList}}" wx:for-item="commodity" wx:key="commodity">
+            <view catchtap="tapCheckbox" data-wpytapcheckbox-a="{{commodity.id}}">
+                {{commodity.isSelected}}
+            </view>
+        </view>
+        <wxc-flex class="shopcart-toolbar">
+            <wxc-flex class="contain" cross="center" main="between">
+                <view>
+                    <label catchtap="tapCheckboxAll" data-wpytapcheckboxall-a="">
+                        <text class="icon icon-radio{{ isSelectedAll ? '-cur': '' }}"/>
+                        <text>全选</text>
+                    </label>
+                </view>
+                <view>
+                    <text>合计：</text>
+                    <wxc-price class="price" value="{{order.actualAmount}}"/>
+                </view>
+            </wxc-flex>
+            <button class="submit" type="base" size="bigger" form-type="submit">结算</button>
+        </wxc-flex>
+    </wxc-flex>
+</form>

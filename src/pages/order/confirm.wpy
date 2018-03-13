@@ -29,6 +29,7 @@
     }
 }
 .order-consignee-main{
+    flex-grow: 1;
     margin-left: @margin;
 }
 .order-consignee-name{
@@ -111,17 +112,17 @@
 <template>
 <form report-submit="true" bindsubmit="formSubmit">
     <wxc-flex class="order-confirm" dir="top">
-        <view class="order-confirm-consignee" @tap="tapConsignee({{order.consignee.id}})">
+        <view class="order-confirm-consignee" @tap="tapConsignee()">
             <wxc-cc class="order-consignee-side">
                 <text class="icon icon-address"></text>
             </wxc-cc>
-            <view class="order-consignee-main" wx:if="{{order.consignee.id}}">
+            <view class="order-consignee-main" wx:if="{{consignee.id}}">
                 <view class="order-consignee-title">
-                    <text class="order-consignee-name">{{order.consignee.name}}</text>
-                    <text class="order-consignee-tel">{{order.consignee.tel}}</text>
+                    <text class="order-consignee-name">{{consignee.name}}</text>
+                    <text class="order-consignee-tel">{{consignee.tel}}</text>
                 </view>
                 <view class="order-consignee-address">
-                    <text>收货地址：</text>{{order.consignee.area +' '+ order.consignee.address}}
+                    <text>收货地址：</text>{{consignee.area +' '+ consignee.address}}
                 </view>
             </view>
             <view class="order-consignee-main" wx:else>
@@ -133,29 +134,29 @@
             </wxc-cc>
         </view>
         <view class="order-confirm-contain">
-            <repeat for="{{order.commodityList}}" item="commodity" key="cid">
-                <orderCommodity :commodity="commodity" class="order-confirm-commodity"></orderCommodity>
+            <repeat for="{{commodityList}}" item="commodity" key="commodity">
+                <cp-order-commodity :commodity="commodity" class="order-confirm-commodity"></cp-order-commodity>
             </repeat>
         </view>
         <view class="order-confirm-footer">
             <view class="order-confirm-message">
-                <textarea bindinput="bindinput" bindblur="bindinput" bindconfirm="bindinput" value="{{order.message}}" data-type="message" cursor-spacing="20" maxlength="50" placeholder="选填：买家留言（50字以内）"></textarea>
+                <textarea bindinput="input" bindblur="input" bindconfirm="input" value="{{message}}" data-store="message" cursor-spacing="20" maxlength="50" placeholder="选填：买家留言（50字以内）"></textarea>
             </view>
             <view class="order-confirm-amount">
                 <wxc-flex class="amount" main="between" cross="center">
                     <text>商品总价</text>
-                    <wxc-price class="price" value="{{order.totalAmount}}"></wxc-price>
+                    <wxc-price class="price" value="{{totalAmount}}"></wxc-price>
                 </wxc-flex>
                 <wxc-flex class="freight" main="between" cross="center">
                     <text>运费（满200包邮）</text>
-                    <wxc-price class="price" value="{{order.freightAmount}}"></wxc-price>
+                    <wxc-price class="price" value="{{freightAmount}}"></wxc-price>
                 </wxc-flex>
             </view>
         </view>
         <wxc-flex class="order-confirm-toolbar">
             <wxc-flex class="count" cross="center" main="end">
                 <text>实付款：</text>
-                <wxc-price class="price" value="{{order.actualAmount}}"></wxc-price>
+                <wxc-price class="price" value="{{actualAmount}}"></wxc-price>
             </wxc-flex>
             <button class="submit" type="base" size="bigger" form-type="submit">提交订单</button>
         </wxc-flex>
@@ -168,39 +169,15 @@
 <script>
 
 import wepy from 'wepy'
+import inputMixin from '@/mixins/input';
 import orderCommodity from '@/components/order-commodity'
-import addressList from '@/components/address-list'
 
 const __DATA__ = {
     totalAmount: '1149.00',
     freightAmount: '0.00',
     actualAmount: '1149.00',
     message: '帮我包装得好看点',
-    consignee: {
-        id: 1,
-        name: '张生',
-        tel: '15817489898',
-        area: '广东 广州市  天河区',
-        address: '金穗路1号3401(广东星外星唱片)',
-    },
-    commodityList: [
-        {
-            id: 1,
-            cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
-            title: '云之七味',
-            type: '熟茶',
-            price: 100.00,
-            count: 1
-        },
-        {
-            id: 2,
-            cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
-            title: '云之七味',
-            type: '熟茶',
-            price: 100.00,
-            count: 1
-        }
-    ]
+    consignee: {}
 }
 
 export default class OrderDetail extends wepy.page {
@@ -234,36 +211,44 @@ export default class OrderDetail extends wepy.page {
     }
 
     components = {
-        addressList,
-        orderCommodity
+        'cp-order-commodity': orderCommodity
     }
 
-    mixins = []
+    mixins = [inputMixin]
 
     data = {
-        order: __DATA__
-    }
-
-    computed = {
+        message: '',
+        totalAmount: '1149.00',
+        freightAmount: '0.00',
+        actualAmount: '1149.00',
+        consignee: {},
+        shopcartList: [],
+        commodityList: []
     }
 
     methods = {
-        bindinput(e){
-            const { type } = e.currentTarget.dataset;
-            let message = e.detail.value && e.detail.value.replace(/[\s\r\n]+/g, ' ') || '';
-            this.order[type] = message
-        },
-
-        tapConsignee(id){
-            // let popup = this.$wxpage.selectComponent('#addressPopup');
-            // popup && popup.show();
-            wx.navigateTo({
-                url: `/pages/address/list?sid=${id}&type=select`
-            })
+        tapConsignee(){
+            if(this.consignee && this.consignee.id){
+                wx.navigateTo({
+                    url: `/pages/consignee/list?sid=${id}&from=order`
+                })
+            } else{
+                wx.navigateTo({
+                    url: `/pages/consignee/edit?from=order`
+                })
+            }
         },
 
         formSubmit(e){
-            console.log(e.detail.formId)
+            console.log(e.detail.formId);
+            console.log('提交订单');
+            //删除收货人缓存数据
+            this.setStorageShopcart();
+            this.delStorageConsignee();
+
+            wx.redirectTo({
+                url: `/pages/order/detail?id=1`
+            })
         }
     }
 
@@ -271,12 +256,54 @@ export default class OrderDetail extends wepy.page {
 
     }
 
+    //获取收货人缓存数据
+    getStorageConsignee(){
+        this.consignee = wx.getStorageSync('__SELECTED_CONSIGNEE__') || this.consignee;
+    }
+    //删除收货人缓存数据
+    delStorageConsignee(){
+        wx.removeStorageSync('__SELECTED_CONSIGNEE__');
+    }
+
+    //设置购物车缓存数据
+    setStorageShopcart(){
+        console.log('更新购物车缓存数据');
+        let shopcartList = [];
+        this.shopcartList.forEach(item => {
+            if(!item.isSelected){
+                shopcartList.push(item);
+            }
+        });
+        wx.setStorageSync('__SHOPCART_LIST__', shopcartList);
+    }
+    //设置购物车缓存数据
+    getStorageShopcart(){
+        console.log('更新购物车缓存数据');
+        this.shopcartList = wx.getStorageSync('__SHOPCART_LIST__') || this.shopcartList;
+
+        let commodityList = [];
+        this.shopcartList.forEach(item => {
+            if(item.isSelected){
+                commodityList.push(item);
+            }
+        });
+        this.commodityList = commodityList;
+    }
+
     onLoad(res) {
-        console.log(res)
+        console.log(res);
+    }
+
+    onUnload() {
+        //删除收货人缓存数据
+        this.delStorageConsignee();
     }
 
     onShow(res) {
-        wx.st
+        //获取收货人缓存数据
+        this.getStorageShopcart();
+        //获取收货人缓存数据
+        this.getStorageConsignee();
     }
 }
 

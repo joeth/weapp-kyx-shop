@@ -64,7 +64,7 @@
 <template>
     <view class="consignee-list">
         <block wx:for="{{consigneeList}}" wx:for-item="consignee" wx:key="id">
-            <view class="item-consignee {{consignee.id == selectId ? 'selected' : ''}}" @tap="tapSelect({{consignee.id}})">
+            <view class="item-consignee {{consignee.id == selectId ? 'selected' : ''}}" @tap="tapSelect({{consignee}})">
                 <view class="item-consignee-contain">
                     <view class="item-consignee-side" wx:if="{{type == 'select'}}">
                         <text class="icon icon-address"></text>
@@ -100,7 +100,7 @@
         </block>
     </view>
     <view class="consignee-toolbar">
-        <navigator class="button base large" url="/pages/address/edit">添加地址</navigator>
+        <navigator class="button base large" url="/pages/consignee/edit">添加地址</navigator>
     </view>
 </template>
 <script>
@@ -155,12 +155,6 @@ export default class AddressList extends wepy.page {
         }
     }
 
-    components = {
-
-    }
-
-    mixins = []
-
     data = {
         type: null,
         selectId: 0,
@@ -168,58 +162,52 @@ export default class AddressList extends wepy.page {
         consigneeList: __DATA__
     }
 
-    computed = {
-    }
-
     methods = {
         tapDefault(id){
-            console.log('tapDefault')
+            console.log('tapDefault');
             if(!id){ return }
             //防止重复设定
             if(this.defaultId == id){ return; }
             try{
                 this.consigneeList.map(item => {
-                    item.isDefault = false
+                    item.isDefault = false;
                     if(item.id == id){
-                        item.isDefault = true
-                        this.defaultId = item.id
+                        item.isDefault = true;
+                        this.defaultId = item.id;
                     }
-                    return item
+                    return item;
                 })
             } catch(e) {}
         },
         tapDelete(id){
-            console.log('tapDelete')
+            console.log('tapDelete');
             try{
-                let index = this.consigneeList.findIndex(n => n.id == id)
-                this.consigneeList.splice(index, 1)
+                let index = this.consigneeList.findIndex(n => n.id == id);
+                this.consigneeList.splice(index, 1);
             } catch(e) {}
         },
-        tapSelect(id){
-            console.log('tapSelect')
-            if(this.type != 'select'){ return; }
+        tapSelect(consignee){
+            console.log('tapSelect');
+            if(!this.from){ return; }
+            wx.setStorageSync('__SELECTED_CONSIGNEE__', consignee);
             wx.navigateBack();
         },
         tapEdit(id){
-            console.log('tapEdit')
+            console.log('tapEdit');
             wx.navigateTo({
-                url: `/pages/address/edit?id=${id}`
-            })
+                url: `/pages/consignee/edit?id=${id}`
+            });
         }
     }
 
     getAddressList(){
-        console.log('访问接口获取列表')
-    }
-
-    events = {
-
+        console.log('访问接口获取列表');
     }
 
     onLoad(res) {
-        console.log(res)
-        this.type = res.type
-        this.selectId = res.sid
+        console.log(res);
+        this.from = res.from;
+        this.selectId = res.sid;
     }
 
     onShow(){

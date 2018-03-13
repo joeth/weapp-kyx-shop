@@ -1,7 +1,7 @@
 
     <view class="consignee-list">
         <block  wx:for="{{consigneeList}}" wx:for-item="consignee" wx:key="id">
-            <view class="item-consignee {{consignee.id == selectId ? 'selected' : ''}}" bindtap="tapSelect" data-wpytapselect-a="{{consignee.id}}">
+            <view class="item-consignee {{consignee.id == selectId ? 'selected' : ''}}" bindtap="tapSelect" data-wpytapselect-a="{{consignee}}">
                 <view class="item-consignee-contain">
                     <view class="item-consignee-side" wx:if="{{type == 'select'}}">
                         <text class="icon icon-address"/>
@@ -37,5 +37,5 @@
         </block>
     </view>
     <view class="consignee-toolbar">
-        <navigator class="button base large" url="/pages/address/edit">添加地址</navigator>
+        <navigator class="button base large" url="/pages/consignee/edit">添加地址</navigator>
     </view>

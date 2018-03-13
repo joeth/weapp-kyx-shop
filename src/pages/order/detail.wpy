@@ -198,6 +198,7 @@ export default class OrderDetail extends wepy.page {
     mixins = []
 
     data = {
+        id: null,
         order: __ORDER_DATA__
     }
 
@@ -211,8 +212,8 @@ export default class OrderDetail extends wepy.page {
 
     }
 
-    onLoad() {
-
+    onLoad(res) {
+        this.id = res.id
     }
 }
 
