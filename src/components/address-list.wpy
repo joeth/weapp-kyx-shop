@@ -1,0 +1,121 @@
+<style lang="less">
+@import 'src/common/styles/config.less';
+.item-consignee-name{
+    margin-right: @margin;
+}
+.item-consignee-title{
+    font-weight: 700;
+    font-size: @font-size-large;
+}
+.item-consignee-address{
+    margin-top: @margin/2;
+}
+.item-consignee-side{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:last-child{ padding-left: @margin;}
+    &:first-child{ padding-right: @margin;}
+    .icon{
+        font-size: 40rpx;
+    }
+    .icon-address{
+        color: @color-primary;
+    }
+    .icon-arrow-right{
+        font-size: 60rpx;
+    }
+}
+.item-consignee-close{
+}
+.item-consignee-contain,
+.item-consignee-toolbar{
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+}
+.item-consignee-toolbar{
+    margin-top: @margin;
+    padding-top: @margin;
+    border-top: 2rpx dashed @color-border;
+    .icon{
+        margin-right: @margin/2;
+        font-size: @font-size-bigger;
+    }
+}
+.item-consignee{
+    padding: @margin;
+
+    margin-top: @margin;
+    background-color: @color-maincolor;
+    // &:first-child{ margin-top: 0;}
+    .icon-close{
+        font-size: @font-size-biggest;
+        color: @color-gray;
+    }
+    &.selected{
+        background-color: @color-forecolor;
+    }
+}
+</style>
+<template>
+    <view class="item-consignee {{consignee.id == selectId ? 'selected' : ''}}" @tap="tapSelect({{consignee.id}})">
+        <view class="item-consignee-contain">
+            <view class="item-consignee-side" wx:if="{{type == 'select'}}">
+                <text class="icon icon-address"></text>
+            </view>
+            <view class="item-consignee-main">
+                <view class="item-consignee-title">
+                    <text class="item-consignee-name">{{consignee.name}}</text>
+                    <text class="item-consignee-tel">{{consignee.tel}}</text>
+                </view>
+                <view class="item-consignee-address">
+                    {{consignee.area +' '+ consignee.address}}
+                </view>
+            </view>
+            <view class="item-consignee-close" wx:if="{{type != 'select'}}">
+                <text class="icon icon-close" @tap.stop="tapDelete({{consignee.id}})"></text>
+            </view>
+        </view>
+        <view class="item-consignee-toolbar" wx:if="{{type != 'select'}}">
+            <view>
+                <label @tap.stop="tapDefault({{consignee.id}})">
+                    <text class="icon icon-radio{{consignee.isDefault ? '-cur': ''}}"></text>
+                    <text>设为默认地址</text>
+                </label>
+            </view>
+            <view>
+                <label @tap.stop="tapEdit({{consignee.id}})">
+                    <text class="icon icon-edit"></text>
+                    <text>编辑</text>
+                </label>
+            </view>
+        </view>
+    </view>
+</template>
+<script>
+import wepy from 'wepy'
+
+export default class AddressList extends wepy.component {
+
+    props = {
+        datalist: {
+            type: Array,
+            default: null,
+            coerce (val) {
+                console.log('coerce datalist', val)
+                if(val) {
+                    return val.map(item => {
+                        let statusText = status2str(item.status, 'order')
+                        return Object.assign({}, item, {statusText})
+                    })
+                }
+            }
+        }
+    }
+
+    onLoad(){
+    }
+}
+
+</script>

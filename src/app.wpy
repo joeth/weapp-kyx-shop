@@ -87,6 +87,54 @@ button{
     }
 
 }
+
+.button{
+    // display: inline-block;
+    border-radius: @radius;
+    line-height: 2.5;
+    padding: 0 1.4em;
+    text-align: center;
+    font-size: @font-size-base;
+    &:before, &:after{
+        border-radius: @radius;
+    }
+    &.primary, &.primary.button-hover, &.primary.navigator-hover{
+        background-color: @color-primary;
+        color: @color-white;
+    }
+    &.warn, &.warn.button-hover, &.warn.navigator-hover{
+        background-color: @color-warn;
+        color: @color-white;
+    }
+    &.base, &.base.button-hover, &.base.navigator-hover{
+        background-color: @color-base;
+        color: @color-white;
+    }
+    &.gray, &.gray.button-hover, &.gray.navigator-hover{
+        background-color: @color-gray;
+        color: @color-white;
+    }
+    &.button-hover, &.navigator-hover{
+        opacity: 0.8;
+    }
+    &.mini {
+        font-size: @font-size-small;
+        padding: 0 1.2em;
+    }
+    &.base {
+        font-size: @font-size-base;
+    }
+    &.large {
+        font-size: @font-size-large;
+    }
+    &.bigger {
+        font-size: @font-size-bigger;
+    }
+    &.biggest {
+        font-size: @font-size-biggest;
+    }
+
+}
 scroll-view:-webkit-scrollbar{
     position: absolute;
     z-index: 1000;
@@ -190,7 +238,7 @@ export default class extends wepy.app {
 
             'pages/address/list',
 
-            'pages/address/detail',
+            'pages/address/edit',
 
             'pages/question/list',
             'pages/question/detail'

@@ -134,7 +134,7 @@
         </view>
         <view class="order-confirm-contain">
             <repeat for="{{order.commodityList}}" item="commodity" key="cid">
-                <cp-order-commodity :commodity="commodity" class="order-confirm-commodity"></cp-order-commodity>
+                <orderCommodity :commodity="commodity" class="order-confirm-commodity"></orderCommodity>
             </repeat>
         </view>
         <view class="order-confirm-footer">
@@ -161,11 +161,15 @@
         </wxc-flex>
     </wxc-flex>
 </form>
+<wxc-popup id="addressPopup">
+    <addressList></addressList>
+</wxc-popup>
 </template>
 <script>
 
 import wepy from 'wepy'
 import orderCommodity from '@/components/order-commodity'
+import addressList from '@/components/address-list'
 
 const __DATA__ = {
     totalAmount: '1149.00',
@@ -203,18 +207,35 @@ export default class OrderDetail extends wepy.page {
     config = {
         navigationBarTitleText: '订单详情',
         usingComponents: {
-            'wxc-cc': '../../packages/@minui/wxc-cc/dist/index',
-            'wxc-flex': '../../packages/@minui/wxc-flex/dist/index',
-            'wxc-tab': '../../packages/@minui/wxc-tab/dist/index',
-            'wxc-tab-panel': '../../packages/@minui/wxc-tab/dist/panel',
-            'wxc-tab-label': '../../packages/@minui/wxc-tab/dist/label',
-            'wxc-badge': '../../packages/@minui/wxc-badge/dist/index',
-            'wxc-price': '../../packages/@minui/wxc-price/dist/index'
+            'wxc-cc': '/packages/@minui/wxc-cc/dist/index',
+            'wxc-flex': '/packages/@minui/wxc-flex/dist/index',
+            'wxc-avatar': '/packages/@minui/wxc-avatar/dist/index',
+            'wxc-badge': '/packages/@minui/wxc-badge/dist/index',
+            'wxc-elip': '/packages/@minui/wxc-elip/dist/index',
+            'wxc-icon': '/packages/@minui/wxc-icon/dist/index',
+            'wxc-label': '/packages/@minui/wxc-label/dist/index',
+            'wxc-loadmore': '/packages/@minui/wxc-loadmore/dist/index',
+            'wxc-price': '/packages/@minui/wxc-price/dist/index',
+
+            'wxc-abnor': '/packages/@minui/wxc-abnor/dist/index',
+            'wxc-countdown': '/packages/@minui/wxc-countdown/dist/index',
+            'wxc-counter': '/packages/@minui/wxc-counter/dist/index',
+            'wxc-loading': '/packages/@minui/wxc-loading/dist/index',
+            'wxc-mask': '/packages/@minui/wxc-mask/dist/index',
+            'wxc-steps': '/packages/@minui/wxc-steps/dist/index',
+            'wxc-tab': '/packages/@minui/wxc-tab/dist/index',
+            'wxc-tab-panel': '/packages/@minui/wxc-tab/dist/panel',
+            'wxc-tab-label': '/packages/@minui/wxc-tab/dist/label',
+
+            'wxc-dialog': '/packages/@minui/wxc-dialog/dist/index',
+            'wxc-popup': '/packages/@minui/wxc-popup/dist/index',
+            'wxc-toast': '/packages/@minui/wxc-toast/dist/index'
         }
     }
 
     components = {
-        'cp-order-commodity': orderCommodity
+        addressList,
+        orderCommodity
     }
 
     mixins = []
@@ -234,6 +255,8 @@ export default class OrderDetail extends wepy.page {
         },
 
         tapConsignee(id){
+            // let popup = this.$wxpage.selectComponent('#addressPopup');
+            // popup && popup.show();
             wx.navigateTo({
                 url: `/pages/address/list?sid=${id}&type=select`
             })
@@ -250,6 +273,10 @@ export default class OrderDetail extends wepy.page {
 
     onLoad(res) {
         console.log(res)
+    }
+
+    onShow(res) {
+        wx.st
     }
 }
 

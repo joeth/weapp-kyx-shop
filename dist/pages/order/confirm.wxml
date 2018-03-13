@@ -65,3 +65,40 @@
         </wxc-flex>
     </wxc-flex>
 </form>
+<wxc-popup id="addressPopup">
+    
+    <view class="item-consignee {{$addressList$consignee.id == $addressList$selectId ? 'selected' : ''}}" bindtap="$addressList$tapSelect" data-wpytapselect-a="{{$addressList$consignee.id}}">
+        <view class="item-consignee-contain">
+            <view class="item-consignee-side"  wx:if="{{$addressList$type == 'select'}}">
+                <text class="icon icon-address"/>
+            </view>
+            <view class="item-consignee-main">
+                <view class="item-consignee-title">
+                    <text class="item-consignee-name">{{$addressList$consignee.name}}</text>
+                    <text class="item-consignee-tel">{{$addressList$consignee.tel}}</text>
+                </view>
+                <view class="item-consignee-address">
+                    {{$addressList$consignee.area +' '+ $addressList$consignee.address}}
+                </view>
+            </view>
+            <view class="item-consignee-close"  wx:if="{{$addressList$type != 'select'}}">
+                <text class="icon icon-close" catchtap="$addressList$tapDelete" data-wpytapdelete-a="{{$addressList$consignee.id}}"/>
+            </view>
+        </view>
+        <view class="item-consignee-toolbar" wx:if="{{$addressList$type != 'select'}}">
+            <view>
+                <label catchtap="$addressList$tapDefault" data-wpytapdefault-a="{{$addressList$consignee.id}}">
+                    <text class="icon icon-radio{{$addressList$consignee.isDefault ? '-cur': ''}}"/>
+                    <text>设为默认地址</text>
+                </label>
+            </view>
+            <view>
+                <label catchtap="$addressList$tapEdit" data-wpytapedit-a="{{$addressList$consignee.id}}">
+                    <text class="icon icon-edit"/>
+                    <text>编辑</text>
+                </label>
+            </view>
+        </view>
+    </view>
+
+</wxc-popup>

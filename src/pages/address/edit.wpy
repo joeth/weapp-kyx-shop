@@ -37,14 +37,14 @@
         </view>
     </view>
 </form>
-<dzuicityselect :selected.sync="area"></dzuicityselect>
-<dzuitoast id="toast"></dzuitoast>
+<cityselect :selected.sync="area"></cityselect>
+<wxc-toast is-show="{{$toast.show}}" icon="{{$toast.icon}}" icon-image="{{$toast.image}}" icon-color="{{$toast.color}}" text="{{$toast.text}}" duration="{{$toast.duration}}"></wxc-toast>
 </template>
 <script>
 import wepy from 'wepy';
-import binputMixin from '@/mixins/binput';
-import dzuitoast from '@/components/dzui/toast';
-import dzuicityselect from '@/components/dzui/cityselect';
+import InputMixin from '@/mixins/binput';
+import MinuiMixin from '@/mixins/minui';
+import cityselect from '@/components/dzui/cityselect';
 
 export default class AddressDetail extends wepy.page {
     config = {
@@ -52,34 +52,50 @@ export default class AddressDetail extends wepy.page {
         usingComponents: {
             'wxc-cc': '/packages/@minui/wxc-cc/dist/index',
             'wxc-flex': '/packages/@minui/wxc-flex/dist/index',
+            'wxc-avatar': '/packages/@minui/wxc-avatar/dist/index',
+            'wxc-badge': '/packages/@minui/wxc-badge/dist/index',
+            'wxc-elip': '/packages/@minui/wxc-elip/dist/index',
+            'wxc-icon': '/packages/@minui/wxc-icon/dist/index',
+            'wxc-label': '/packages/@minui/wxc-label/dist/index',
+            'wxc-loadmore': '/packages/@minui/wxc-loadmore/dist/index',
+            'wxc-price': '/packages/@minui/wxc-price/dist/index',
+
+            'wxc-abnor': '/packages/@minui/wxc-abnor/dist/index',
+            'wxc-countdown': '/packages/@minui/wxc-countdown/dist/index',
+            'wxc-counter': '/packages/@minui/wxc-counter/dist/index',
+            'wxc-loading': '/packages/@minui/wxc-loading/dist/index',
+            'wxc-mask': '/packages/@minui/wxc-mask/dist/index',
+            'wxc-steps': '/packages/@minui/wxc-steps/dist/index',
             'wxc-tab': '/packages/@minui/wxc-tab/dist/index',
             'wxc-tab-panel': '/packages/@minui/wxc-tab/dist/panel',
             'wxc-tab-label': '/packages/@minui/wxc-tab/dist/label',
-            'wxc-badge': '/packages/@minui/wxc-badge/dist/index',
-            'wxc-price': '/packages/@minui/wxc-price/dist/index',
-            'wxc-popup': '/packages/@minui/wxc-popup/dist/index'
+
+            'wxc-dialog': '/packages/@minui/wxc-dialog/dist/index',
+            'wxc-popup': '/packages/@minui/wxc-popup/dist/index',
+            'wxc-toast': '/packages/@minui/wxc-toast/dist/index'
         }
     }
 
     components = {
-        dzuitoast,
-        dzuicityselect
+        // toast,
+        cityselect
     }
 
-    mixins = [binputMixin]
+    mixins = [MinuiMixin, InputMixin]
 
     data = {
         id: 0,
         name: '',
         area: '',
         tel: '',
-        address: ''
+        address: '',
     }
 
     computed = {
     }
 
     methods = {
+
         showCityPicker() {
             this.$broadcast('showCityselect');
         },
@@ -89,38 +105,35 @@ export default class AddressDetail extends wepy.page {
             console.log(e.detail.formId);
 
             if(!this.name){
-                let promise = this.$invoke('toast', 'show', {
-                    title: '请填写收货人',
-                    img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png',
+                this.$showToast({
+                    text: '请填写收货人'
                 });
                 return;
             }
 
             if(!this.tel){
-                let promise = this.$invoke('toast', 'show', {
-                    title: '请填写联系方式',
-                    img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png',
+                this.$showToast({
+                    text: '请填写联系方式'
                 });
                 return;
             }
 
             if(!this.area){
-                let promise = this.$invoke('toast', 'show', {
-                    title: '请选择所在地区',
-                    img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png',
+                this.$showToast({
+                    text: '请选择所在地区'
                 });
                 return;
             }
 
             if(!this.address){
-                let promise = this.$invoke('toast', 'show', {
-                    title: '请填写详细地址',
-                    img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png',
+                this.$showToast({
+                    text: '请填写详细地址'
                 });
                 return;
             }
 
-            console.log('提交数据')
+            console.log('提交数据');
+            wx.navigateBack();
 
         }
     }
@@ -145,6 +158,10 @@ export default class AddressDetail extends wepy.page {
                 console.log('请求完成');
             }, 200)
         }
+    }
+
+    onShow() {
+        // console.log(this)
     }
 }
 

@@ -1,6 +1,6 @@
 import wepy from 'wepy'
 
-export default class binput extends wepy.mixin {
+export default class binputMixin extends wepy.mixin {
     methods = {
         binput(e){
             const { store, trim } = e.currentTarget.dataset;

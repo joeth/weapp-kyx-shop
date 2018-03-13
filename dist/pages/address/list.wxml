@@ -3,9 +3,9 @@
         <block  wx:for="{{consigneeList}}" wx:for-item="consignee" wx:key="id">
             <view class="item-consignee {{consignee.id == selectId ? 'selected' : ''}}" bindtap="tapSelect" data-wpytapselect-a="{{consignee.id}}">
                 <view class="item-consignee-contain">
-                    <wxc-cc class="order-consignee-side" wx:if="{{type == 'select'}}">
+                    <view class="item-consignee-side" wx:if="{{type == 'select'}}">
                         <text class="icon icon-address"/>
-                    </wxc-cc>
+                    </view>
                     <view class="item-consignee-main">
                         <view class="item-consignee-title">
                             <text class="item-consignee-name">{{consignee.name}}</text>
@@ -15,7 +15,7 @@
                             {{consignee.area +' '+ consignee.address}}
                         </view>
                     </view>
-                    <view class="item-consignee-side" wx:if="{{type != 'select'}}">
+                    <view class="item-consignee-close" wx:if="{{type != 'select'}}">
                         <text class="icon icon-close" catchtap="tapDelete" data-wpytapdelete-a="{{consignee.id}}"/>
                     </view>
                 </view>
@@ -37,5 +37,5 @@
         </block>
     </view>
     <view class="consignee-toolbar">
-        <button type="base" size="large">添加地址</button>
+        <navigator class="button base large" url="/pages/address/edit">添加地址</navigator>
     </view>
