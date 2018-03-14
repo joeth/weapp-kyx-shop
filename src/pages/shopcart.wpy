@@ -35,18 +35,28 @@
     .contain{
         flex-grow: 1;
         padding: @margin;
-        text-align: right;
     }
 }
 </style>
 <template>
 <form report-submit="true" bindsubmit="formSubmit">
     <wxc-flex class="shopcart" dir="top">
-        <view class="shopcart-commodity" wx:for="{{shopcartList}}" wx:for-item="commodity" wx:key="commodity">
-            <view @tap.stop="tapCheckbox({{commodity.id}})">
-                {{commodity.isSelected}}
+        <block wx:for="{{shopcartList}}" wx:for-item="commodity" wx:key="commodity">
+            <view class="shopcart-commodity">
+                <view class="shopcart-commodity-checkbox" @tap.stop="tapCheckbox({{commodity.id}})">
+                    <text class="icon icon-radio{{ commodity.isSelected ? '-cur': '' }}"></text>
+                </view>
+                <view class="shopcart-commodity-cover"></view>
+                <view class="shopcart-commodity-main">
+                    <view class="shopcart-commodity-title"></view>
+                    <view class="shopcart-commodity-text"></view>
+                    <wxc-flex class="shopcart-commodity-count" main="between" cross="center">
+                        <wxc-price class="price" value="{{commodity.price}}"></wxc-price>
+                        <wxc-counter number="{{commodity.count}}" max="{{commodity.maximum}}" min="1" bind:changenumber="onChangeCounter" id="{{commodity.id}}"></wxc-counter>
+                    </wxc-flex>
+                </view>
             </view>
-        </view>
+        </block>
         <wxc-flex class="shopcart-toolbar">
             <wxc-flex class="contain" cross="center" main="between">
                 <view>
@@ -57,7 +67,7 @@
                 </view>
                 <view>
                     <text>合计：</text>
-                    <wxc-price class="price" value="{{order.actualAmount}}"></wxc-price>
+                    <wxc-price class="price" value="{{actualAmount}}"></wxc-price>
                 </view>
             </wxc-flex>
             <button class="submit" type="base" size="bigger" form-type="submit">结算</button>
@@ -67,6 +77,9 @@
 </template>
 <script>
 import wepy from 'wepy'
+import { getStore, connect } from 'wepy-redux'
+import { getShopCart, addShopCart, delShopCart } from '@/store/actions'
+const store = getStore()
 
 const __SHOPCART_LIST__ = [
     {
@@ -76,6 +89,7 @@ const __SHOPCART_LIST__ = [
         type: '熟茶',
         price: '180.00',
         count: 1,
+        maximum: 3,
         isSelected: true
     },
     {
@@ -85,11 +99,17 @@ const __SHOPCART_LIST__ = [
         type: '熟茶',
         price: '920.00',
         count: 1,
+        maximum: 3,
         isSelected: true
     }
 ]
 
-export default class ShopCart extends wepy.page {
+@connect({
+    uid: state => state.shopcart.uid,
+    commodity: state => state.shopcart.commodity
+})
+
+export default class PageShopCart extends wepy.page {
     config = {
         navigationBarTitleText: '购物车',
         usingComponents: {
@@ -122,7 +142,8 @@ export default class ShopCart extends wepy.page {
     data = {
         isSelectedAll: false,
         shopcartList: __SHOPCART_LIST__,
-        selectedList: []
+        selectedList: [],
+        actualAmount: '10.00',
     }
 
     methods = {
@@ -141,6 +162,16 @@ export default class ShopCart extends wepy.page {
                 return item;
             });
             this.updateSelectedAll();
+        },
+        onChangeCounter(e){
+            const { id } = e.currentTarget;
+            const { number } = e.detail;
+            this.shopcartList.map(item => {
+                if(item.id == id){
+                    item.count = number;
+                }
+            });
+            this.setStorageShopcart();
         },
         formSubmit(e){
             console.log('去结算');
@@ -172,6 +203,9 @@ export default class ShopCart extends wepy.page {
     }
 
     onLoad() {
+        store.dispatch(addShopCart({uid: 1, commodity: {id: 1}})).then(e => {
+            console.log('then', this.$state.shopcart)
+        })
         this.getStorageShopcart();
         this.updateSelectedAll();
     }

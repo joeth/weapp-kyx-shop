@@ -88,6 +88,18 @@ button{
 
 }
 
+.icon-radio, .icon-radio-cur{
+    margin-right: .2em;
+}
+
+// .price{
+//     // padding-left: 1em;
+//     position: relative;
+//     &:before{
+//         content: '￥';
+//     }
+// }
+
 .button{
     // display: inline-block;
     border-radius: @radius;
@@ -216,8 +228,12 @@ button[type="normal"], navigator.normal{
 
 </style>
 <script>
-import wepy from 'wepy';
-import 'wepy-async-function';
+import wepy from 'wepy'
+import 'wepy-async-function'
+import { setStore } from 'wepy-redux'
+import configStore from './store'
+const store = configStore()
+setStore(store)
 
 const device = wx.getSystemInfoSync()
 const deviceRadio = device.windowWidth / 750

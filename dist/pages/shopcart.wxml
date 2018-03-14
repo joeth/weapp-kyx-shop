@@ -1,11 +1,22 @@
 
 <form report-submit="true" bindsubmit="formSubmit">
     <wxc-flex class="shopcart" dir="top">
-        <view class="shopcart-commodity"  wx:for="{{shopcartList}}" wx:for-item="commodity" wx:key="commodity">
-            <view catchtap="tapCheckbox" data-wpytapcheckbox-a="{{commodity.id}}">
-                {{commodity.isSelected}}
+        <block  wx:for="{{shopcartList}}" wx:for-item="commodity" wx:key="commodity">
+            <view class="shopcart-commodity">
+                <view class="shopcart-commodity-checkbox" catchtap="tapCheckbox" data-wpytapcheckbox-a="{{commodity.id}}">
+                    <text class="icon icon-radio{{ commodity.isSelected ? '-cur': '' }}"/>
+                </view>
+                <view class="shopcart-commodity-cover"/>
+                <view class="shopcart-commodity-main">
+                    <view class="shopcart-commodity-title"/>
+                    <view class="shopcart-commodity-text"/>
+                    <wxc-flex class="shopcart-commodity-count" main="between" cross="center">
+                        <wxc-price class="price" value="{{commodity.price}}"/>
+                        <wxc-counter number="{{commodity.count}}" max="{{commodity.maximum}}" min="1"  bind:changenumber="onChangeCounter" id="{{commodity.id}}"/>
+                    </wxc-flex>
+                </view>
             </view>
-        </view>
+        </block>
         <wxc-flex class="shopcart-toolbar">
             <wxc-flex class="contain" cross="center" main="between">
                 <view>
@@ -16,7 +27,7 @@
                 </view>
                 <view>
                     <text>合计：</text>
-                    <wxc-price class="price" value="{{order.actualAmount}}"/>
+                    <wxc-price class="price" value="{{actualAmount}}"/>
                 </view>
             </wxc-flex>
             <button class="submit" type="base" size="bigger" form-type="submit">结算</button>
