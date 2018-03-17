@@ -29,7 +29,7 @@ module.exports = {
           outputStyle: 'compressed'
         },*/
         babel: {
-            sourceMap: false,
+            sourceMap: true,
             presets: [
                 'env'
             ],
@@ -51,7 +51,7 @@ module.exports = {
                 'mangle': true,
                 'mangle-props': true,
                 'minify': true,
-                'sourcemap': false,
+                'sourcemap': true,
                 'compress': {
                     'warnings': false,
                     'dead_code': true,

@@ -231,7 +231,8 @@ button[type="normal"], navigator.normal{
 import wepy from 'wepy'
 import 'wepy-async-function'
 import { setStore } from 'wepy-redux'
-import configStore from './store'
+import configStore from '@/store'
+import { getShopCart } from '@/store/actions'
 const store = configStore()
 setStore(store)
 
@@ -338,7 +339,7 @@ export default class extends wepy.app {
 
 
     onLaunch() {
-        // this.testAsync()
+        store.dispatch(getShopCart({uid:1}));
     }
 
     sleep(s) {

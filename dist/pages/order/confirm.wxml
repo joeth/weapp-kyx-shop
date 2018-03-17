@@ -23,7 +23,7 @@
             </wxc-cc>
         </view>
         <view class="order-confirm-contain">
-            <block wx:for="{{commodityList}}" wx:for-index="index" wx:for-item="commodity" wx:key="commodity">
+            <block wx:for="{{shopBuyList}}" wx:for-index="index" wx:for-item="commodity" wx:key="commodity">
                 
     <wxc-flex class="cp-order-commodity order-confirm-commodity">
         <image class="cp-commodity-cover" src="{{commodity.cover}}"/>

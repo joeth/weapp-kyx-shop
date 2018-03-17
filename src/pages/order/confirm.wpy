@@ -134,7 +134,7 @@
             </wxc-cc>
         </view>
         <view class="order-confirm-contain">
-            <repeat for="{{commodityList}}" item="commodity" key="commodity">
+            <repeat for="{{shopBuyList}}" item="commodity" key="commodity">
                 <cp-order-commodity :commodity="commodity" class="order-confirm-commodity"></cp-order-commodity>
             </repeat>
         </view>
@@ -169,16 +169,17 @@
 <script>
 
 import wepy from 'wepy'
-import inputMixin from '@/mixins/input';
+import inputMixin from '@/mixins/input'
 import orderCommodity from '@/components/order-commodity'
 
-const __DATA__ = {
-    totalAmount: '1149.00',
-    freightAmount: '0.00',
-    actualAmount: '1149.00',
-    message: '帮我包装得好看点',
-    consignee: {}
-}
+import { getStore, connect } from 'wepy-redux'
+import { getShopBuyList } from '@/store/actions'
+const store = getStore()
+
+@connect({
+    shopBuyList: state => state.shopcart.shopBuyList,
+    totalAmount: state => state.shopcart.totalAmount
+})
 
 export default class OrderDetail extends wepy.page {
     config = {
@@ -218,12 +219,8 @@ export default class OrderDetail extends wepy.page {
 
     data = {
         message: '',
-        totalAmount: '1149.00',
-        freightAmount: '0.00',
-        actualAmount: '1149.00',
         consignee: {},
-        shopcartList: [],
-        commodityList: []
+        freightAmount: '10.00',
     }
 
     methods = {
@@ -242,18 +239,23 @@ export default class OrderDetail extends wepy.page {
         formSubmit(e){
             console.log(e.detail.formId);
             console.log('提交订单');
-            //删除收货人缓存数据
-            this.setStorageShopcart();
-            this.delStorageConsignee();
 
             wx.redirectTo({
-                url: `/pages/order/detail?id=1`
+                url: `/pages/order/detail?id=1`,
+                // success: (res) => {
+                //     //删除收货人缓存数据
+                //     this.delStorageConsignee();
+                // }
             })
         }
     }
 
-    events = {
-
+    computed = {
+        actualAmount() {
+            let freightAmount = Number(this.freightAmount) != NaN ? Number(this.freightAmount) : 0
+            let totalAmount = Number(this.totalAmount) != NaN ? Number(this.totalAmount) : 0
+            return (totalAmount + freightAmount).toFixed(2)
+        }
     }
 
     //获取收货人缓存数据
@@ -265,43 +267,18 @@ export default class OrderDetail extends wepy.page {
         wx.removeStorageSync('__SELECTED_CONSIGNEE__');
     }
 
-    //设置购物车缓存数据
-    setStorageShopcart(){
-        console.log('更新购物车缓存数据');
-        let shopcartList = [];
-        this.shopcartList.forEach(item => {
-            if(!item.isSelected){
-                shopcartList.push(item);
-            }
-        });
-        wx.setStorageSync('__SHOPCART_LIST__', shopcartList);
-    }
-    //设置购物车缓存数据
-    getStorageShopcart(){
-        console.log('更新购物车缓存数据');
-        this.shopcartList = wx.getStorageSync('__SHOPCART_LIST__') || this.shopcartList;
-
-        let commodityList = [];
-        this.shopcartList.forEach(item => {
-            if(item.isSelected){
-                commodityList.push(item);
-            }
-        });
-        this.commodityList = commodityList;
-    }
-
     onLoad(res) {
         console.log(res);
+        const param = { uid: 1 }
+        store.dispatch(getShopBuyList(param));
     }
 
     onUnload() {
-        //删除收货人缓存数据
-        this.delStorageConsignee();
+        // //删除收货人缓存数据
+        // this.delStorageConsignee();
     }
 
     onShow(res) {
-        //获取收货人缓存数据
-        this.getStorageShopcart();
         //获取收货人缓存数据
         this.getStorageConsignee();
     }

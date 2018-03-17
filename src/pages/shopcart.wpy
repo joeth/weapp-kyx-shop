@@ -1,8 +1,5 @@
 <style lang="less">
 @import 'src/common/styles/config.less';
-.shopcart{
-    height: 100vh;
-}
 
 .shopcart-toolbar{
     display: block;
@@ -37,48 +34,100 @@
         padding: @margin;
     }
 }
+
+.shopcart-commodity-check{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40rpx;
+    margin-right: @margin;
+}
+.shopcart-commodity-cover{
+    display: block;
+    width: 180rpx;
+    height: 180rpx;
+    background-color: @color-forecolor;
+    border: 2rpx solid @color-border;
+    border-radius: @radius;
+}
+.shopcart-commodity-main{
+    display: block;
+    flex-grow: 1;
+    margin-left: @margin;
+    position: relative;
+}
+.shopcart-commodity-text{
+    color: @color-gray;
+}
+.shopcart-commodity{
+    display: block;
+    position: relative;
+    padding: @margin;
+
+    margin-top: @margin;
+    background-color: @color-maincolor;
+    .icon-close{
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: @font-size-biggest;
+        color: @color-gray;
+    }
+}
+.shopcart{
+    padding-bottom: 120rpx;
+    position: relative;
+}
 </style>
 <template>
 <form report-submit="true" bindsubmit="formSubmit">
-    <wxc-flex class="shopcart" dir="top">
-        <block wx:for="{{shopcartList}}" wx:for-item="commodity" wx:key="commodity">
-            <view class="shopcart-commodity">
-                <view class="shopcart-commodity-checkbox" @tap.stop="tapCheckbox({{commodity.id}})">
+    <view class="shopcart">
+        <block wx:for="{{shopCartList}}" wx:for-item="commodity" wx:key="commodity">
+            <wxc-flex class="shopcart-commodity">
+                <view class="shopcart-commodity-check" @tap.stop="onCheckOne({{commodity}})">
                     <text class="icon icon-radio{{ commodity.isSelected ? '-cur': '' }}"></text>
                 </view>
-                <view class="shopcart-commodity-cover"></view>
-                <view class="shopcart-commodity-main">
-                    <view class="shopcart-commodity-title"></view>
-                    <view class="shopcart-commodity-text"></view>
+                <navigator class="shopcart-commodity-cover" url="/pages/commodity/detail?id={{commodity.id}}">
+                    <image src="{{commodity.cover}}"></image>
+                </navigator>
+                <wxc-flex class="shopcart-commodity-main" main="between" dir="top">
+                    <wxc-flex class="shopcart-commodity-contain" dir="top">
+                        <view class="shopcart-commodity-title">{{commodity.title}}</view>
+                        <view class="shopcart-commodity-text">{{commodity.type}}</view>
+                    </wxc-flex>
                     <wxc-flex class="shopcart-commodity-count" main="between" cross="center">
                         <wxc-price class="price" value="{{commodity.price}}"></wxc-price>
-                        <wxc-counter number="{{commodity.count}}" max="{{commodity.maximum}}" min="1" bind:changenumber="onChangeCounter" id="{{commodity.id}}"></wxc-counter>
+                        <wxc-counter number="{{commodity.count || 0}}" max="{{commodity.maximum || 1}}" min="1" bind:changenumber="onChangeCounter" data-value="{{commodity}}"></wxc-counter>
                     </wxc-flex>
-                </view>
-            </view>
-        </block>
-        <wxc-flex class="shopcart-toolbar">
-            <wxc-flex class="contain" cross="center" main="between">
-                <view>
-                    <label @tap.stop="tapCheckboxAll()">
-                        <text class="icon icon-radio{{ isSelectedAll ? '-cur': '' }}"></text>
-                        <text>全选</text>
-                    </label>
-                </view>
-                <view>
-                    <text>合计：</text>
-                    <wxc-price class="price" value="{{actualAmount}}"></wxc-price>
-                </view>
+                    <text class="icon icon-close" @tap.stop="onDelCart({{commodity}})"></text>
+                </wxc-flex>
             </wxc-flex>
-            <button class="submit" type="base" size="bigger" form-type="submit">结算</button>
+        </block>
+        <button @tap="onAddCart">添加一个</button>
+    </view>
+    <wxc-flex class="shopcart-toolbar">
+        <wxc-flex class="contain" cross="center" main="between">
+            <view>
+                <label @tap.stop="onCheckAll()">
+                    <text class="icon icon-radio{{ isSelectedAll ? '-cur': '' }}"></text>
+                    <text>全选</text>
+                </label>
+            </view>
+            <view>
+                <text>合计：</text>
+                <wxc-price class="price" value="{{totalAmount}}"></wxc-price>
+            </view>
         </wxc-flex>
+        <button class="submit" type="base" size="bigger" form-type="submit">结算</button>
     </wxc-flex>
 </form>
+<wxc-toast is-show="{{$toast.show}}" icon="{{$toast.icon}}" icon-image="{{$toast.image}}" icon-color="{{$toast.color}}" text="{{$toast.text}}" duration="{{$toast.duration}}"></wxc-toast>
 </template>
 <script>
 import wepy from 'wepy'
+import minuiMixin from '@/mixins/minui'
 import { getStore, connect } from 'wepy-redux'
-import { getShopCart, addShopCart, delShopCart } from '@/store/actions'
+import { getShopCart, setShopCart, addShopCart, delShopCart, checkOneShopCart, checkAllShopCart, getShopBuyList } from '@/store/actions'
 const store = getStore()
 
 const __SHOPCART_LIST__ = [
@@ -105,8 +154,9 @@ const __SHOPCART_LIST__ = [
 ]
 
 @connect({
-    uid: state => state.shopcart.uid,
-    commodity: state => state.shopcart.commodity
+    shopCartList: state => state.shopcart.shopCartList,
+    isSelectedAll: state => state.shopcart.isSelectedAll,
+    totalAmount: state => state.shopcart.totalAmount,
 })
 
 export default class PageShopCart extends wepy.page {
@@ -139,75 +189,89 @@ export default class PageShopCart extends wepy.page {
         }
     }
 
+    mixins = [minuiMixin]
+
     data = {
-        isSelectedAll: false,
-        shopcartList: __SHOPCART_LIST__,
-        selectedList: [],
-        actualAmount: '10.00',
+        uid: 1
     }
 
     methods = {
-        tapCheckboxAll(){
-            this.isSelectedAll = !this.isSelectedAll;
-            this.shopcartList.map(item => {
-                item.isSelected = this.isSelectedAll;
-                return item;
-            });
+        onCheckAll(){
+            const param = { uid: this.uid}
+            store.dispatch(checkAllShopCart(param));
         },
-        tapCheckbox(id){
-            this.shopcartList.map(item => {
-                if(item.id == id){
-                    item.isSelected = !item.isSelected;
-                }
-                return item;
-            });
-            this.updateSelectedAll();
+        onCheckOne(param){
+            store.dispatch(checkOneShopCart(param));
         },
         onChangeCounter(e){
-            const { id } = e.currentTarget;
+            const { value } = e.currentTarget.dataset;
             const { number } = e.detail;
-            this.shopcartList.map(item => {
-                if(item.id == id){
-                    item.count = number;
+
+            const param = Object.assign({}, value, {
+                count: number
+            })
+
+            store.dispatch(setShopCart(param));
+        },
+        onDelCart(param){
+            wx.showModal({
+                // title: '温馨提示',
+                content: '确定要删除该商品吗？',
+                success: (res) => {
+                    if(res.confirm){
+                        //执行删除
+                        store.dispatch(delShopCart(param));
+                        this.$apply();
+                    }
                 }
             });
-            this.setStorageShopcart();
+        },
+        onAddCart(){
+            const param = {
+                id: 4,
+                uid: this.uid,
+                cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
+                title: '糥伍古树圆茶',
+                type: '熟茶',
+                price: '69.98',
+                count: 1,
+                maximum: 3,
+                isSelected: true
+            }
+            store.dispatch(addShopCart(param));
         },
         formSubmit(e){
             console.log('去结算');
-            console.log(e.detail.formId);
+            const { formId } = e.detail;
+            const param = { formId: formId};
 
-            //更新购物车缓存数据
-            this.setStorageShopcart();
+            let iscan = this.shopCartList.some(n => n.isSelected == true)
+            if(!iscan){
+                this.$showToast({
+                    text: '请选择要购买的商品！'
+                });
+                // wx.showModal({
+                //     // title: '温馨提示',
+                //     content: '请选择要购买的商品！',
+                //     showCancel: false,
+                //     success(res) {
+                //         if(res.confirm){
+                //             //执行删除
+                //         }
+                //     }
+                // });
+                return;
+            }
 
             wx.navigateTo({
                 url: '/pages/order/confirm'
-            })
+            });
         }
     }
 
-    updateSelectedAll(){
-        this.isSelectedAll = !this.shopcartList.find(n => !n.isSelected);
-    }
-
-    //设置购物车缓存数据
-    setStorageShopcart(){
-        console.log('更新购物车缓存数据');
-        wx.setStorageSync('__SHOPCART_LIST__', this.shopcartList);
-    }
-
-    //设置购物车缓存数据
-    getStorageShopcart(){
-        console.log('更新购物车缓存数据');
-        this.shopcartList = wx.getStorageSync('__SHOPCART_LIST__') || this.shopcartList;
-    }
-
     onLoad() {
-        store.dispatch(addShopCart({uid: 1, commodity: {id: 1}})).then(e => {
-            console.log('then', this.$state.shopcart)
-        })
-        this.getStorageShopcart();
-        this.updateSelectedAll();
+        // const param = { uid: this.uid}
+        // store.dispatch(getShopCart(param))
     }
 }
 

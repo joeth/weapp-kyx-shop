@@ -181,10 +181,20 @@ export default class AddressList extends wepy.page {
         },
         tapDelete(id){
             console.log('tapDelete');
-            try{
-                let index = this.consigneeList.findIndex(n => n.id == id);
-                this.consigneeList.splice(index, 1);
-            } catch(e) {}
+            wx.showModal({
+                // title: '温馨提示',
+                content: '确定要删除吗？',
+                success: (res) => {
+                    if(res.confirm){
+                        //执行删除
+                        try{
+                            let index = this.consigneeList.findIndex(n => n.id == id);
+                            this.consigneeList.splice(index, 1);
+                            this.$apply();
+                        } catch(e) {}
+                    }
+                }
+            });
         },
         tapSelect(consignee){
             console.log('tapSelect');
