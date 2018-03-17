@@ -52,19 +52,19 @@ button{
     }
     &[type="primary"], &[type="primary"].button-hover{
         background-color: @color-primary;
-        color: @color-white;
+        color: @color-invert;
     }
     &[type="warn"], &[type="warn"].button-hover{
         background-color: @color-warn;
-        color: @color-white;
+        color: @color-invert;
     }
     &[type="base"], &[type="base"].button-hover{
         background-color: @color-base;
-        color: @color-white;
+        color: @color-invert;
     }
     &[type="gray"], &[type="gray"].button-hover{
         background-color: @color-gray;
-        color: @color-white;
+        color: @color-invert;
     }
     &[type].button-hover{
         opacity: 0.8;
@@ -244,9 +244,9 @@ export default class extends wepy.app {
         pages: [
             'pages/shopcart',
 
-            'pages/mycenter',
             'pages/homepage',
             'pages/catalog',
+            'pages/mycenter',
 
             'pages/commodity/list',
             'pages/commodity/detail',
@@ -259,7 +259,7 @@ export default class extends wepy.app {
             'pages/consignee/edit',
 
             'pages/question/list',
-            'pages/question/detail'
+            'pages/question/detail',
         ],
         tabBar: {
             color: '#452713',

@@ -1,10 +1,10 @@
 
 <form report-submit="true" bindsubmit="formSubmit">
-    <wxc-flex class="order-confirm" dir="top">
+    <view class="order-confirm">
         <view class="order-confirm-consignee" bindtap="tapConsignee" data-wpytapconsignee-a="">
-            <wxc-cc class="order-consignee-side">
+            <view class="order-consignee-side">
                 <text class="icon icon-address"/>
-            </wxc-cc>
+            </view>
             <view class="order-consignee-main"  wx:if="{{consignee.id}}">
                 <view class="order-consignee-title">
                     <text class="order-consignee-name">{{consignee.name}}</text>
@@ -18,9 +18,9 @@
                 <view class="order-consignee-title">您还没有收货地址</view>
                 <view class="order-consignee-address">请添加先添加收货地址</view>
             </view>
-            <wxc-cc class="order-consignee-side">
+            <view class="order-consignee-side">
                 <text class="icon icon-arrow-right"/>
-            </wxc-cc>
+            </view>
         </view>
         <view class="order-confirm-contain">
             <block wx:for="{{shopBuyList}}" wx:for-index="index" wx:for-item="commodity" wx:key="commodity">
@@ -56,15 +56,12 @@
                 </wxc-flex>
             </view>
         </view>
-        <wxc-flex class="order-confirm-toolbar">
-            <wxc-flex class="count" cross="center" main="end">
-                <text>实付款：</text>
-                <wxc-price class="price" value="{{actualAmount}}"/>
-            </wxc-flex>
-            <button class="submit" type="base" size="bigger" form-type="submit">提交订单</button>
+    </view>
+    <wxc-flex class="order-confirm-toolbar">
+        <wxc-flex class="count" cross="center" main="end">
+            <text>实付款：</text>
+            <wxc-price class="price" value="{{actualAmount}}"/>
         </wxc-flex>
+        <button class="submit" type="base" size="bigger" form-type="submit">提交订单</button>
     </wxc-flex>
 </form>
-<wxc-popup id="addressPopup">
-    <addressList/>
-</wxc-popup>

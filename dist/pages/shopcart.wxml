@@ -1,6 +1,6 @@
 
-<form report-submit="true" bindsubmit="formSubmit">
-    <view class="shopcart">
+<form class="shopcart" report-submit="true" bindsubmit="formSubmit">
+    <view class="shopcart-contain">
         <block  wx:for="{{shopCartList}}" wx:for-item="commodity" wx:key="commodity">
             <wxc-flex class="shopcart-commodity">
                 <view class="shopcart-commodity-check" catchtap="onCheckOne" data-wpyoncheckone-a="{{commodity}}">
@@ -26,15 +26,14 @@
     </view>
     <wxc-flex class="shopcart-toolbar">
         <wxc-flex class="contain" cross="center" main="between">
-            <view>
+            <view class="check">
                 <label catchtap="onCheckAll" data-wpyoncheckall-a="">
                     <text class="icon icon-radio{{ isSelectedAll ? '-cur': '' }}"/>
                     <text>全选</text>
                 </label>
             </view>
-            <view>
-                <text>合计：</text>
-                <wxc-price class="price" value="{{totalAmount}}"/>
+            <view class="amount">
+                合计：<wxc-price class="price" value="{{totalAmount}}"/>
             </view>
         </wxc-flex>
         <button class="submit" type="base" size="bigger" form-type="submit">结算</button>

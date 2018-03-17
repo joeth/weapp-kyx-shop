@@ -33,14 +33,17 @@
         flex-grow: 1;
         padding: @margin;
     }
+    .amount{
+        font-size: @font-size-large;
+    }
 }
 
 .shopcart-commodity-check{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40rpx;
-    margin-right: @margin;
+    width: 100rpx;
+    .icon{ margin: 0;}
 }
 .shopcart-commodity-cover{
     display: block;
@@ -53,7 +56,7 @@
 .shopcart-commodity-main{
     display: block;
     flex-grow: 1;
-    margin-left: @margin;
+    margin: 0 @margin;
     position: relative;
 }
 .shopcart-commodity-text{
@@ -62,7 +65,7 @@
 .shopcart-commodity{
     display: block;
     position: relative;
-    padding: @margin;
+    padding: @margin 0;
 
     margin-top: @margin;
     background-color: @color-maincolor;
@@ -74,14 +77,19 @@
         color: @color-gray;
     }
 }
-.shopcart{
+.shopcart-contain{
     padding-bottom: 120rpx;
     position: relative;
 }
+.shopcart{
+    .icon-radio, .icon-radio-cur{
+        font-size: 48rpx;
+    }
+}
 </style>
 <template>
-<form report-submit="true" bindsubmit="formSubmit">
-    <view class="shopcart">
+<form class="shopcart" report-submit="true" bindsubmit="formSubmit">
+    <view class="shopcart-contain">
         <block wx:for="{{shopCartList}}" wx:for-item="commodity" wx:key="commodity">
             <wxc-flex class="shopcart-commodity">
                 <view class="shopcart-commodity-check" @tap.stop="onCheckOne({{commodity}})">
@@ -107,15 +115,14 @@
     </view>
     <wxc-flex class="shopcart-toolbar">
         <wxc-flex class="contain" cross="center" main="between">
-            <view>
+            <view class="check">
                 <label @tap.stop="onCheckAll()">
                     <text class="icon icon-radio{{ isSelectedAll ? '-cur': '' }}"></text>
                     <text>全选</text>
                 </label>
             </view>
-            <view>
-                <text>合计：</text>
-                <wxc-price class="price" value="{{totalAmount}}"></wxc-price>
+            <view class="amount">
+                合计：<wxc-price class="price" value="{{totalAmount}}"></wxc-price>
             </view>
         </wxc-flex>
         <button class="submit" type="base" size="bigger" form-type="submit">结算</button>
