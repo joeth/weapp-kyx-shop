@@ -23,12 +23,12 @@
     background:none
 }
 .counter__opt {
-    width: 60rpx;
+    width: 52rpx;
     background-color: #d2c7b5;
     color: #9e968a;
 }
 .counter__text {
-    min-width: 60rpx;
+    min-width: 80rpx;
     border-left: 1rpx solid #b6aea1;
     border-right: 1rpx solid #b6aea1;
     color: #e95608;
@@ -38,4 +38,7 @@
 }
 .counter__no {
     color: #b6aea1
+}
+.counter__icon{
+    font-weight: 700;
 }
