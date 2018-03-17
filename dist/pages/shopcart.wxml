@@ -16,7 +16,7 @@
                     </wxc-flex>
                     <wxc-flex class="shopcart-commodity-count" main="between" cross="center">
                         <wxc-price class="price" value="{{commodity.price}}"/>
-                        <wxc-counter number="{{commodity.count || 0}}" max="{{commodity.maximum || 1}}" min="1"  bind:changenumber="onChangeCounter" data-value="{{commodity}}"/>
+                        <wxc-counter class="counter" number="{{commodity.count || 0}}" max="{{commodity.maximum || 1}}" min="1"  bind:changenumber="onChangeCounter" data-value="{{commodity}}"/>
                     </wxc-flex>
                     <text class="icon icon-close" catchtap="onDelCart" data-wpyondelcart-a="{{commodity}}"/>
                 </wxc-flex>
