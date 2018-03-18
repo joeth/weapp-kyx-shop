@@ -2,12 +2,12 @@
  * @Author: zdenzel
  * @Date:   2018-03-14 23:23:42
  * @Last Modified by:   zdenzel
- * @Last Modified time: 2018-03-18 00:01:56
+ * @Last Modified time: 2018-03-18 14:12:00
  */
 
 import wepy from 'wepy'
 import { handleActions } from 'redux-actions'
-import { GET_SHOP_CART, SET_SHOP_CART, UPDATE_SHOP_CART, ADD_SHOP_CART, DEL_SHOP_CART, CHECK_ONE_SHOP_CART, CHECK_ALL_SHOP_CART, GET_BUY_LIST } from '../types/shopcart'
+import { GET_SHOP_CART, SET_SHOP_CART, UPDATE_SHOP_CART, ADD_SHOP_CART, DEL_SHOP_CART, CHECK_ONE_SHOP_CART, CHECK_ALL_SHOP_CART, GET_BUY_LIST, REMOVE_BUY_LIST } from '../types/shopcart'
 
 const SHOP_BUY_LIST = 'SHOP_BUY_LIST'
 const SHOP_CART_LIST = 'SHOP_CART_LIST'
@@ -22,7 +22,7 @@ const initState = {
 
 const getSelectStatus = (state) => {
     try {
-        return !state.every(n => n.isSelected == false)
+        return state.every(n => n.isSelected == true)
     } catch (e) {}
 }
 const getTotalAmount = (state) => {
@@ -156,6 +156,25 @@ const todos = handleActions({
         wepy.setStorageSync(SHOP_BUY_LIST, shopBuyList)
 
         return { ...state, shopBuyList }
+    },
+    [REMOVE_BUY_LIST](state, { type, payload }) {
+        let shopCartData = state.shopCartData.concat()
+        let shopBuyList = []
+
+        try {
+            state.shopBuyList.forEach(buy => {
+                let index = shopCartData.findIndex(cart => cart.uid == buy.uid && cart.id == buy.id)
+                shopCartData.splice(index, 1)
+            })
+        } catch (e) {}
+
+        let shopCartList = shopCartData.filter(item => item.uid == payload.uid)
+        let isSelectedAll = getSelectStatus(shopCartList)
+        let totalAmount = getTotalAmount(shopCartList)
+        wepy.setStorageSync(SHOP_CART_LIST, shopCartData)
+        wepy.setStorageSync(SHOP_BUY_LIST, shopBuyList)
+
+        return { ...state, shopCartData, shopCartList, shopBuyList, isSelectedAll, totalAmount }
     },
 
 

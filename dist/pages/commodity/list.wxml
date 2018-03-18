@@ -1,0 +1,22 @@
+
+    <wxc-tab class="tabbar" line-color="transparent" active-line-color="{{colors.success}}" default-index="{{activeIndex}}" animate="{{true}}" component-id="lists">
+        <view class="tabbar-nav" slot="tablabel">
+            <!-- <block wx:for="{{catalogTabs}}" wx:for-item="item" wx:key="{{item.id}}" tab-index="{{index}}">
+                <wxc-tab-label class="tabbar-label {{activeIndex == index ? 'active' : ''}}">
+                    <button class="tabbar-button" type="normal" bindtap="onTabClick" data-id="{{item.id}}" data-index="{{index}}">
+                        {{item.name}}
+                        <wxc-badge class="tabbar-badge" max="99" value="{{item.badge}}" wx:if="{{item.badge}}"></wxc-badge>
+                    </button>
+                </wxc-tab-label>
+            </block> -->
+            <block  wx:for="{{catalogTabs}}" wx:for-item="item" wx:key="{{item.id}}" tab-index="{{index}}">
+                <wxc-tab-label class="tabbar-label {{activeIndex == index ? 'active' : ''}}">
+                    <button class="tabbar-button" type="normal" bindtap="onTabClick" data-id="{{item.id}}" data-index="{{index}}">
+                        {{item.name}}
+                        <wxc-badge class="tabbar-badge" max="99" value="{{item.badge}}" wx:if="{{item.badge}}"/>
+                    </button>
+                </wxc-tab-label>
+            </block>
+        </view>
+        <wxc-tab-panel component-id="lists"/>
+    </wxc-tab>

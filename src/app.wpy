@@ -220,7 +220,7 @@ button[type="normal"], navigator.normal{
     right: 10rpx;
     top: 0;
 }
-.tabbar-main{
+.tabbar-main, .tabbar-panel{
     overflow: hidden;
     background-image: url('https://t1.picb.cc/uploads/2018/02/26/KE9MN.jpg');
     background-color: @color-backcolor;
@@ -242,13 +242,14 @@ const deviceRadio = device.windowWidth / 750
 export default class extends wepy.app {
     config = {
         pages: [
-            'pages/shopcart',
+
+            'pages/commodity/list',
 
             'pages/homepage',
             'pages/catalog',
+            'pages/shopcart',
             'pages/mycenter',
 
-            'pages/commodity/list',
             'pages/commodity/detail',
 
             'pages/order/list',

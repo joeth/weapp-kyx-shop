@@ -14,12 +14,14 @@
         </view>
         <wxc-tab class="tabbar" line-color="transparent" active-line-color="transparent">
             <view class="tabbar-nav" slot="tablabel">
-                <wxc-tab-label class="tabbar-label"  wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}">
-                    <navigator class="normal tabbar-button" url="/pages/order/list?type={{tab.id}}">
-                        {{tab.title}}
-                        <wxc-badge class="tabbar-badge" max="99" value="{{tab.badge}}" wx:if="{{tab.badge}}"/>
-                    </navigator>
-                </wxc-tab-label>
+                <block  wx:for="{{orderTabs}}" wx:for-item="item" wx:key="{{item.id}}" tab-index="{{index}}">
+                    <wxc-tab-label class="tabbar-label {{activeIndex == index ? 'active' : ''}}">
+                        <navigator class="normal tabbar-button" url="/pages/order/list?type={{item.id}}">
+                            {{item.name}}
+                            <wxc-badge class="tabbar-badge" max="99" value="{{item.badge}}" wx:if="{{item.badge}}"/>
+                        </navigator>
+                    </wxc-tab-label>
+                </block>
             </view>
         </wxc-tab>
         <wxc-flex class="menu" main="around">

@@ -3,14 +3,16 @@
 </style>
 <template>
 <view class="order-lst">
-    <wxc-tab class="tabbar" line-color="transparent" active-line-color="{{colors.success}}" default-index="{{activeKey}}" animate="{{true}}">
+    <wxc-tab class="tabbar" line-color="transparent" active-line-color="{{colors.success}}" default-index="{{activeIndex}}" animate="{{true}}">
         <view class="tabbar-nav" slot="tablabel">
-            <wxc-tab-label class="tabbar-label {{activeKey == index ? 'active' : ''}}" wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}">
-                <button class="tabbar-button" type="normal" bind:tap="onTabClick" data-id="{{tab.id}}">
-                    {{tab.title}}
-                    <wxc-badge class="tabbar-badge" max="99" value="{{tab.badge}}" wx:if="{{tab.badge}}"></wxc-badge>
-                </button>
-            </wxc-tab-label>
+            <block wx:for="{{orderTabs}}" wx:for-item="item" wx:key="{{item.id}}" tab-index="{{index}}">
+                <wxc-tab-label class="tabbar-label {{activeIndex == index ? 'active' : ''}}">
+                    <button class="tabbar-button" type="normal" @tap="onTabClick" data-id="{{item.id}}" data-index="{{index}}">
+                        {{item.name}}
+                        <wxc-badge class="tabbar-badge" max="99" value="{{item.badge}}" wx:if="{{item.badge}}"></wxc-badge>
+                    </button>
+                </wxc-tab-label>
+            </block>
         </view>
         <view class="tabbar-main">
             <cp-order-list :datalist="orderList"></cp-order-list>
@@ -106,13 +108,14 @@ export default class OrderList extends wepy.page {
     mixins = [colorsMixin]
 
     data = {
-        activeKey: 0,
+        activeId: 0,
+        activeIndex: 0,
         orderTabs: [
-            { id: 0, title: '全部', badge: 0, content: '全部' },
-            { id: 1, title: '待付款', badge: 0, content: '待付款' },
-            { id: 2, title: '待发货', badge: 0, content: '待发货' },
-            { id: 3, title: '待收货', badge: 0, content: '待收货' },
-            { id: 4, title: '已完成', badge: 0, content: '已完成' }
+            { id: 1, name: '全部', badge: 0, content: '全部' },
+            { id: 2, name: '待付款', badge: 0, content: '待付款' },
+            { id: 3, name: '待发货', badge: 0, content: '待发货' },
+            { id: 4, name: '待收货', badge: 0, content: '待收货' },
+            { id: 5, name: '已完成', badge: 0, content: '已完成' }
         ],
         orderList: __ORDER_DATA__
     }
@@ -122,11 +125,11 @@ export default class OrderList extends wepy.page {
 
     methods = {
         onTabClick(e){
-            const activeKey = this.activeKey;
-            const { id } = e.currentTarget.dataset;
+            const { id, index } = e.currentTarget.dataset;
 
-            if(id != activeKey){
-                this.activeKey = id;
+            if(id != this.activeId){
+                this.activeId = id;
+                this.activeIndex = index;
                 this.orderList = __ORDER_DATA__;
                 console.log('执行数据更新');
             }

@@ -18,7 +18,7 @@
             
     <view class="cp-catalog-list {{$cpCatalogList$skin}}" style="width:{{$cpCatalogList$width}}rpx;padding:{{$cpCatalogList$margin}}rpx;{{$cpCatalogList$style}}">
         <block wx:for="{{$cpCatalogList$datalist}}" wx:for-index="$cpCatalogList$index" wx:for-item="$cpCatalogList$item" wx:key="$cpCatalogList$id">
-            <navigator class="normal cp-catalog-item" url="/pages/product/list?cid={{$cpCatalogList$item.id}}" rediect="{{$cpCatalogList$rediect}}" hover-class="{{$cpCatalogList$hoverClass}}" style="width:{{$cpCatalogList$itemWidth}}rpx;padding:{{$cpCatalogList$padding}}rpx;margin-top:{{$cpCatalogList$index>=$cpCatalogList$column?$cpCatalogList$margin:0}}rpx">
+            <navigator class="normal cp-catalog-item" url="/pages/commodity/list?cid={{$cpCatalogList$item.id}}" rediect="{{$cpCatalogList$rediect}}" hover-class="{{$cpCatalogList$hoverClass}}" style="width:{{$cpCatalogList$itemWidth}}rpx;padding:{{$cpCatalogList$padding}}rpx;margin-top:{{$cpCatalogList$index>=$cpCatalogList$column?$cpCatalogList$margin:0}}rpx">
                 <view class="cp-catalog-image" style="width:{{$cpCatalogList$imageWidth}}rpx;height:{{$cpCatalogList$imageHeight}}rpx;">
                     <image src="{{$cpCatalogList$item.image}}" mode="aspectFill" lazy-load="{{$cpCatalogList$lazyLoad}}"/>
                 </view>

@@ -1,13 +1,15 @@
 
 <view class="order-lst">
-    <wxc-tab class="tabbar" line-color="transparent" active-line-color="{{colors.success}}" default-index="{{activeKey}}" animate="{{true}}">
+    <wxc-tab class="tabbar" line-color="transparent" active-line-color="{{colors.success}}" default-index="{{activeIndex}}" animate="{{true}}">
         <view class="tabbar-nav" slot="tablabel">
-            <wxc-tab-label class="tabbar-label {{activeKey == index ? 'active' : ''}}"  wx:for="{{orderTabs}}" wx:for-item="tab" wx:key="{{tab.title}}" tab-index="{{index}}">
-                <button class="tabbar-button" type="normal"  bind:tap="onTabClick" data-id="{{tab.id}}">
-                    {{tab.title}}
-                    <wxc-badge class="tabbar-badge" max="99" value="{{tab.badge}}" wx:if="{{tab.badge}}"/>
-                </button>
-            </wxc-tab-label>
+            <block  wx:for="{{orderTabs}}" wx:for-item="item" wx:key="{{item.id}}" tab-index="{{index}}">
+                <wxc-tab-label class="tabbar-label {{activeIndex == index ? 'active' : ''}}">
+                    <button class="tabbar-button" type="normal" bindtap="onTabClick" data-id="{{item.id}}" data-index="{{index}}">
+                        {{item.name}}
+                        <wxc-badge class="tabbar-badge" max="99" value="{{item.badge}}" wx:if="{{item.badge}}"/>
+                    </button>
+                </wxc-tab-label>
+            </block>
         </view>
         <view class="tabbar-main">
             

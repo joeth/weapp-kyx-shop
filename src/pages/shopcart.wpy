@@ -235,12 +235,12 @@ export default class PageShopCart extends wepy.page {
         },
         onAddCart(){
             const param = {
-                id: 4,
+                id: 1,
                 uid: this.uid,
                 cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
                 title: '糥伍古树圆茶',
                 type: '熟茶',
-                price: '69.98',
+                price: '19.98',
                 count: 1,
                 maximum: 3,
                 isSelected: true

@@ -2,7 +2,7 @@
  * @Author: zdenzel
  * @Date:   2018-03-14 23:37:54
  * @Last Modified by:   zdenzel
- * @Last Modified time: 2018-03-17 23:49:00
+ * @Last Modified time: 2018-03-18 13:53:58
  */
 
 export const GET_SHOP_CART = 'GET_SHOP_CART';
@@ -18,3 +18,4 @@ export const CHECK_ONE_SHOP_CART = 'CHECK_ONE_SHOP_CART';
 export const CHECK_ALL_SHOP_CART = 'CHECK_ALL_SHOP_CART';
 
 export const GET_BUY_LIST = 'GET_BUY_LIST';
+export const REMOVE_BUY_LIST = 'REMOVE_BUY_LIST';

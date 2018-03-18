@@ -2,10 +2,23 @@
 @import 'src/common/styles/config.less';
 </style>
 <template>
-
+    <wxc-tab class="tabbar" line-color="transparent" active-line-color="{{colors.success}}" default-index="{{activeIndex}}" animate="{{true}}" component-id="lists">
+        <view class="tabbar-nav" slot="tablabel">
+            <block wx:for="{{catalogTabs}}" wx:for-item="item" wx:key="{{item.id}}" tab-index="{{index}}">
+                <wxc-tab-label class="tabbar-label {{activeIndex == index ? 'active' : ''}}">
+                    <button class="tabbar-button" type="normal" bindtap="onTabClick" data-id="{{item.id}}" data-index="{{index}}">
+                        {{item.name}}
+                        <wxc-badge class="tabbar-badge" max="99" value="{{item.badge}}" wx:if="{{item.badge}}"></wxc-badge>
+                    </button>
+                </wxc-tab-label>
+            </block>
+        </view>
+        <wxc-tab-panel component-id="lists"></wxc-tab-panel>
+    </wxc-tab>
 </template>
 <script>
 import wepy from 'wepy'
+import colorsMixin from '@/mixins/colors'
 
 export default class CommodityList extends wepy.page {
     config = {
@@ -40,19 +53,39 @@ export default class CommodityList extends wepy.page {
     components = {
     }
 
-    mixins = []
+    mixins = [colorsMixin]
 
     data = {
+        activeId: 1,
+        activeIndex: 0,
+        catalogTabs: [
+            {id: 1, name: '饼茶'},
+            {id: 2, name: '砖茶'},
+            {id: 3, name: '商务茶'},
+            {id: 4, name: '沱茶'},
+            {id: 5, name: '散茶'},
+            {id: 6, name: '礼品茶'},
+            {id: 7, name: '免费试喝'},
+            {id: 8, name: '个性定制'},
+        ]
     }
 
     computed = {
-        now() {
-            return +new Date()
-        }
     }
 
     methods = {
+        onTabChange(e) {
+            console.log(e)
+        },
+        onTabClick(e){
+            const { id, index } = e.currentTarget.dataset;
 
+            if(id != this.activeId){
+                this.activeId = id;
+                this.activeIndex = index;
+                console.log('执行数据更新');
+            }
+        }
     }
 
     events = {
