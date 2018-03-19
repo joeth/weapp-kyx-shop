@@ -38,10 +38,10 @@
 .order-consignee-address{
     margin-top: @margin/2;
 }
-.order-detail-commodity{
+.order-detail-product{
     padding: 0;
     background-color: transparent;
-    .cp-order-commodity{
+    .cp-order-product{
         margin-top: 2rpx;
         background-color: @color-maincolor;
     }
@@ -82,19 +82,19 @@
                 </view>
             </view>
         </wxc-flex>
-        <view class="order-detail-commodity">
-            <repeat for="{{order.commodityList}}" item="commodity" key="cid">
-                <cp-order-commodity :commodity="commodity"></cp-order-commodity>
+        <view class="order-detail-product">
+            <repeat for="{{order.productList}}" item="product" key="cid">
+                <cp-order-product :product="product"></cp-order-product>
             </repeat>
         </view>
         <view class="order-detail-amount">
             <wxc-flex class="freight" main="between" cross="center">
                 <text>运费</text>
-                <wxc-price class="price" value="{{order.freightAmount}}"></wxc-price>
+                <text class="price">￥{{order.freightAmount}}</text>
             </wxc-flex>
             <wxc-flex class="amount" main="between" cross="center">
                 <text>实付款（含运费）</text>
-                <wxc-price class="price" value="{{order.actualAmount}}"></wxc-price>
+                <text class="price">￥{{order.actualAmount}}</text>
             </wxc-flex>
         </view>
         <view class="order-detail-property">
@@ -116,7 +116,7 @@
 <script>
 
 import wepy from 'wepy'
-import orderCommodity from '@/components/order-commodity'
+import orderProduct from '@/components/order/product'
 
 const __ORDER_DATA__ = {
     id: 2,
@@ -141,7 +141,7 @@ const __ORDER_DATA__ = {
         area: '广东 广州市  天河区',
         address: '金穗路1号3401(广东星外星唱片)',
     },
-    commodityList: [
+    productList: [
         {
             id: 1,
             cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
@@ -173,7 +173,6 @@ export default class OrderDetail extends wepy.page {
             'wxc-icon': '/packages/@minui/wxc-icon/dist/index',
             'wxc-label': '/packages/@minui/wxc-label/dist/index',
             'wxc-loadmore': '/packages/@minui/wxc-loadmore/dist/index',
-            'wxc-price': '/packages/@minui/wxc-price/dist/index',
 
             'wxc-abnor': '/packages/@minui/wxc-abnor/dist/index',
             'wxc-countdown': '/packages/@minui/wxc-countdown/dist/index',
@@ -192,7 +191,7 @@ export default class OrderDetail extends wepy.page {
     }
 
     components = {
-        'cp-order-commodity': orderCommodity
+        'cp-order-product': orderProduct
     }
 
     mixins = []

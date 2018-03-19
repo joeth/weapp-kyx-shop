@@ -16,8 +16,9 @@ page{
     // box-sizing: border-box;
 
     line-height: 1.5em;
+    // font-family: Helvetica Neue,Helvetica,sans-serif;
+    font-family: -apple-system-font, "Helvetica Neue",Helvetica,sans-serif;
     font-size: @font-size-base;
-    // font-family: @font-family-default;
     color: @color-base;
 }
 image{
@@ -185,17 +186,20 @@ button[type="normal"], navigator.normal{
     display: block;
     background-color: @color-maincolor;
 }
-.tabbar-nav{
-    padding: @margin/2 0;
-    font-size: @font-size-large;
-}
-.tabbar-label{
-    padding: @margin 0;
+.tabbar-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 90rpx;
+
     position: relative;
+    font-size: @font-size-large;
     &:before{
         content: '';
         height: 1em;
-        width: 2rpx;
+        width: 1px;
         margin-top: -.5em;
         position: absolute;
         top: 50%;
@@ -203,8 +207,14 @@ button[type="normal"], navigator.normal{
 
         background-color: @color-border;
     }
+    &.navigator-hover{
+        color: @color-primary;
+        background-color: transparent;
+    }
+}
+.tabbar-label{
     &:first-child{
-        &:before{
+        .tabbar-button:before{
             display: none;
         }
     }
@@ -212,13 +222,10 @@ button[type="normal"], navigator.normal{
         color: @color-success;
     }
 }
-.tabbar-button{
-    position: relative;
-}
 .tabbar-badge{
     position: absolute;
-    right: 10rpx;
-    top: 0;
+    right: 5rpx;
+    top: 5rpx;
 }
 .tabbar-main, .tabbar-panel{
     overflow: hidden;
@@ -229,6 +236,7 @@ button[type="normal"], navigator.normal{
 </style>
 <script>
 import wepy from 'wepy'
+import Promise from 'promise-polyfill'
 import 'wepy-async-function'
 import { setStore } from 'wepy-redux'
 import configStore from '@/store'
@@ -243,14 +251,14 @@ export default class extends wepy.app {
     config = {
         pages: [
 
-            'pages/commodity/list',
-
             'pages/homepage',
             'pages/catalog',
             'pages/shopcart',
             'pages/mycenter',
 
-            'pages/commodity/detail',
+            'pages/product/list',
+
+            'pages/product/detail',
 
             'pages/order/list',
             'pages/order/detail',
@@ -304,6 +312,7 @@ export default class extends wepy.app {
 
     constructor() {
         super();
+        this.use('promisify');
         this.use('requestfix');
         //拦截request请求
         this.intercept('request', {

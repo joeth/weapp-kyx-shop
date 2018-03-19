@@ -1,1 +1,1 @@
-@import "./../../components/order-list.wxss";
+@import "./../../components/order/list.wxss";

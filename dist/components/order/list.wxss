@@ -1,2 +1,2 @@
-@import "./order-commodity.wxss";
+@import "./product.wxss";
 .cp-order-head,.cp-order-foot{display:block;padding:20rpx}.cp-order-code{color:#8c8174}.cp-order-status{color:#8c8174}.cp-order-info{margin-top:20rpx}.cp-order-info .price{font-size:40rpx;color:#e75607}.cp-order-tool .cp-order-button{margin-top:20rpx;margin-left:20rpx}.cp-order-tool .cp-order-button:first-child{margin-left:0}.cp-order-item{margin-top:20rpx;background-color:#e9e0cc}.cp-order-item.is-pending .cp-order-status{color:#e75607}.cp-order-item.is-complete .cp-order-status{color:#a91e11}.cp-order-item.is-invailed .cp-order-status{color:#8c8174}

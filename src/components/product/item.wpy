@@ -1,0 +1,138 @@
+<style lang="less">
+@import 'src/common/styles/config.less';
+.cp-item-list{
+    overflow: hidden;
+    position: relative;
+
+    .cp-product-cover{
+        width: 150rpx;
+        height: 150rpx;
+        background-color: @color-forecolor;
+        position: relative;
+        image{ width: 100%; height: 100%;}
+    }
+    .cp-product-row{
+        display: block;
+    }
+    .cp-product-title{
+        padding: @margin/2 0;
+        font-size: @font-size-large;
+        color: @color-base;
+    }
+    .cp-product-price{
+        color: @color-primary;
+    }
+    .cp-product-comment{
+        color: @color-gray;
+    }
+    .cp-product-context{
+        flex-flow: 1;
+        margin-left: @margin;
+    }
+    .cp-product-item{
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+
+        background-color: @color-maincolor;
+    }
+}
+</style>
+<template>
+    <view class="cp-item-list" style="padding:{{margin}}rpx 0;">
+        <repeat for="{{datalist}}" index="index" item="product" key="id">
+            <navigator class="cp-product-item" url="/pages/product/detail?pid={{product.id}}" style="padding:{{padding}}rpx;margin-top:{{index>0?margin:0}}rpx;{{boxBackColor}}">
+                <view class="cp-product-cover" style="width:{{imageWidth}}rpx;height:{{imageHeight}}rpx;{{imgBackColor}}">
+                    <image src="{{product.cover}}"></image>
+                </view>
+                <view class="cp-product-context" style="margin-left:{{padding}}rpx;">
+                    <wxc-elip class="cp-product-row cp-product-title">{{product.title}}</wxc-elip>
+                    <wxc-elip class="cp-product-row">
+                        <text class="cp-product-price">￥{{product.price}}</text>
+                    </wxc-elip>
+                    <wxc-flex class="cp-product-row">
+                        <text class="icon icon-score">{{product.score}}</text>
+                        <text class="cp-product-comment">（共有{{product.comment}}人评价）</text>
+                    </wxc-flex>
+                </view>
+            </navigator>
+        </repeat>
+    </view>
+</template>
+<script>
+import wepy from 'wepy'
+const docWidth = 750
+const winRtio = wepy.getSystemInfoSync().windowWidth / docWidth
+export default class GridProduct extends wepy.component {
+
+    props = {
+        datalist: {
+            type: Array,
+            default: null
+        },
+        //图片宽度
+        imageWidth: {
+            type: String,
+            default: 150
+        },
+        //外补白
+        margin: {
+            type: [String,Number],
+            default: 20
+        },
+        //内补白
+        padding: {
+            type: [String,Number],
+            default: 20
+        },
+        //图片比例
+        ratio: {
+            type: Array,
+            default: [1,1]
+        },
+        route: {
+            type: String,
+            default: '/pages/product/detail'
+        },
+        boxBackColor: {
+            type: String,
+            default: null,
+            coerce (val) {
+                if(val) {
+                    return 'background-color:' + val
+                }
+            }
+        },
+        imgBackColor: {
+            type: String,
+            default: null,
+            coerce (val) {
+                if(val) {
+                    return 'background-color:' + val
+                }
+            }
+        }
+    }
+
+    data =  {
+        width: docWidth,
+        imageRate: 1
+    }
+
+    computed = {
+    }
+
+    onLoad() {
+        try{
+            this.imageRate = this.ratio[1] / this.ratio[0]
+            if(isNaN(this.imageRate)){
+                this.imageRate = 1
+            }
+        }catch(e){}
+
+        this.imageHeight = this.imageWidth * this.imageRate
+
+    }
+}
+</script>

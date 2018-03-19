@@ -1,0 +1,3 @@
+@import "./grid.wxss";
+@import "./item.wxss";
+.cp-product-list{padding:10rpx;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-around}

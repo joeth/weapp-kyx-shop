@@ -19,7 +19,6 @@ export default class CommodityDetail extends wepy.page {
             'wxc-icon': '/packages/@minui/wxc-icon/dist/index',
             'wxc-label': '/packages/@minui/wxc-label/dist/index',
             'wxc-loadmore': '/packages/@minui/wxc-loadmore/dist/index',
-            'wxc-price': '/packages/@minui/wxc-price/dist/index',
 
             'wxc-abnor': '/packages/@minui/wxc-abnor/dist/index',
             'wxc-countdown': '/packages/@minui/wxc-countdown/dist/index',

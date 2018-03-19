@@ -1,0 +1,78 @@
+
+    <view class="products">
+        <view class="header">
+            <wxc-tab class="tabbar" line-color="{{colors.border}}" active-line-color="{{colors.success}}" default-index="{{activeIndex}}" animate="{{true}}" component-id="list">
+                <view class="tabbar-nav" slot="tablabel">
+                    <wxc-tab-label class="tabbar-label"  wx:for="{{catalogTabs}}" wx:for-item="item" wx:key="{{item.id}}" tab-index="{{index}}" component-id="list">
+                        <view class="tabbar-button {{activeIndex == index ? 'active' : ''}}" bindtap="onTabClick" data-id="{{item.id}}" data-index="{{index}}">
+                            <view class="tabbar-text">{{item.name}}</view>
+                        </view>
+                    </wxc-tab-label>
+                </view>
+            </wxc-tab>
+            <wxc-flex class="filter" main="between" cross="center">
+                <wxc-flex>
+                    <view class="filter-button {{isSortPopular ? 'active' : ''}}" bindtap="tapPopular" data-wpytappopular-a="">
+                        <text>人气</text>
+                    </view>
+                    <view class="filter-button {{isSortPrice ? 'active' : ''}}" bindtap="tapPrice" data-wpytapprice-a="">
+                        <text>价格</text>
+                        <text class="icon icon-sort-{{isSortPrice == 'down' ? 'down' : 'up'}}"  wx:if="{{isSortPrice}}"/>
+                    </view>
+                </wxc-flex>
+                <wxc-flex>
+                    <view class="filter-button {{isGridList ? 'active' : ''}}" bindtap="tapGridList" data-wpytapgridlist-a="">
+                        <text>网格</text>
+                    </view>
+                    <view class="filter-button {{isFilter ? 'active' : ''}}" bindtap="showFilter" data-wpyshowfilter-a="">
+                        <text>筛选</text>
+                        <text class="icon icon-filter"/>
+                    </view>
+                </wxc-flex>
+            </wxc-flex>
+        </view>
+        <view class="lists">
+            
+    <view class="cp-grid-list" style="padding:{{$cpProductGrid$margin}}rpx" wx:if="{{isGridList}}">
+        <block wx:for="{{$cpProductGrid$datalist}}" wx:for-index="$cpProductGrid$index" wx:for-item="$cpProductGrid$product" wx:key="$cpProductGrid$id">
+            <navigator class="cp-product-item" url="/pages/product/detail?pid={{$cpProductGrid$product.id}}" style="width:{{$cpProductGrid$itemWidth}}rpx;padding:{{$cpProductGrid$padding}}rpx;margin-top:{{$cpProductGrid$index>=$cpProductGrid$column?$cpProductGrid$margin:0}}rpx;{{$cpProductGrid$boxBackColor}}">
+                <view class="cp-product-cover" style="width:{{$cpProductGrid$imageWidth}}rpx;height:{{$cpProductGrid$imageHeight}}rpx;{{$cpProductGrid$imgBackColor}}">
+                    <image src="{{$cpProductGrid$product.cover}}"/>
+                </view>
+                <view class="cp-product-context" style="margin-top: {{$cpProductGrid$margin}}rpx;">
+                    <wxc-elip class="cp-product-row cp-product-title">{{$cpProductGrid$product.title}}</wxc-elip>
+                    <wxc-elip class="cp-product-row">
+                        <text class="cp-product-price">￥{{$cpProductGrid$product.price}}</text>
+                    </wxc-elip>
+                    <wxc-flex class="cp-product-row">
+                        <text class="icon icon-score">{{$cpProductGrid$product.score}}</text>
+                        <text class="cp-product-comment">（共有{{$cpProductGrid$product.comment}}人评价）</text>
+                    </wxc-flex>
+                </view>
+            </navigator>
+        </block>
+    </view>
+
+            
+    <view class="cp-item-list" style="padding:{{$cpProductItem$margin}}rpx 0;" wx:else>
+        <block wx:for="{{$cpProductItem$datalist}}" wx:for-index="$cpProductItem$index" wx:for-item="$cpProductItem$product" wx:key="$cpProductItem$id">
+            <navigator class="cp-product-item" url="/pages/product/detail?pid={{$cpProductItem$product.id}}" style="padding:{{$cpProductItem$padding}}rpx;margin-top:{{$cpProductItem$index>0?$cpProductItem$margin:0}}rpx;{{$cpProductItem$boxBackColor}}">
+                <view class="cp-product-cover" style="width:{{$cpProductItem$imageWidth}}rpx;height:{{$cpProductItem$imageHeight}}rpx;{{$cpProductItem$imgBackColor}}">
+                    <image src="{{$cpProductItem$product.cover}}"/>
+                </view>
+                <view class="cp-product-context" style="margin-left:{{$cpProductItem$padding}}rpx;">
+                    <wxc-elip class="cp-product-row cp-product-title">{{$cpProductItem$product.title}}</wxc-elip>
+                    <wxc-elip class="cp-product-row">
+                        <text class="cp-product-price">￥{{$cpProductItem$product.price}}</text>
+                    </wxc-elip>
+                    <wxc-flex class="cp-product-row">
+                        <text class="icon icon-score">{{$cpProductItem$product.score}}</text>
+                        <text class="cp-product-comment">（共有{{$cpProductItem$product.comment}}人评价）</text>
+                    </wxc-flex>
+                </view>
+            </navigator>
+        </block>
+    </view>
+
+        </view>
+    </view>

@@ -14,19 +14,19 @@
                 </view>
             </view>
         </wxc-flex>
-        <view class="order-detail-commodity">
-            <block wx:for="{{order.commodityList}}" wx:for-index="index" wx:for-item="commodity" wx:key="cid">
+        <view class="order-detail-product">
+            <block wx:for="{{order.productList}}" wx:for-index="index" wx:for-item="product" wx:key="cid">
                 
-    <wxc-flex class="cp-order-commodity">
-        <image class="cp-commodity-cover" src="{{commodity.cover}}"/>
-        <wxc-flex class="cp-commodity-main" dir="top" main="between">
-            <view class="cp-commodity-info">
-                <text class="cp-commodity-row cp-commodity-title">{{commodity.title}}</text>
-                <text class="cp-commodity-row cp-commodity-text">{{commodity.type}}</text>
+    <wxc-flex class="cp-order-product">
+        <image class="cp-product-cover" src="{{product.cover}}"/>
+        <wxc-flex class="cp-product-main" dir="top" main="between">
+            <view class="cp-product-info">
+                <text class="cp-product-row cp-product-title">{{product.title}}</text>
+                <text class="cp-product-row cp-product-text">{{product.type}}</text>
             </view>
-            <wxc-flex class="cp-commodity-count" main="between" cross="center">
-                <wxc-price class="price" value="{{commodity.price}}"/>
-                <text class="count">x{{commodity.count}}</text>
+            <wxc-flex class="cp-product-count" main="between" cross="center">
+                <text class="price">￥{{product.price}}</text>
+                <text class="count">x{{product.count}}</text>
             </wxc-flex>
         </wxc-flex>
     </wxc-flex>
@@ -36,11 +36,11 @@
         <view class="order-detail-amount">
             <wxc-flex class="freight" main="between" cross="center">
                 <text>运费</text>
-                <wxc-price class="price" value="{{order.freightAmount}}"/>
+                <text class="price">￥{{order.freightAmount}}</text>
             </wxc-flex>
             <wxc-flex class="amount" main="between" cross="center">
                 <text>实付款（含运费）</text>
-                <wxc-price class="price" value="{{order.actualAmount}}"/>
+                <text class="price">￥{{order.actualAmount}}</text>
             </wxc-flex>
         </view>
         <view class="order-detail-property">

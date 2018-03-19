@@ -51,14 +51,12 @@
         </view>
         <wxc-tab class="tabbar" line-color="transparent" active-line-color="transparent">
             <view class="tabbar-nav" slot="tablabel">
-                <block wx:for="{{orderTabs}}" wx:for-item="item" wx:key="{{item.id}}" tab-index="{{index}}">
-                    <wxc-tab-label class="tabbar-label {{activeIndex == index ? 'active' : ''}}">
-                        <navigator class="normal tabbar-button" url="/pages/order/list?type={{item.id}}">
-                            {{item.name}}
-                            <wxc-badge class="tabbar-badge" max="99" value="{{item.badge}}" wx:if="{{item.badge}}"></wxc-badge>
-                        </navigator>
-                    </wxc-tab-label>
-                </block>
+                <wxc-tab-label class="tabbar-label" wx:for="{{orderTabs}}" wx:for-item="item" wx:key="{{item.id}}" tab-index="{{index}}">
+                    <navigator class="tabbar-button {{activeIndex == index ? 'active' : ''}}" url="/pages/order/list?tid={{item.id}}">
+                        <wxc-badge class="tabbar-badge" type="num" value="{{item.badge}}" max="99" wx:if="{{item.badge}}"></wxc-badge>
+                        <view class="tabbar-text">{{item.name}}</view>
+                    </navigator>
+                </wxc-tab-label>
             </view>
         </wxc-tab>
         <wxc-flex class="menu" main="around">
@@ -92,7 +90,6 @@ export default class MyCenter extends wepy.page {
             'wxc-icon': '/packages/@minui/wxc-icon/dist/index',
             'wxc-label': '/packages/@minui/wxc-label/dist/index',
             'wxc-loadmore': '/packages/@minui/wxc-loadmore/dist/index',
-            'wxc-price': '/packages/@minui/wxc-price/dist/index',
 
             'wxc-abnor': '/packages/@minui/wxc-abnor/dist/index',
             'wxc-countdown': '/packages/@minui/wxc-countdown/dist/index',
@@ -123,9 +120,9 @@ export default class MyCenter extends wepy.page {
         orderTabs: [
             { id: 1, name: '全部', badge: 0 },
             { id: 2, name: '待付款', badge: 1 },
-            { id: 3, name: '待发货', badge: 0 },
+            { id: 3, name: '待发货', badge: 2 },
             { id: 4, name: '待收货', badge: 0 },
-            { id: 5, name: '已完成', badge: 0 }
+            { id: 5, name: '已完成', badge: 10 }
         ],
         activeKey: 0
     }

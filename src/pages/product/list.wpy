@@ -1,0 +1,237 @@
+<style lang="less">
+@import 'src/common/styles/config.less';
+.tabbar{
+    background-color: transparent;
+}
+.tabbar-button{
+    &:before{ display: none !important;}
+}
+.filter{
+    display: block;
+    height: 90rpx;
+    padding: 0 @margin;
+    background-color: @color-maincolor;
+}
+.filter-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60rpx;
+    padding: 0 @margin;
+    margin-left: @margin;
+    background-color: transparent;
+    border-radius: @radius;
+    &:first-child{ margin-left: 0;}
+    &.active{
+        background-color: @color-base;
+        color: @color-invert;
+    }
+    .icon{
+        margin-left: 5rpx;
+    }
+    text{
+        display: inline-block;
+        vertical-align: middle;
+    }
+    // font-size: @font-size-large;
+}
+.products{
+    padding-top: 180rpx;
+    position: relative;
+    .header{
+        width: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 10;
+        background-image: url('https://t1.picb.cc/uploads/2018/02/26/KE9MN.jpg');
+        background-color: @color-backcolor;
+    }
+}
+</style>
+<template>
+    <view class="products">
+        <view class="header">
+            <wxc-tab class="tabbar" line-color="{{colors.border}}" active-line-color="{{colors.success}}" default-index="{{activeIndex}}" animate="{{true}}" component-id="list">
+                <view class="tabbar-nav" slot="tablabel">
+                    <wxc-tab-label class="tabbar-label" wx:for="{{catalogTabs}}" wx:for-item="item" wx:key="{{item.id}}" tab-index="{{index}}" component-id="list">
+                        <view class="tabbar-button {{activeIndex == index ? 'active' : ''}}" @tap="onTabClick" data-id="{{item.id}}" data-index="{{index}}">
+                            <view class="tabbar-text">{{item.name}}</view>
+                        </view>
+                    </wxc-tab-label>
+                </view>
+            </wxc-tab>
+            <wxc-flex class="filter" main="between" cross="center">
+                <wxc-flex>
+                    <view class="filter-button {{isSortPopular ? 'active' : ''}}" @tap="tapPopular()">
+                        <text>人气</text>
+                    </view>
+                    <view class="filter-button {{isSortPrice ? 'active' : ''}}" @tap="tapPrice()">
+                        <text>价格</text>
+                        <text class="icon icon-sort-{{isSortPrice == 'down' ? 'down' : 'up'}}" wx:if="{{isSortPrice}}"></text>
+                    </view>
+                </wxc-flex>
+                <wxc-flex>
+                    <view class="filter-button {{isGridList ? 'active' : ''}}" @tap="tapGridList()">
+                        <text>网格</text>
+                    </view>
+                    <view class="filter-button {{isFilter ? 'active' : ''}}" @tap="showFilter()">
+                        <text>筛选</text>
+                        <text class="icon icon-filter"></text>
+                    </view>
+                </wxc-flex>
+            </wxc-flex>
+        </view>
+        <view class="lists">
+            <cp-product-grid :datalist="productList" wx:if="{{isGridList}}"></cp-product-grid>
+            <cp-product-item :datalist="productList" wx:else></cp-product-item>
+        </view>
+    </view>
+</template>
+<script>
+import wepy from 'wepy'
+import colorsMixin from '@/mixins/colors'
+import productItem from '@/components/product/item'
+import productGrid from '@/components/product/grid'
+
+const __PRODUCT_LIST__ = [
+    {
+        id: 1,
+        cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
+        title: '糥伍古树圆茶',
+        price: '99.00',
+        score: 8,
+        comment: 801
+    }, {
+        id: 2,
+        cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
+        title: '糥伍古树圆茶',
+        price: '99.00',
+        score: 6,
+        comment: 101
+    }, {
+        id: 3,
+        cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
+        title: '糥伍古树圆茶',
+        price: '99.00',
+        score: 9,
+        comment: 1
+    }, {
+        id: 4,
+        cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
+        title: '糥伍古树圆茶',
+        price: '99.00',
+        score: 9,
+        comment: 1
+    }, {
+        id: 5,
+        cover: 'https://t1.picb.cc/uploads/2018/02/22/KGQhG.png',
+        title: '糥伍古树圆茶',
+        price: '99.00',
+        score: 9,
+        comment: 1
+    }
+]
+
+export default class CommodityList extends wepy.page {
+    config = {
+        navigationBarTitleText: '产品列表',
+        usingComponents: {
+            'wxc-cc': '/packages/@minui/wxc-cc/dist/index',
+            'wxc-flex': '/packages/@minui/wxc-flex/dist/index',
+            'wxc-avatar': '/packages/@minui/wxc-avatar/dist/index',
+            'wxc-badge': '/packages/@minui/wxc-badge/dist/index',
+            'wxc-elip': '/packages/@minui/wxc-elip/dist/index',
+            'wxc-icon': '/packages/@minui/wxc-icon/dist/index',
+            'wxc-label': '/packages/@minui/wxc-label/dist/index',
+            'wxc-loadmore': '/packages/@minui/wxc-loadmore/dist/index',
+
+            'wxc-abnor': '/packages/@minui/wxc-abnor/dist/index',
+            'wxc-countdown': '/packages/@minui/wxc-countdown/dist/index',
+            'wxc-counter': '/packages/@minui/wxc-counter/dist/index',
+            'wxc-loading': '/packages/@minui/wxc-loading/dist/index',
+            'wxc-mask': '/packages/@minui/wxc-mask/dist/index',
+            'wxc-steps': '/packages/@minui/wxc-steps/dist/index',
+            'wxc-tab': '/packages/@minui/wxc-tab/dist/index',
+            'wxc-tab-panel': '/packages/@minui/wxc-tab/dist/panel',
+            'wxc-tab-label': '/packages/@minui/wxc-tab/dist/label',
+
+            'wxc-dialog': '/packages/@minui/wxc-dialog/dist/index',
+            'wxc-popup': '/packages/@minui/wxc-popup/dist/index',
+            'wxc-toast': '/packages/@minui/wxc-toast/dist/index'
+        }
+    }
+
+    components = {
+        'cp-product-item': productItem,
+        'cp-product-grid': productGrid
+    }
+
+    mixins = [colorsMixin]
+
+    data = {
+        activeId: 1,
+        activeIndex: 0,
+        catalogTabs: [
+            {id: 1, name: '饼茶'},
+            {id: 2, name: '砖茶'},
+            {id: 3, name: '商务茶'},
+            {id: 4, name: '沱茶'},
+            {id: 5, name: '散茶'},
+            {id: 6, name: '礼品茶'},
+            {id: 7, name: '免费试喝'},
+            {id: 8, name: '个性定制'},
+        ],
+        isGridList: true,
+        isSortPopular: false,
+        isSortPrice: false,
+        isFilter: false,
+        productList: __PRODUCT_LIST__
+    }
+
+    computed = {
+    }
+
+    methods = {
+        onTabClick(e){
+            const { id, index } = e.currentTarget.dataset;
+            this.isSortPopular = false;
+            this.isSortPrice = false;
+            this.isFilter = false;
+
+            if(id != this.activeId){
+                this.activeId = id;
+                this.activeIndex = index;
+                console.log('执行数据更新');
+            }
+        },
+        tapGridList(e){
+            //切换列表方式
+            this.isGridList = !this.isGridList;
+        },
+        tapPopular(e){
+            //取消价格排序
+            this.isSortPrice = false;
+            //设置人气排序
+            this.isSortPopular = true;
+        },
+        tapPrice(e){
+            //取消人气排序
+            this.isSortPopular = false;
+            //设置价格排序
+            this.isSortPrice = this.isSortPrice == 'up' ? 'down' : 'up';
+        },
+        showFilter(e){
+            this.isFilter = !this.isFilter;
+        }
+    }
+
+    events = {
+    }
+
+    onLoad() {
+
+    }
+}
+
+</script>

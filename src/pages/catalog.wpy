@@ -49,7 +49,7 @@
 }
 </style>
 <template>
-    <searchbar></searchbar>
+    <cp-searchbar></cp-searchbar>
     <view class="catalog">
         <scroll-view class="catalog-nav" scroll-y="true">
             <button type="normal" class="nav-item active">产品</button>
@@ -57,14 +57,14 @@
             <button type="normal" class="nav-item">个性定制</button>
         </scroll-view>
         <scroll-view class="catalog-body" scroll-y="true">
-            <cp-catalog-list :datalist="catalogList" width="550"></cp-catalog-list>
+            <cp-catalog :datalist="catalogList" width="550"></cp-catalog>
         </scroll-view>
     </view>
 </template>
 <script>
 import wepy from 'wepy'
-import catalogList from '@/components/catalog-list'
 import searchbar from '@/components/searchbar'
+import catalog from '@/components/product/catalog'
 
 export default class Catalog extends wepy.page {
     config = {
@@ -78,7 +78,6 @@ export default class Catalog extends wepy.page {
             'wxc-icon': '/packages/@minui/wxc-icon/dist/index',
             'wxc-label': '/packages/@minui/wxc-label/dist/index',
             'wxc-loadmore': '/packages/@minui/wxc-loadmore/dist/index',
-            'wxc-price': '/packages/@minui/wxc-price/dist/index',
 
             'wxc-abnor': '/packages/@minui/wxc-abnor/dist/index',
             'wxc-countdown': '/packages/@minui/wxc-countdown/dist/index',
@@ -97,8 +96,8 @@ export default class Catalog extends wepy.page {
     }
 
     components = {
-        searchbar,
-        'cp-catalog-list': catalogList,
+        'cp-searchbar': searchbar,
+        'cp-catalog': catalog,
     }
 
     mixins = []

@@ -29,7 +29,7 @@
 <template>
     <view class="cp-catalog-list {{skin}}" style="width:{{width}}rpx;padding:{{margin}}rpx;{{style}}">
         <repeat for="{{datalist}}" index="index" item="item" key="id">
-            <navigator class="normal cp-catalog-item" url="/pages/commodity/list?cid={{item.id}}" rediect="{{rediect}}" hover-class="{{hoverClass}}" style="width:{{itemWidth}}rpx;padding:{{padding}}rpx;margin-top:{{index>=column?margin:0}}rpx">
+            <navigator class="normal cp-catalog-item" url="/pages/product/list?cid={{item.id}}" rediect="{{rediect}}" hover-class="{{hoverClass}}" style="width:{{itemWidth}}rpx;padding:{{padding}}rpx;margin-top:{{index>=column?margin:0}}rpx">
                 <view class="cp-catalog-image" style="width:{{imageWidth}}rpx;height:{{imageHeight}}rpx;">
                     <image src="{{item.image}}" mode="aspectFill" lazy-load="{{lazyLoad}}"></image>
                 </view>
