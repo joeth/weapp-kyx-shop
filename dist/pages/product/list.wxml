@@ -1,36 +1,34 @@
 
     <view class="products">
-        <view class="header">
-            <wxc-tab class="tabbar" line-color="{{colors.border}}" active-line-color="{{colors.success}}" default-index="{{activeIndex}}" animate="{{true}}" component-id="list">
-                <view class="tabbar-nav" slot="tablabel">
-                    <wxc-tab-label class="tabbar-label"  wx:for="{{catalogTabs}}" wx:for-item="item" wx:key="{{item.id}}" tab-index="{{index}}" component-id="list">
-                        <view class="tabbar-button {{activeIndex == index ? 'active' : ''}}" bindtap="onTabClick" data-id="{{item.id}}" data-index="{{index}}">
-                            <view class="tabbar-text">{{item.name}}</view>
-                        </view>
-                    </wxc-tab-label>
+        <wxc-tab class="tabbar" line-color="{{colors.border}}" active-line-color="{{colors.success}}" default-index="{{activeIndex}}" animate="{{true}}" component-id="list">
+            <view class="tabbar-nav" slot="tablabel">
+                <wxc-tab-label class="tabbar-label"  wx:for="{{catalogTabs}}" wx:for-item="item" wx:key="{{item.id}}" tab-index="{{index}}" component-id="list">
+                    <view class="tabbar-button {{activeIndex == index ? 'active' : ''}}" bindtap="onTabClick" data-id="{{item.id}}" data-index="{{index}}">
+                        <view class="tabbar-text">{{item.name}}</view>
+                    </view>
+                </wxc-tab-label>
+            </view>
+        </wxc-tab>
+        <wxc-flex class="filter" main="between" cross="center">
+            <wxc-flex>
+                <view class="filter-button {{isSortPopular ? 'active' : ''}}" bindtap="tapPopular" data-wpytappopular-a="">
+                    <text>人气</text>
                 </view>
-            </wxc-tab>
-            <wxc-flex class="filter" main="between" cross="center">
-                <wxc-flex>
-                    <view class="filter-button {{isSortPopular ? 'active' : ''}}" bindtap="tapPopular" data-wpytappopular-a="">
-                        <text>人气</text>
-                    </view>
-                    <view class="filter-button {{isSortPrice ? 'active' : ''}}" bindtap="tapPrice" data-wpytapprice-a="">
-                        <text>价格</text>
-                        <text class="icon icon-sort-{{isSortPrice == 'down' ? 'down' : 'up'}}"  wx:if="{{isSortPrice}}"/>
-                    </view>
-                </wxc-flex>
-                <wxc-flex>
-                    <view class="filter-button {{isGridList ? 'active' : ''}}" bindtap="tapGridList" data-wpytapgridlist-a="">
-                        <text>网格</text>
-                    </view>
-                    <view class="filter-button {{isFilter ? 'active' : ''}}" bindtap="showFilter" data-wpyshowfilter-a="">
-                        <text>筛选</text>
-                        <text class="icon icon-filter"/>
-                    </view>
-                </wxc-flex>
+                <view class="filter-button {{isSortPrice ? 'active' : ''}}" bindtap="tapPrice" data-wpytapprice-a="">
+                    <text>价格</text>
+                    <text class="icon icon-sort-{{isSortPrice == 'down' ? 'down' : 'up'}}"  wx:if="{{isSortPrice}}"/>
+                </view>
             </wxc-flex>
-        </view>
+            <wxc-flex>
+                <view class="filter-button {{isGridList ? 'active' : ''}}" bindtap="tapGridList" data-wpytapgridlist-a="">
+                    <text>网格</text>
+                </view>
+                <view class="filter-button {{isFilter ? 'active' : ''}}" bindtap="showFilter" data-wpyshowfilter-a="">
+                    <text>筛选</text>
+                    <text class="icon icon-filter"/>
+                </view>
+            </wxc-flex>
+        </wxc-flex>
         <view class="lists">
             
     <view class="cp-grid-list" style="padding:{{$cpProductGrid$margin}}rpx" wx:if="{{isGridList}}">

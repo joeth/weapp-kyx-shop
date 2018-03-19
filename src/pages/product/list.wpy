@@ -8,8 +8,7 @@
 }
 .filter{
     display: block;
-    height: 90rpx;
-    padding: 0 @margin;
+    padding: @margin;
     background-color: @color-maincolor;
 }
 .filter-button{
@@ -36,9 +35,9 @@
     // font-size: @font-size-large;
 }
 .products{
-    padding-top: 180rpx;
+    padding-top: 100rpx;
     position: relative;
-    .header{
+    .tabbar{
         width: 100%;
         position: fixed;
         left: 0;
@@ -51,37 +50,35 @@
 </style>
 <template>
     <view class="products">
-        <view class="header">
-            <wxc-tab class="tabbar" line-color="{{colors.border}}" active-line-color="{{colors.success}}" default-index="{{activeIndex}}" animate="{{true}}" component-id="list">
-                <view class="tabbar-nav" slot="tablabel">
-                    <wxc-tab-label class="tabbar-label" wx:for="{{catalogTabs}}" wx:for-item="item" wx:key="{{item.id}}" tab-index="{{index}}" component-id="list">
-                        <view class="tabbar-button {{activeIndex == index ? 'active' : ''}}" @tap="onTabClick" data-id="{{item.id}}" data-index="{{index}}">
-                            <view class="tabbar-text">{{item.name}}</view>
-                        </view>
-                    </wxc-tab-label>
+        <wxc-tab class="tabbar" line-color="{{colors.border}}" active-line-color="{{colors.success}}" default-index="{{activeIndex}}" animate="{{true}}" component-id="list">
+            <view class="tabbar-nav" slot="tablabel">
+                <wxc-tab-label class="tabbar-label" wx:for="{{catalogTabs}}" wx:for-item="item" wx:key="{{item.id}}" tab-index="{{index}}" component-id="list">
+                    <view class="tabbar-button {{activeIndex == index ? 'active' : ''}}" @tap="onTabClick" data-id="{{item.id}}" data-index="{{index}}">
+                        <view class="tabbar-text">{{item.name}}</view>
+                    </view>
+                </wxc-tab-label>
+            </view>
+        </wxc-tab>
+        <wxc-flex class="filter" main="between" cross="center">
+            <wxc-flex>
+                <view class="filter-button {{isSortPopular ? 'active' : ''}}" @tap="tapPopular()">
+                    <text>人气</text>
                 </view>
-            </wxc-tab>
-            <wxc-flex class="filter" main="between" cross="center">
-                <wxc-flex>
-                    <view class="filter-button {{isSortPopular ? 'active' : ''}}" @tap="tapPopular()">
-                        <text>人气</text>
-                    </view>
-                    <view class="filter-button {{isSortPrice ? 'active' : ''}}" @tap="tapPrice()">
-                        <text>价格</text>
-                        <text class="icon icon-sort-{{isSortPrice == 'down' ? 'down' : 'up'}}" wx:if="{{isSortPrice}}"></text>
-                    </view>
-                </wxc-flex>
-                <wxc-flex>
-                    <view class="filter-button {{isGridList ? 'active' : ''}}" @tap="tapGridList()">
-                        <text>网格</text>
-                    </view>
-                    <view class="filter-button {{isFilter ? 'active' : ''}}" @tap="showFilter()">
-                        <text>筛选</text>
-                        <text class="icon icon-filter"></text>
-                    </view>
-                </wxc-flex>
+                <view class="filter-button {{isSortPrice ? 'active' : ''}}" @tap="tapPrice()">
+                    <text>价格</text>
+                    <text class="icon icon-sort-{{isSortPrice == 'down' ? 'down' : 'up'}}" wx:if="{{isSortPrice}}"></text>
+                </view>
             </wxc-flex>
-        </view>
+            <wxc-flex>
+                <view class="filter-button {{isGridList ? 'active' : ''}}" @tap="tapGridList()">
+                    <text>网格</text>
+                </view>
+                <view class="filter-button {{isFilter ? 'active' : ''}}" @tap="showFilter()">
+                    <text>筛选</text>
+                    <text class="icon icon-filter"></text>
+                </view>
+            </wxc-flex>
+        </wxc-flex>
         <view class="lists">
             <cp-product-grid :datalist="productList" wx:if="{{isGridList}}"></cp-product-grid>
             <cp-product-item :datalist="productList" wx:else></cp-product-item>
